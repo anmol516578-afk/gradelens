@@ -1,0 +1,29 @@
+[project]
+name = "gradelens"
+version = "1.0.0"
+description = "AI Student Performance Analyst for college faculty and HODs"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = [".venv", "sample_data", "models"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
+filterwarnings = [
+    "error::pandas.errors.PerformanceWarning",
+    "error::FutureWarning",
+]
+
+[tool.coverage.run]
+source = ["core", "agent", "ml"]
+omit = ["*/__init__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

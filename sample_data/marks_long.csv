@@ -1,0 +1,902 @@
+Roll No,Student Name,Section,Semester,Subject,Attendance (%),Assignment,MST 1,MST 2,End Term,Internal Total,Total,Result
+2023BCA001,Sai Chauhan,A,5,Python,75,8,13,14,55,35,90,Pass
+2023BCA001,Sai Chauhan,A,5,DBMS,78,9,15,15,48,39,87,Pass
+2023BCA001,Sai Chauhan,A,5,Data Structures,70,6,10,10,37,26,63,Pass
+2023BCA001,Sai Chauhan,A,5,Computer Networks,81,9,12,13,46,34,80,Pass
+2023BCA001,Sai Chauhan,A,5,Discrete Maths,76,6,11,12,51,29,80,Pass
+2023BCA002,Ira Chopra,A,5,Python,79,7,10,9,50,26,76,Pass
+2023BCA002,Ira Chopra,A,5,DBMS,,7,11,10,43,28,71,Pass
+2023BCA002,Ira Chopra,A,5,Data Structures,91,6,9,10,42,25,67,Pass
+2023BCA002,Ira Chopra,A,5,Computer Networks,70,8,13,12,47,33,80,Pass
+2023BCA002,Ira Chopra,A,5,Discrete Maths,85,6,11,7,27,24,51,Pass
+2023BCA003,Rahul Kapoor,A,5,Python,98,10,15,12,60,37,97,Pass
+2023BCA003,Rahul Kapoor,A,5,DBMS,92,10,13,10,50,33,83,Pass
+2023BCA003,Rahul Kapoor,A,5,Data Structures,100,9,15,15,41,39,80,Pass
+2023BCA003,Rahul Kapoor,A,5,Computer Networks,93,10,12,9,43,31,74,Pass
+2023BCA003,Rahul Kapoor,A,5,Discrete Maths,99,10,14,10,43,34,77,Pass
+2023BCA004,Sai Mishra,A,5,Python,76,9,AB,9,44,18,62,Pass
+2023BCA004,Sai Mishra,A,5,DBMS,77,7,11,10,36,28,64,Pass
+2023BCA004,Sai Mishra,A,5,Data Structures,70,7,7,51,36,22,58,Pass
+2023BCA004,Sai Mishra,A,5,Computer Networks,60,8,9,11,45,28,73,Pass
+2023BCA004,Sai Mishra,A,5,Discrete Maths,90,7,AB,10,47,17,64,Pass
+2023BCA005,Kabir Kaur,A,5,Python,67,5,8,5,22,18,40,Pass
+2023BCA005,Kabir Kaur,A,5,DBMS,72,6,4,2,14,12,26,Fail
+2023BCA005,Kabir Kaur,A,5,Data Structures,65,4,7,5,20,16,36,Fail
+2023BCA005,Kabir Kaur,A,5,Computer Networks,77,,8,9,29,21,50,Pass
+2023BCA005,Kabir Kaur,A,5,Discrete Maths,75,3,4,3,20,10,30,Fail
+2023BCA006,Diya Menon,A,5,Python,75,6,9,7,21,22,43,Pass
+2023BCA006,Diya Menon,A,5,DBMS,86,7,7,8,35,22,57,Pass
+2023BCA006,Diya Menon,A,5,Data Structures,81,6,7,9,22,22,44,Pass
+2023BCA006,Diya Menon,A,5,Computer Networks,64,7,6,7,37,20,57,Pass
+2023BCA006,Diya Menon,A,5,Discrete Maths,88,5,5,5,21,15,36,Fail
+2023BCA007,Tanvi Chauhan,A,5,Python,100,10,13,14,60,37,97,Pass
+2023BCA007,Tanvi Chauhan,A,5,DBMS,98,10,15,12,55,37,92,Pass
+2023BCA007,Tanvi Chauhan,A,5,Data Structures,,10,15,15,57,40,97,Pass
+2023BCA007,Tanvi Chauhan,A,5,Computer Networks,91,10,15,13,55,38,93,Pass
+2023BCA007,Tanvi Chauhan,A,5,Discrete Maths,90,10,14,14,55,38,93,Pass
+2023BCA008,Isha Saini, A ,5,Python,79,10,12,Absent,47,22,69,Pass
+2023BCA008,Isha Saini,A,5,DBMS,85,10,15,14,52,39,91,Pass
+2023BCA008,Isha Saini,A,5,Data Structures,,10,AB,14,53,24,77,Pass
+2023BCA008,Isha Saini,A,5,Computer Networks,87,10,14,14,56,38,94,Pass
+2023BCA008,Isha Saini,A,5,Discrete Maths,83,9,10,12,44,31,75,Pass
+2023BCA009,Ananya Patel,A,5,Python,76,8,9,10,22,27,49,Pass
+2023BCA009,Ananya Patel,A,5,DBMS,91,9,12,11,46,32,78,Pass
+2023BCA009,Ananya Patel,A,5,Data Structures,97,10,15,15,49,40,89,Pass
+2023BCA009,Ananya Patel,A,5,Computer Networks,90,10,12,13,44,35,79,Pass
+2023BCA009,Ananya Patel,A,5,Discrete Maths,86,8,10,7,36,25,61,Pass
+2023BCA010,Harleen Malhotra,A,5,Python,73,8,9,9,38,26,64,Pass
+2023BCA010,Harleen Malhotra,A,5,DBMS,90,7,8,9,31,24,55,Pass
+2023BCA010,Harleen Malhotra,A,5,Data Structures,89,7,7,7,39,21,60,Pass
+2023BCA010,Harleen Malhotra,A,5,Computer Networks,85,9,9,7,40,25,65,Pass
+2023BCA010,Harleen Malhotra,A,5,Discrete Maths,92,5,6,5,28,16,44,Pass
+2023BCA011,Ananya Kulkarni,A,5,Python,91,10,13,14,49,37,86,Pass
+2023BCA011,Ananya Kulkarni,A,5,DBMS,93,10,15,15,55,40,95,Pass
+2023BCA011,Ananya Kulkarni,A,5,Data Structures,83,10,12,13,50,35,85,Pass
+2023BCA011,Ananya Kulkarni,A,5,Computer Networks,96,,15,13,54,38,92,Pass
+2023BCA011,Ananya Kulkarni,A,5,Discrete Maths,85,9,11,11,48,31,79,Pass
+2023BCA012,Shaurya Grewal,A,5,Python,79,7,9,12,40,28,68,Pass
+2023BCA012,Shaurya Grewal,A,5,DBMS,84,6,9,4,28,19,47,Pass
+2023BCA012,Shaurya Grewal,A,5,Data Structures,84,8,9,5,35,22,57,Pass
+2023BCA012,Shaurya Grewal,A,5,Computer Networks,59,5,6,5,28,16,44,Pass
+2023BCA012,Shaurya Grewal,A,5,Discrete Maths,78,7,9,9,28,25,53,Pass
+2023BCA013,Pooja Jain, A ,5,Python,93,8,10,6,35,24,59,Pass
+2023BCA013,Pooja Jain,A,5,DBMS,92,9,10,9,42,28,70,Pass
+2023BCA013,Pooja Jain,A,5,Data Structures,91,8,8,9,35,25,60,Pass
+2023BCA013,Pooja Jain,A,5,Computer Networks,96,9,11,12,40,32,72,Pass
+2023BCA013,Pooja Jain,A,5,Discrete Maths,91,9,11,11,34,31,65,Pass
+2023BCA014,Navdeep Bansal,A,5,Python,85,9,14,13,47,36,83,Pass
+2023BCA014,Navdeep Bansal,A,5,DBMS,84,9,13,14,51,36,87,Pass
+2023BCA014,Navdeep Bansal,A,5,Data Structures,73,9,10,9,48,28,76,Pass
+2023BCA014,Navdeep Bansal,A,5,Computer Networks,79,9,12,12,49,33,82,Pass
+2023BCA014,Navdeep Bansal,Section-A,5,Discrete Maths,68,5,9,10,42,24,66,Pass
+2023BCA015,Aadhya Chopra,A,5,Python,66,6,8,9,34,23,57,Pass
+2023BCA015,Aadhya Chopra,A,5,DBMS,70,5,11,11,36,27,63,Pass
+2023BCA015,Aadhya Chopra,A,5,Data Structures,60,5,6,5,27,16,43,Pass
+2023BCA015,Aadhya Chopra,A,5,Computer Networks,65,6,13,14,46,33,79,Pass
+2023BCA015,Aadhya Chopra,A,5,Discrete Maths,67,5,6,5,26,16,42,Pass
+2023BCA016,Nikhil Das,A,5,Python,85,10,12,10,44,32,76,Pass
+2023BCA016,Nikhil Das,A,5,DBMS,82,9,11,11,46,31,77,Pass
+2023BCA016,Nikhil Das,A,5,Data Structures,93,10,11,10,34,31,65,Pass
+2023BCA016,Nikhil Das,A,5,Computer Networks,82,9,10,11,47,30,77,Pass
+2023BCA016,Nikhil Das, A ,5,Discrete Maths,87,10,11,12,48,33,81,Pass
+2023BCA017,Sai Dhillon,A,5,Python,80,9,10,8,38,27,65,Pass
+2023BCA017,Sai Dhillon,A,5,DBMS,84,9,11,11,45,31,76,Pass
+2023BCA017,Sai Dhillon,A,5,Data Structures,77,7,11,9,39,27,66,Pass
+2023BCA017,Sai Dhillon,A,5,Computer Networks,72,7,9,9,36,25,61,Pass
+2023BCA017,Sai Dhillon,A,5,Discrete Maths,64,5,5,2,27,12,39,Fail
+2023BCA018,Simran Singh,A,5,Python,82,9,12,9,32,30,62,Pass
+2023BCA018,Simran Singh,A,5,DBMS,79,9,12,13,52,34,86,Pass
+2023BCA018,Simran Singh,A,5,Data Structures,83,9,11,11,48,31,79,Pass
+2023BCA018,Simran Singh,A,5,Computer Networks,91,6,8,7,28,21,49,Pass
+2023BCA018,Simran Singh,A,5,Discrete Maths,76,8,10,8,22,26,48,Pass
+2023BCA019,Jasleen Mittal,A,5,Python,82,10,13,13,54,36,90,Pass
+2023BCA019,Jasleen Mittal,A,5,DBMS,96,10,15,15,58,40,98,Pass
+2023BCA019,Jasleen Mittal,A,5,Data Structures,85,10,13,15,58,38,96,Pass
+2023BCA019,Jasleen Mittal,A,5,Computer Networks,92,10,15,14,60,39,99,Pass
+2023BCA019,Jasleen Mittal,A,5,Discrete Maths,87,8,11,6,31,25,56,Pass
+2023BCA020,Yash Jain,A,5,Python,65,8,10,9,36,27,63,Pass
+2023BCA020,Yash Jain,A,5,DBMS,65,3,5,3,34,11,45,Pass
+2023BCA020,Yash Jain,A,5,Data Structures,69,7,12,9,43,28,71,Pass
+2023BCA020,Yash Jain,A,5,Computer Networks,66,7,10,8,40,25,65,Pass
+2023BCA020,Yash Jain,A,5,Discrete Maths,71,5,8,10,38,23,61,Pass
+2023BCA021,Ishaan Chauhan,A,5,Python,67,8,15,14,42,37,79,Pass
+2023BCA021,Ishaan Chauhan,A,5,DBMS,72,7,12,12,35,31,66,Pass
+2023BCA021,Ishaan Chauhan,A,5,Data Structures,69,8,14,15,48,37,85,Pass
+2023BCA021,Ishaan Chauhan,A,5,Computer Networks,78,7,11,12,49,30,79,Pass
+2023BCA021,Ishaan Chauhan,A,5,Discrete Maths,77,8,10,10,43,28,71,Pass
+2023BCA022,Meera Kulkarni,A,5,Python,59,5,7,5,15,17,32,Fail
+2023BCA022,Meera Kulkarni,A,5,DBMS,67,4,4,7,32,15,47,Pass
+2023BCA022,Meera Kulkarni,A,5,Data Structures,64,3,2,3,12,8,20,Fail
+2023BCA022,Meera Kulkarni,A,5,Computer Networks,59,2,4,1,16,7,23,Fail
+2023BCA022,Meera Kulkarni,A,5,Discrete Maths,67,0,2,0,9,2,11,Fail
+2023BCA023,Arjun Bajwa,A,5,Python,67,7,11,14,46,32,78,Pass
+2023BCA023,Arjun Bajwa,A,5,DBMS,77,7,8,8,27,23,50,Pass
+2023BCA023,Arjun Bajwa,A,5,Data Structures,76,,9,6,29,23,52,Pass
+2023BCA023,Arjun Bajwa,A,5,Computer Networks,68,8,11,12,46,31,77,Pass
+2023BCA023,Arjun Bajwa,A,5,Discrete Maths,,5,9,6,24,20,44,Pass
+2023BCA024,Aman Arora,A,5,Python,94,8,12,12,44,32,76,Pass
+2023BCA024,Aman Arora,A,5,DBMS,73,9,9,9,32,27,59,Pass
+2023BCA024,Aman Arora,A,5,Data Structures,79,7,6,5,33,18,51,Pass
+2023BCA024,Aman Arora,Sec A,5,Computer Networks,74,9,11,12,43,32,75,Pass
+2023BCA024,Aman Arora,A,5,Discrete Maths,71,6,7,7,33,20,53,Pass
+2023BCA025,Kavya Saini,A,5,Python,,5,6,6,31,17,48,Pass
+2023BCA025,Kavya Saini,A,5,DBMS,73,6,7,Absent,34,13,47,Pass
+2023BCA025,Kavya Saini,A,5,Data Structures,69,8,9,7,40,24,64,Pass
+2023BCA025,Kavya Saini,A,5,Computer Networks,78,6,7,7,35,20,55,Pass
+2023BCA025,Kavya Saini,A,5,Discrete Maths,80,5,10,11,36,26,62,Pass
+2023BCA026,Sneha Nair, A ,5,Python,74,9,12,12,43,33,76,Pass
+2023BCA026,Sneha Nair,A,5,DBMS,82,8,9,10,47,27,74,Pass
+2023BCA026,Sneha Nair,A,5,Data Structures,84,6,7,8,33,21,54,Pass
+2023BCA026,Sneha Nair,A,5,Computer Networks,77,4,AB,8,15,12,27,Fail
+2023BCA026,Sneha Nair,A,5,Discrete Maths,88,6,10,10,24,26,50,Pass
+2023BCA027,Harjot Malhotra,A,5,Python,67,6,10,10,53,26,79,Pass
+2023BCA027,Harjot Malhotra,A,5,DBMS,70,8,12,11,46,31,77,Pass
+2023BCA027,Harjot Malhotra,A,5,Data Structures,75,5,7,5,34,17,51,Pass
+2023BCA027,Harjot Malhotra,A,5,Computer Networks,76,4,9,12,34,25,59,Pass
+2023BCA027,Harjot Malhotra,A,5,Discrete Maths,67,6,9,10,40,25,65,Pass
+2023BCA028,Siddharth Verma,A,5,Python,62,6,13,12,49,31,80,Pass
+2023BCA028,Siddharth Verma,A,5,DBMS,63,6,9,7,43,22,65,Pass
+2023BCA028,Siddharth Verma,A,5,Data Structures,59,5,12,12,43,29,72,Pass
+2023BCA028,Siddharth Verma,A,5,Computer Networks,54,8,11,8,43,27,70,Pass
+2023BCA028,Siddharth Verma,A,5,Discrete Maths,55,4,6,6,17,16,33,Fail
+2023BCA029,Aadhya Reddy,A,5,Python,69,4,5,6,28,15,43,Pass
+2023BCA029,Aadhya Reddy,A,5,DBMS,75,5,6,Absent,18,11,29,Fail
+2023BCA029,Aadhya Reddy,A,5,Data Structures,88,6,5,7,29,18,47,Pass
+2023BCA029,Aadhya Reddy,A,5,Computer Networks,81,6,10,8,25,24,49,Pass
+2023BCA029,Aadhya Reddy,A,5,Discrete Maths,80,4,5,5,17,14,31,Fail
+2023BCA030,Tanvi Mishra,A,5,Python,73,8,11,11,40,30,70,Pass
+2023BCA030,Tanvi Mishra,A,5,DBMS,72,6,8,8,40,22,62,Pass
+2023BCA030,Tanvi Mishra,A,5,Data Structures,67,7,10,8,28,25,53,Pass
+2023BCA030,Tanvi Mishra,A,5,Computer Networks,77,6,12,12,48,30,78,Pass
+2023BCA030,Tanvi Mishra,A,5,Discrete Maths,73,5,5,4,28,14,42,Pass
+2023BCA031,Fatima Yadav,A,5,Python,73,7,7,8,35,22,57,Pass
+2023BCA031,Fatima Yadav,A,5,DBMS,83,8,11,8,33,27,60,Pass
+2023BCA031,Fatima Yadav,A,5,Data Structures,80,9,11,10,43,30,73,Pass
+2023BCA031,Fatima Yadav,A,5,Computer Networks,80,8,8,12,33,28,61,Pass
+2023BCA031,Fatima Yadav,A,5,Discrete Maths,84,6,7,8,31,21,52,Pass
+2023BCA032,Harjot Bajwa,A,5,Python,91,9,9,8,28,26,54,Pass
+2023BCA032,Harjot Bajwa,A,5,DBMS,85,9,12,13,42,34,76,Pass
+2023BCA032,Harjot Bajwa,A,5,Data Structures,83,7,5,2,29,14,43,Pass
+2023BCA032,Harjot Bajwa,A,5,Computer Networks,83,9,10,12,50,31,81,Pass
+2023BCA032,Harjot Bajwa,A,5,Discrete Maths,82,5,8,9,32,22,54,Pass
+2023BCA033,Navdeep Mehta,A,5,Python,98,10,15,14,51,39,90,Pass
+2023BCA033,Navdeep Mehta,A,5,DBMS,84,9,13,13,54,35,89,Pass
+2023BCA033,Navdeep Mehta,A,5,Data Structures,83,9,11,11,33,31,64,Pass
+2023BCA033,Navdeep Mehta,A,5,Computer Networks,78,10,11,10,47,31,78,Pass
+2023BCA033,Navdeep Mehta,A,5,Discrete Maths,83,8,9,9,38,26,64,Pass
+2023BCA034,Gurleen Kulkarni,A,5,Python,89,10,10,5,-,25,25,Fail
+2023BCA034,Gurleen Kulkarni,A,5,DBMS,88,8,12,13,45,33,78,Pass
+2023BCA034,Gurleen Kulkarni,Sec A,5,Data Structures,86,7,12,7,38,26,64,Pass
+2023BCA034,Gurleen Kulkarni,A,5,Computer Networks,83,9,9,7,37,25,62,Pass
+2023BCA034,Gurleen Kulkarni,A,5,Discrete Maths,98,9,10,10,47,29,76,Pass
+2023BCA035,Arjun Malhotra,A,5,Python,85,10,12,13,49,35,84,Pass
+2023BCA035,Arjun Malhotra,A,5,DBMS,84,10,12,13,44,35,79,Pass
+2023BCA035,Arjun Malhotra,A,5,Data Structures,90,9,13,14,47,36,83,Pass
+2023BCA035,Arjun Malhotra,A,5,Computer Networks,82,9,14,15,60,38,98,Pass
+2023BCA035,Arjun Malhotra,A,5,Discrete Maths,79,8,10,9,36,27,63,Pass
+2023BCA036,Neha Nair,A,5,Python,82,8,8,8,38,24,62,Pass
+2023BCA036,Neha Nair,A,5,DBMS,75,10,12,12,41,34,75,Pass
+2023BCA036,Neha Nair,A,5,Data Structures,92,9,8,9,53,26,79,Pass
+2023BCA036,Neha Nair,A,5,Computer Networks,90,8,10,8,34,26,60,Pass
+2023BCA036,Neha Nair,A,5,Discrete Maths,81,5,6,5,22,16,38,Fail
+2023BCA037,Nikhil Patel,A,5,Python,73,7,9,7,38,23,61,Pass
+2023BCA037,Nikhil Patel,A,5,DBMS,73,7,6,7,36,20,56,Pass
+2023BCA037,Nikhil Patel,A,5,Data Structures,74,6,AB,9,20,15,35,Fail
+2023BCA037,Nikhil Patel,A,5,Computer Networks,78,8,9,10,51,27,78,Pass
+2023BCA037,Nikhil Patel,A,5,Discrete Maths,68,5,6,7,28,18,46,Pass
+2023BCA038,Riya Bhatia, A ,5,Python,79,8,13,12,42,33,75,Pass
+2023BCA038,Riya Bhatia,A,5,DBMS,83,6,6,5,31,17,48,Pass
+2023BCA038,Riya Bhatia,A,5,Data Structures,82,7,9,6,29,22,51,Pass
+2023BCA038,Riya Bhatia,A,5,Computer Networks,77,8,9,8,49,25,74,Pass
+2023BCA038,Riya Bhatia,A,5,Discrete Maths,84,7,8,8,35,23,58,Pass
+2023BCA039,Pranav Das,a,5,Python,87,8,10,8,46,26,72,Pass
+2023BCA039,Pranav Das,A,5,DBMS,93,9,14,14,52,37,89,Pass
+2023BCA039,Pranav Das,A,5,Data Structures,70,7,10,11,47,28,75,Pass
+2023BCA039,Pranav Das,A,5,Computer Networks,77,6,9,7,38,22,60,Pass
+2023BCA039,Pranav Das,A,5,Discrete Maths,79,6,9,9,34,24,58,Pass
+2023BCA040,Saanvi Agarwal,A,5,Python,79,9,11,10,47,30,77,Pass
+2023BCA040,Saanvi Agarwal,A,5,DBMS,90,,4,6,34,18,52,Pass
+2023BCA040,Saanvi Agarwal,A,5,Data Structures,77,9,6,7,30,22,52,Pass
+2023BCA040,Saanvi Agarwal,A,5,Computer Networks,83,9,11,10,34,30,64,Pass
+2023BCA040,Saanvi Agarwal, A ,5,Discrete Maths,94,8,8,7,27,23,50,Pass
+2023BCA041,Zoya Chopra,A,5,Python,66,5,5,3,26,13,39,Fail
+2023BCA041,Zoya Chopra,A,5,DBMS,69,7,7,5,21,19,40,Pass
+2023BCA041,Zoya Chopra,A,5,Data Structures,75,6,5,4,27,15,42,Pass
+2023BCA041,Zoya Chopra,A,5,Computer Networks,70,5,6,4,25,15,40,Pass
+2023BCA041,Zoya Chopra,A,5,Discrete Maths,71,5,6,3,14,14,28,Fail
+2023BCA042,Ishaan Mittal,A,5,Python,89,8,12,12,36,32,68,Pass
+2023BCA042,Ishaan Mittal,A,5,DBMS,84,8,10,9,37,27,64,Pass
+2023BCA042,Ishaan Mittal,A,5,Data Structures,76,9,11,11,44,31,75,Pass
+2023BCA042,Ishaan Mittal,A,5,Computer Networks,86,8,14,11,41,33,74,Pass
+2023BCA042,Ishaan Mittal,A,5,Discrete Maths,85,7,AB,9,35,16,51,Pass
+2023BCA043,Myra Pandey,A,5,Python,71,10,13,13,51,36,87,Pass
+2023BCA043,Myra Pandey,A,5,DBMS,75,9,11,12,45,32,77,Pass
+2023BCA043,Myra Pandey,A,5,Data Structures,71,7,5,5,40,17,57,Pass
+2023BCA043,Myra Pandey,A,5,Computer Networks,76,8,11,11,50,30,80,Pass
+2023BCA043,Myra Pandey,a,5,Discrete Maths,73,7,10,9,26,26,52,Pass
+2023BCA044,Sai Joshi,A,5,Python,81,10,15,15,52,40,92,Pass
+2023BCA044,Sai Joshi,A,5,DBMS,94,10,15,13,53,38,91,Pass
+2023BCA044,Sai Joshi,A,5,Data Structures,80,10,14,14,52,38,90,Pass
+2023BCA044,Sai Joshi,A,5,Computer Networks,93,10,14,12,45,36,81,Pass
+2023BCA044,Sai Joshi,A,5,Discrete Maths,85,9,13,11,46,33,79,Pass
+2023BCA045,Pooja Mittal,A,5,Python,94,10,15,15,58,40,98,Pass
+2023BCA045,Pooja Mittal,A,5,DBMS,89,10,14,14,60,38,98,Pass
+2023BCA045,Pooja Mittal,A,5,Data Structures,92,10,14,9,54,33,87,Pass
+2023BCA045,Pooja Mittal,A,5,Computer Networks,81,10,13,15,50,38,88,Pass
+2023BCA045,Pooja Mittal,A,5,Discrete Maths,87,10,13,14,53,37,90,Pass
+2023BCA046,Aman Bansal,A,5,Python,62,5,9,9,35,23,58,Pass
+2023BCA046,Aman Bansal,a,5,DBMS,59,5,8,8,32,21,53,Pass
+2023BCA046,Aman Bansal,A,5,Data Structures,70,7,7,7,29,21,50,Pass
+2023BCA046,Aman Bansal,A,5,Computer Networks,65,5,10,10,49,25,74,Pass
+2023BCA046,Aman Bansal,A,5,Discrete Maths,66,2,4,4,21,10,31,Fail
+2023BCA047,Harleen Rao,A,5,Python,70,6,9,10,45,25,70,Pass
+2023BCA047,Harleen Rao,A,5,DBMS,65,6,9,5,36,20,56,Pass
+2023BCA047,Harleen Rao,a,5,Data Structures,78,7,12,7,30,26,56,Pass
+2023BCA047,Harleen Rao,A,5,Computer Networks,66,5,8,8,34,21,55,Pass
+2023BCA047,Harleen Rao,A,5,Discrete Maths,73,6,7,8,22,21,43,Pass
+2023BCA048,Simran Khan,A,5,Python,59,,5,8,27,16,43,Pass
+2023BCA048,Simran Khan,A,5,DBMS,70,3,6,4,21,13,34,Fail
+2023BCA048,Simran Khan,A,5,Data Structures,65,3,5,6,28,14,42,Pass
+2023BCA048,Simran Khan,A,5,Computer Networks,72,4,7,4,27,15,42,Pass
+2023BCA048,Simran Khan,A,5,Discrete Maths,71,5,5,1,19,11,30,Fail
+2023BCA049,Karan Mishra,a,5,Python,58,4,6,5,21,15,36,Fail
+2023BCA049,Karan Mishra,A,5,DBMS,63,5,11,12,29,28,57,Pass
+2023BCA049,Karan Mishra,A,5,Data Structures,54,4,8,8,31,20,51,Pass
+2023BCA049,Karan Mishra,A,5,Computer Networks,60,5,7,8,35,20,55,Pass
+2023BCA049,Karan Mishra,A,5,Discrete Maths,52,2,6,6,23,14,37,Fail
+2023BCA050,Sara Patel,A,5,Python,62,7,12,13,51,32,83,Pass
+2023BCA050,Sara Patel,A,5,DBMS,62,7,9,10,42,26,68,Pass
+2023BCA050,Sara Patel,A,5,Data Structures,75,6,9,6,34,21,55,Pass
+2023BCA050,Sara Patel,A,5,Computer Networks,77,5,10,8,34,23,57,Pass
+2023BCA050,Sara Patel,Section-A,5,Discrete Maths,76,7,10,11,53,28,81,Pass
+2023BCA051,Shruti Nair,A,5,Python,95,10,14,14,56,38,94,Pass
+2023BCA051,Shruti Nair,A,5,DBMS,94,10,14,12,51,36,87,Pass
+2023BCA051,Shruti Nair, A ,5,Data Structures,72,10,11,11,53,32,85,Pass
+2023BCA051,Shruti Nair,a,5,Computer Networks,90,10,15,15,58,40,98,Pass
+2023BCA051,Shruti Nair,A,5,Discrete Maths,87,10,11,13,54,34,88,Pass
+2023BCA052,Priya Sharma,A,5,Python,76,6,4,4,33,14,47,Pass
+2023BCA052,Priya Sharma,A,5,DBMS,70,6,7,3,37,16,53,Pass
+2023BCA052,Priya Sharma,A,5,Data Structures,81,8,12,9,35,29,64,Pass
+2023BCA052,Priya Sharma,A,5,Computer Networks,81,6,7,4,31,17,48,Pass
+2023BCA052,Priya Sharma,A,5,Discrete Maths,80,6,5,6,30,17,47,Pass
+2023BCA053,Neha Saini,A,5,Python,87,10,10,11,60,31,91,Pass
+2023BCA053,Neha Saini,A,5,DBMS,88,8,10,8,40,26,66,Pass
+2023BCA053,Neha Saini,A,5,Data Structures,79,8,7,3,36,18,54,Pass
+2023BCA053,Neha Saini,A,5,Computer Networks,79,8,7,8,33,23,56,Pass
+2023BCA053,Neha Saini,A,5,Discrete Maths,70,7,7,8,21,22,43,Pass
+2023BCA054,Pooja Agarwal,A,5,Python,83,5,5,5,27,15,42,Pass
+2023BCA054,Pooja Agarwal,A,5,DBMS,79,7,6,7,26,20,46,Pass
+2023BCA054,Pooja Agarwal,A,5,Data Structures,71,5,2,2,30,9,39,Fail
+2023BCA054,Pooja Agarwal,A,5,Computer Networks,71,6,6,6,20,18,38,Fail
+2023BCA054,Pooja Agarwal,A,5,Discrete Maths,67,3,4,1,9,8,17,Fail
+2023BCA055,Varun Pandey,A,5,Python,100,9,14,11,35,34,69,Pass
+2023BCA055,Varun Pandey,A,5,DBMS,89,8,9,10,43,27,70,Pass
+2023BCA055,Varun Pandey,A,5,Data Structures,89,8,12,15,46,35,81,Pass
+2023BCA055,Varun Pandey,A,5,Computer Networks,86,10,10,6,34,26,60,Pass
+2023BCA055,Varun Pandey,A,5,Discrete Maths,86,8,8,5,24,21,45,Pass
+2023BCA056,Yash Saini,A,5,Python,68,5,7,7,39,19,58,Pass
+2023BCA056,Yash Saini,A,5,DBMS,80,6,8,9,30,23,53,Pass
+2023BCA056,Yash Saini,A,5,Data Structures,77,5,7,2,12,14,26,Fail
+2023BCA056,Yash Saini,A,5,Computer Networks,78,6,8,9,42,23,65,Pass
+2023BCA056,Yash Saini,A,5,Discrete Maths,76,5,8,9,42,22,64,Pass
+2023BCA057,Saanvi Malhotra,A,5,Python,87,7,10,7,34,24,58,Pass
+2023BCA057,Saanvi Malhotra,A,5,DBMS,91,10,13,15,45,38,83,Pass
+2023BCA057,Saanvi Malhotra,A,5,Data Structures,84,10,12,9,39,31,70,Pass
+2023BCA057,Saanvi Malhotra,A,5,Computer Networks,97,8,11,10,34,29,63,Pass
+2023BCA057,Saanvi Malhotra,a,5,Discrete Maths,99,8,9,8,42,25,67,Pass
+2023BCA058,Ananya Dhillon,A,5,Python,81,8,9,6,29,23,52,Pass
+2023BCA058,Ananya Dhillon,A,5,DBMS,68,7,9,9,39,25,64,Pass
+2023BCA058,Ananya Dhillon,A,5,Data Structures,78,6,10,11,23,27,50,Pass
+2023BCA058,Ananya Dhillon,A,5,Computer Networks,77,5,9,6,33,20,53,Pass
+2023BCA058,Ananya Dhillon,A,5,Discrete Maths,87,7,9,11,43,27,70,Pass
+2023BCA059,Aditya Patel,A,5,Python,68,8,8,11,49,27,76,Pass
+2023BCA059,Aditya Patel,A,5,DBMS,83,7,11,10,48,28,76,Pass
+2023BCA059,Aditya Patel,A,5,Data Structures,82,7,9,10,42,26,68,Pass
+2023BCA059,Aditya Patel,A,5,Computer Networks,74,8,12,15,51,35,86,Pass
+2023BCA059,Aditya Patel,A,5,Discrete Maths,78,4,8,6,28,18,46,Pass
+2023BCA060,Karan Gupta,A,5,Python,67,6,9,8,26,23,49,Pass
+2023BCA060,Karan Gupta,Sec A,5,DBMS,69,4,5,4,26,13,39,Fail
+2023BCA060,Karan Gupta,A,5,Data Structures,59,4,6,8,18,18,36,Fail
+2023BCA060,Karan Gupta,A,5,Computer Networks,66,6,7,9,41,22,63,Pass
+2023BCA060,Karan Gupta, A ,5,Discrete Maths,66,3,3,3,23,9,32,Fail
+2023BCA009,Ananya Patel,A,5,Python,76,8,9,10,22,27,49,Pass
+2023BCA061,Aman Agarwal,B,5,Python,72,4,7,8,25,19,44,Pass
+2023BCA061,Aman Agarwal,B,5,DBMS,59,4,4,3,18,11,29,Fail
+2023BCA061,Aman Agarwal,Sec. B,5,Data Structures,80,1,7,7,16,15,31,Fail
+2023BCA061,Aman Agarwal,B,5,Computer Networks,67,3,5,4,15,12,27,Fail
+2023BCA061,Aman Agarwal,B,5,Discrete Maths,57,2,2,2,6,6,12,Fail
+2023BCA062,Ira Malhotra,B,5,Python,84,10,15,15,60,40,100,Pass
+2023BCA062,Ira Malhotra,B,5,DBMS,83,8,13,15,44,36,80,Pass
+2023BCA062,Ira Malhotra,B,5,Data Structures,71,,12,10,40,29,69,Pass
+2023BCA062,Ira Malhotra,B,5,Computer Networks,74,8,15,15,52,38,90,Pass
+2023BCA062,Ira Malhotra,B,5,Discrete Maths,83,8,9,4,36,21,57,Pass
+2023BCA063,Jasleen Dhillon,B,5,Python,73,3,8,8,32,19,51,Pass
+2023BCA063,Jasleen Dhillon,B,5,DBMS,73,4,5,6,27,15,42,Pass
+2023BCA063,Jasleen Dhillon,B,5,Data Structures,67,6,3,3,20,12,32,Fail
+2023BCA063,Jasleen Dhillon,B,5,Computer Networks,68,6,4,3,30,13,43,Pass
+2023BCA063,Jasleen Dhillon,B,5,Discrete Maths,71,3,3,6,28,12,40,Pass
+2023BCA064,Arjun Chauhan,B,5,Python,77,6,6,7,40,19,59,Pass
+2023BCA064,Arjun Chauhan,B,5,DBMS,80,7,7,4,23,18,41,Pass
+2023BCA064,Arjun Chauhan,B,5,Data Structures,89,6,6,8,21,20,41,Pass
+2023BCA064,Arjun Chauhan,B,5,Computer Networks,73,6,5,3,30,14,44,Pass
+2023BCA064,Arjun Chauhan,B,5,Discrete Maths,87,6,7,7,22,20,42,Pass
+2023BCA065,Pari Jain,B,5,Python,100,10,15,15,55,40,95,Pass
+2023BCA065,Pari Jain,B,5,DBMS,100,10,15,15,56,40,96,Pass
+2023BCA065,Pari Jain,B,5,Data Structures,95,10,13,15,60,38,98,Pass
+2023BCA065,Pari Jain,B,5,Computer Networks,100,10,13,14,60,37,97,Pass
+2023BCA065,Pari Jain,B,5,Discrete Maths,92,9,13,13,34,35,69,Pass
+2023BCA066,Saanvi Dhillon,B,5,Python,75,9,14,11,46,34,80,Pass
+2023BCA066,Saanvi Dhillon,B,5,DBMS,84,10,13,8,47,31,78,Pass
+2023BCA066,Saanvi Dhillon,B,5,Data Structures,79,10,15,15,51,40,91,Pass
+2023BCA066,Saanvi Dhillon,B,5,Computer Networks,85,9,15,15,60,39,99,Pass
+2023BCA066,Saanvi Dhillon,B,5,Discrete Maths,86,8,14,10,42,32,74,Pass
+2023BCA067,Neha Joshi,B,5,Python,73,5,7,7,33,19,52,Pass
+2023BCA067,Neha Joshi,B,5,DBMS,87,6,10,7,25,23,48,Pass
+2023BCA067,Neha Joshi,B,5,Data Structures,74,5,4,2,10,11,21,Fail
+2023BCA067,Neha Joshi,B,5,Computer Networks,82,7,9,9,27,25,52,Pass
+2023BCA067,Neha Joshi,B,5,Discrete Maths,68,2,2,2,18,6,24,Fail
+2023BCA068,Navya Verma,Sec. B,5,Python,73,,11,11,41,29,70,Pass
+2023BCA068,Navya Verma,B,5,DBMS,72,5,6,6,27,17,44,Pass
+2023BCA068,Navya Verma,B,5,Data Structures,68,5,6,7,23,18,41,Pass
+2023BCA068,Navya Verma,B,5,Computer Networks,63,5,8,3,28,16,44,Pass
+2023BCA068,Navya Verma,B,5,Discrete Maths,64,4,8,6,22,18,40,Pass
+2023BCA069,Gurpreet Chopra,B,5,Python,96,10,11,8,47,29,76,Pass
+2023BCA069,Gurpreet Chopra,B,5,DBMS,77,7,10,11,29,28,57,Pass
+2023BCA069,Gurpreet Chopra,B,5,Data Structures,82,8,10,10,19,28,47,Pass
+2023BCA069,Gurpreet Chopra,B,5,Computer Networks,74,8,10,7,40,25,65,Pass
+2023BCA069,Gurpreet Chopra,B,5,Discrete Maths,83,7,10,11,38,28,66,Pass
+2023BCA070,Lakshmi Iyer,Section B,5,Python,77,10,10,9,55,29,84,Pass
+2023BCA070,Lakshmi Iyer,B,5,DBMS,85,10,11,12,48,33,81,Pass
+2023BCA070,Lakshmi Iyer,B,5,Data Structures,84,9,10,10,48,29,77,Pass
+2023BCA070,Lakshmi Iyer,B,5,Computer Networks,84,9,13,12,48,34,82,Pass
+2023BCA070,Lakshmi Iyer,B,5,Discrete Maths,81,9,15,15,44,39,83,Pass
+2023BCA071,Yash Pillai,B,5,Python,62,5,7,8,38,20,58,Pass
+2023BCA071,Yash Pillai,B,5,DBMS,64,5,8,11,44,24,68,Pass
+2023BCA071,Yash Pillai,B,5,Data Structures,62,5,10,10,25,25,50,Pass
+2023BCA071,Yash Pillai,B,5,Computer Networks,52,4,8,4,19,16,35,Fail
+2023BCA071,Yash Pillai,B,5,Discrete Maths,65,3,4,5,11,12,23,Fail
+2023BCA072,Divya Kapoor,B,5,Python,78,9,9,10,46,28,74,Pass
+2023BCA072,Divya Kapoor,B,5,DBMS,78,7,8,6,31,21,52,Pass
+2023BCA072,Divya Kapoor,B,5,Data Structures,92,8,9,9,44,26,70,Pass
+2023BCA072,Divya Kapoor,B,5,Computer Networks,85,7,8,9,35,24,59,Pass
+2023BCA072,Divya Kapoor,B,5,Discrete Maths,91,8,7,7,32,22,54,Pass
+2023BCA073,Aditya Das,B,5,Python,71,7,9,5,36,21,57,Pass
+2023BCA073,Aditya Das,B,5,DBMS,93,8,12,12,58,32,90,Pass
+2023BCA073,Aditya Das,B,5,Data Structures,73,8,9,10,40,27,67,Pass
+2023BCA073,Aditya Das,B,5,Computer Networks,78,5,10,9,34,24,58,Pass
+2023BCA073,Aditya Das,B,5,Discrete Maths,75,6,6,6,37,18,55,Pass
+2023BCA074,Shruti Singh,B,5,Python,85,8,9,5,42,22,64,Pass
+2023BCA074,Shruti Singh,B,5,DBMS,74,9,10,6,46,25,71,Pass
+2023BCA074,Shruti Singh,B,5,Data Structures,77,7,10,9,38,26,64,Pass
+2023BCA074,Shruti Singh,B,5,Computer Networks,85,9,12,11,45,32,77,Pass
+2023BCA074,Shruti Singh,B,5,Discrete Maths,73,5,6,7,27,18,45,Pass
+2023BCA075,Jasleen Khan,B,5,Python,75,6,8,8,32,22,54,Pass
+2023BCA075,Jasleen Khan,B,5,DBMS,72,5,6,7,34,18,52,Pass
+2023BCA075,Jasleen Khan,B,5,Data Structures,83,8,8,7,33,23,56,Pass
+2023BCA075,Jasleen Khan,B,5,Computer Networks,76,7,8,7,33,22,55,Pass
+2023BCA075,Jasleen Khan,B,5,Discrete Maths,71,3,9,7,15,19,34,Fail
+2023BCA076,Fatima Khan,B,5,Python,75,7,10,11,34,28,62,Pass
+2023BCA076,Fatima Khan,B,5,DBMS,71,4,9,10,32,23,55,Pass
+2023BCA076,Fatima Khan,B,5,Data Structures,80,6,7,7,22,20,42,Pass
+2023BCA076,Fatima Khan,B,5,Computer Networks,66,6,8,4,20,18,38,Fail
+2023BCA076,Fatima Khan,B,5,Discrete Maths,73,3,4,3,17,10,27,Fail
+2023BCA077,Ayaan Dhillon,B,5,Python,85,5,7,7,29,19,48,Pass
+2023BCA077,Ayaan Dhillon,B,5,DBMS,77,7,7,4,31,18,49,Pass
+2023BCA077,Ayaan Dhillon,B,5,Data Structures,76,5,7,4,21,16,37,Fail
+2023BCA077,Ayaan Dhillon,B,5,Computer Networks,71,8,8,9,20,25,45,Pass
+2023BCA077,Ayaan Dhillon,B,5,Discrete Maths,68,3,3,4,9,10,19,Fail
+2023BCA078,Ananya Saini,B,5,Python,75,7,12,12,48,31,79,Pass
+2023BCA078,Ananya Saini,B,5,DBMS,82,6,11,8,36,25,61,Pass
+2023BCA078,Ananya Saini,b,5,Data Structures,81,6,7,7,41,20,61,Pass
+2023BCA078,Ananya Saini,B,5,Computer Networks,78,6,7,4,33,17,50,Pass
+2023BCA078,Ananya Saini,B,5,Discrete Maths,73,5,4,6,23,15,38,Fail
+2023BCA079,Divya Agarwal,Sec. B,5,Python,84,6,6,8,26,20,46,Pass
+2023BCA079,Divya Agarwal,Section B,5,DBMS,80,5,7,4,25,16,41,Pass
+2023BCA079,Divya Agarwal,B,5,Data Structures,79,8,9,8,44,25,69,Pass
+2023BCA079,Divya Agarwal,B,5,Computer Networks,73,7,8,8,35,23,58,Pass
+2023BCA079,Divya Agarwal,B,5,Discrete Maths,85,6,7,6,25,19,44,Pass
+2023BCA080,Navdeep Pillai,B,5,Python,87,10,14,15,54,39,93,Pass
+2023BCA080,Navdeep Pillai,B,5,DBMS,87,7,8,8,36,23,59,Pass
+2023BCA080,Navdeep Pillai,B,5,Data Structures,90,8,10,11,35,29,64,Pass
+2023BCA080,Navdeep Pillai,B,5,Computer Networks,81,8,11,12,40,31,71,Pass
+2023BCA080,Navdeep Pillai,B,5,Discrete Maths,79,6,7,3,23,16,39,Fail
+2023BCA081,Rahul Bansal,B,5,Python,86,8,7,7,38,22,60,Pass
+2023BCA081,Rahul Bansal,B,5,DBMS,98,7,10,10,43,27,70,Pass
+2023BCA081,Rahul Bansal,Sec. B,5,Data Structures,82,8,9,9,16,26,42,Pass
+2023BCA081,Rahul Bansal,B,5,Computer Networks,84,6,8,4,27,18,45,Pass
+2023BCA081,Rahul Bansal,B,5,Discrete Maths,82,5,7,7,27,19,46,Pass
+2023BCA082,Pranav Reddy,B,5,Python,77,5,8,Absent,35,13,48,Pass
+2023BCA082,Pranav Reddy,B,5,DBMS,77,6,9,12,35,27,62,Pass
+2023BCA082,Pranav Reddy,B,5,Data Structures,79,7,9,9,33,25,58,Pass
+2023BCA082,Pranav Reddy,B,5,Computer Networks,69,6,9,8,31,23,54,Pass
+2023BCA082,Pranav Reddy,B,5,Discrete Maths,68,6,8,9,21,23,44,Pass
+2023BCA083,Gurpreet Sharma,B,5,Python,65,9,12,10,43,31,74,Pass
+2023BCA083,Gurpreet Sharma,b,5,DBMS,60,5,7,8,32,20,52,Pass
+2023BCA083,Gurpreet Sharma,B,5,Data Structures,78,8,11,12,39,31,70,Pass
+2023BCA083,Gurpreet Sharma,B,5,Computer Networks,90,8,13,14,40,35,75,Pass
+2023BCA083,Gurpreet Sharma,B,5,Discrete Maths,81,6,7,6,34,19,53,Pass
+2023BCA084,Reyansh Kaur,B,5,Python,86,10,12,12,54,34,88,Pass
+2023BCA084,Reyansh Kaur,B,5,DBMS,86,9,9,5,36,23,59,Pass
+2023BCA084,Reyansh Kaur,B,5,Data Structures,100,10,10,9,41,29,70,Pass
+2023BCA084,Reyansh Kaur,B,5,Computer Networks,93,7,8,9,53,24,77,Pass
+2023BCA084,Reyansh Kaur,b,5,Discrete Maths,96,7,8,7,31,22,53,Pass
+2023BCA085,Pooja Pandey,B,5,Python,82,7,6,8,38,21,59,Pass
+2023BCA085,Pooja Pandey,B,5,DBMS,76,8,12,14,48,34,82,Pass
+2023BCA085,Pooja Pandey,B,5,Data Structures,80,7,8,8,39,23,62,Pass
+2023BCA085,Pooja Pandey,B,5,Computer Networks,87,8,11,12,40,31,71,Pass
+2023BCA085,Pooja Pandey,B,5,Discrete Maths,87,6,9,9,37,24,61,Pass
+2023BCA086,Riya Malhotra,B,5,Python,91,8,7,3,33,18,51,Pass
+2023BCA086,Riya Malhotra,B,5,DBMS,86,9,10,9,39,28,67,Pass
+2023BCA086,Riya Malhotra,Sec. B,5,Data Structures,86,6,10,8,20,24,44,Pass
+2023BCA086,Riya Malhotra,b,5,Computer Networks,87,9,13,14,38,36,74,Pass
+2023BCA086,Riya Malhotra,B,5,Discrete Maths,94,8,6,7,30,21,51,Pass
+2023BCA087,Isha Reddy,Section B,5,Python,85,7,12,11,40,30,70,Pass
+2023BCA087,Isha Reddy,B,5,DBMS,78,7,6,5,30,18,48,Pass
+2023BCA087,Isha Reddy,B,5,Data Structures,85,7,11,9,35,27,62,Pass
+2023BCA087,Isha Reddy,B,5,Computer Networks,91,9,10,11,51,30,81,Pass
+2023BCA087,Isha Reddy,B,5,Discrete Maths,87,6,7,7,33,20,53,Pass
+2023BCA088,Gurleen Sandhu,B,5,Python,80,6,10,6,25,22,47,Pass
+2023BCA088,Gurleen Sandhu,B,5,DBMS,89,6,6,6,36,18,54,Pass
+2023BCA088,Gurleen Sandhu,B,5,Data Structures,88,6,12,11,22,29,51,Pass
+2023BCA088,Gurleen Sandhu,B,5,Computer Networks,85,9,7,7,40,23,63,Pass
+2023BCA088,Gurleen Sandhu,B,5,Discrete Maths,67,6,6,6,21,18,39,Fail
+2023BCA089,Zoya Reddy,B,5,Python,81,8,10,7,28,25,53,Pass
+2023BCA089,Zoya Reddy,B,5,DBMS,85,7,AB,13,41,20,61,Pass
+2023BCA089,Zoya Reddy,B,5,Data Structures,78,9,11,11,40,31,71,Pass
+2023BCA089,Zoya Reddy,B,5,Computer Networks,82,7,10,9,23,26,49,Pass
+2023BCA089,Zoya Reddy,B,5,Discrete Maths,93,6,8,10,33,24,57,Pass
+2023BCA090,Siddharth Mishra,B,5,Python,100,10,11,12,47,33,80,Pass
+2023BCA090,Siddharth Mishra,B,5,DBMS,95,10,8,8,41,26,67,Pass
+2023BCA090,Siddharth Mishra,B,5,Data Structures,91,9,7,6,27,22,49,Pass
+2023BCA090,Siddharth Mishra,B,5,Computer Networks,94,10,11,9,49,30,79,Pass
+2023BCA090,Siddharth Mishra,B,5,Discrete Maths,87,7,8,9,33,24,57,Pass
+2023BCA091,Siddharth Chopra,B,5,Python,98,10,12,15,60,37,97,Pass
+2023BCA091,Siddharth Chopra,B,5,DBMS,100,10,12,12,52,34,86,Pass
+2023BCA091,Siddharth Chopra,B,5,Data Structures,100,10,13,12,46,35,81,Pass
+2023BCA091,Siddharth Chopra,B,5,Computer Networks,100,10,15,15,58,40,98,Pass
+2023BCA091,Siddharth Chopra,B,5,Discrete Maths,100,10,11,12,52,33,85,Pass
+2023BCA092,Ishaan Rao,B,5,Python,88,10,14,15,54,39,93,Pass
+2023BCA092,Ishaan Rao,B,5,DBMS,94,10,14,13,55,37,92,Pass
+2023BCA092,Ishaan Rao,B,5,Data Structures,100,9,12,8,41,29,70,Pass
+2023BCA092,Ishaan Rao,B,5,Computer Networks,82,7,8,12,45,27,72,Pass
+2023BCA092,Ishaan Rao,B,5,Discrete Maths,75,8,12,8,36,28,64,Pass
+2023BCA093,Karan Joshi,B,5,Python,87,8,10,11,33,29,62,Pass
+2023BCA093,Karan Joshi,B,5,DBMS,80,8,11,13,50,32,82,Pass
+2023BCA093,Karan Joshi,B,5,Data Structures,85,9,10,11,46,30,76,Pass
+2023BCA093,Karan Joshi,B,5,Computer Networks,89,7,10,8,36,25,61,Pass
+2023BCA093,Karan Joshi,B,5,Discrete Maths,71,6,9,8,25,23,48,Pass
+2023BCA094,Riya Jain,B,5,Python,96,7,11,12,27,30,57,Pass
+2023BCA094,Riya Jain,B,5,DBMS,84,5,7,7,20,19,39,Fail
+2023BCA094,Riya Jain,B,5,Data Structures,84,8,4,5,31,17,48,Pass
+2023BCA094,Riya Jain,B,5,Computer Networks,88,7,8,9,31,24,55,Pass
+2023BCA094,Riya Jain,B,5,Discrete Maths,85,7,6,7,26,20,46,Pass
+2023BCA095,Navya Kulkarni,B,5,Python,69,4,8,8,20,20,40,Pass
+2023BCA095,Navya Kulkarni,B,5,DBMS,65,6,7,8,37,21,58,Pass
+2023BCA095,Navya Kulkarni,Sec. B,5,Data Structures,70,4,AB,4,33,8,41,Pass
+2023BCA095,Navya Kulkarni,B,5,Computer Networks,71,3,8,5,16,16,32,Fail
+2023BCA095,Navya Kulkarni,B,5,Discrete Maths,66,2,3,2,9,7,16,Fail
+2023BCA096,Ayesha Kaur,B,5,Python,83,9,13,15,43,37,80,Pass
+2023BCA096,Ayesha Kaur,B,5,DBMS,79,10,12,12,42,34,76,Pass
+2023BCA096,Ayesha Kaur,B,5,Data Structures,83,7,10,11,33,28,61,Pass
+2023BCA096,Ayesha Kaur,B,5,Computer Networks,88,10,12,11,44,33,77,Pass
+2023BCA096,Ayesha Kaur,B,5,Discrete Maths,80,7,8,6,21,21,42,Pass
+2023BCA097,Gurpreet Gupta,B,5,Python,74,7,9,8,42,24,66,Pass
+2023BCA097,Gurpreet Gupta,B,5,DBMS,84,7,10,7,29,24,53,Pass
+2023BCA097,Gurpreet Gupta,B,5,Data Structures,74,5,10,9,23,24,47,Pass
+2023BCA097,Gurpreet Gupta,B,5,Computer Networks,67,6,8,8,37,22,59,Pass
+2023BCA097,Gurpreet Gupta,B,5,Discrete Maths,79,6,6,7,19,19,38,Fail
+2023BCA098,Gurpreet Bajwa,B,5,Python,75,7,10,12,42,29,71,Pass
+2023BCA098,Gurpreet Bajwa,B,5,DBMS,85,9,12,12,45,33,78,Pass
+2023BCA098,Gurpreet Bajwa,B,5,Data Structures,79,9,10,8,38,27,65,Pass
+2023BCA098,Gurpreet Bajwa,B,5,Computer Networks,83,9,9,9,27,27,54,Pass
+2023BCA098,Gurpreet Bajwa,B,5,Discrete Maths,79,7,8,9,41,24,65,Pass
+2023BCA099,Harjot Sethi,B,5,Python,66,3,4,3,14,10,24,Fail
+2023BCA099,Harjot Sethi,B,5,DBMS,60,4,7,8,22,19,41,Pass
+2023BCA099,Harjot Sethi,B,5,Data Structures,67,5,6,6,14,17,31,Fail
+2023BCA099,Harjot Sethi,B,5,Computer Networks,64,2,5,4,17,11,28,Fail
+2023BCA099,Harjot Sethi,B,5,Discrete Maths,63,1,3,5,10,9,19,Fail
+2023BCA100,Nikhil Banerjee,B,5,Python,68,6,11,13,49,30,79,Pass
+2023BCA100,Nikhil Banerjee,B,5,DBMS,70,7,9,9,42,25,67,Pass
+2023BCA100,Nikhil Banerjee,B,5,Data Structures,76,8,12,13,48,33,81,Pass
+2023BCA100,Nikhil Banerjee,B,5,Computer Networks,72,7,9,8,36,24,60,Pass
+2023BCA100,Nikhil Banerjee,B,5,Discrete Maths,68,5,9,9,37,23,60,Pass
+2023BCA101,Sneha Bajwa,B,5,Python,70,6,12,11,35,29,64,Pass
+2023BCA101,Sneha Bajwa,B,5,DBMS,67,5,7,7,35,19,54,Pass
+2023BCA101,Sneha Bajwa,B,5,Data Structures,63,5,10,10,32,25,57,Pass
+2023BCA101,Sneha Bajwa,B,5,Computer Networks,70,6,11,11,40,28,68,Pass
+2023BCA101,Sneha Bajwa,B,5,Discrete Maths,73,3,7,6,26,16,42,Pass
+2023BCA102,Harsh Saini,Section B,5,Python,68,3,4,6,14,13,27,Fail
+2023BCA102,Harsh Saini,B,5,DBMS,64,2,3,4,20,9,29,Fail
+2023BCA102,Harsh Saini,B,5,Data Structures,69,5,6,4,17,15,32,Fail
+2023BCA102,Harsh Saini,B,5,Computer Networks,73,6,8,9,27,23,50,Pass
+2023BCA102,Harsh Saini,B,5,Discrete Maths,72,4,5,1,11,10,21,Fail
+2023BCA103,Harsh Pandey,B,5,Python,86,7,5,7,37,19,56,Pass
+2023BCA103,Harsh Pandey,b,5,DBMS,79,6,9,9,40,24,64,Pass
+2023BCA103,Harsh Pandey,B,5,Data Structures,81,5,6,2,24,13,37,Fail
+2023BCA103,Harsh Pandey,B,5,Computer Networks,80,7,8,7,36,22,58,Pass
+2023BCA103,Harsh Pandey,B,5,Discrete Maths,71,5,4,1,19,10,29,Fail
+2023BCA104,Neha Chopra,B,5,Python,73,7,15,14,47,36,83,Pass
+2023BCA104,Neha Chopra,B,5,DBMS,68,8,9,9,44,26,70,Pass
+2023BCA104,Neha Chopra,B,5,Data Structures,81,6,8,9,42,23,65,Pass
+2023BCA104,Neha Chopra,B,5,Computer Networks,81,5,9,9,34,23,57,Pass
+2023BCA104,Neha Chopra,B,5,Discrete Maths,72,5,7,8,26,20,46,Pass
+2023BCA105,Tanvi Banerjee,Section B,5,Python,89,8,10,7,29,25,54,Pass
+2023BCA105,Tanvi Banerjee,B,5,DBMS,100,8,14,9,38,31,69,Pass
+2023BCA105,Tanvi Banerjee,B,5,Data Structures,92,10,10,8,26,28,54,Pass
+2023BCA105,Tanvi Banerjee,B,5,Computer Networks,100,9,7,8,34,24,58,Pass
+2023BCA105,Tanvi Banerjee,B,5,Discrete Maths,82,9,10,7,32,26,58,Pass
+2023BCA106,Arjun Kaur,B,5,Python,94,8,10,10,37,28,65,Pass
+2023BCA106,Arjun Kaur,B,5,DBMS,95,9,13,15,48,37,85,Pass
+2023BCA106,Arjun Kaur,B,5,Data Structures,100,7,9,5,23,21,44,Pass
+2023BCA106,Arjun Kaur,B,5,Computer Networks,92,9,9,11,47,29,76,Pass
+2023BCA106,Arjun Kaur,B,5,Discrete Maths,88,7,8,5,19,20,39,Fail
+2023BCA107,Aman Sethi,B,5,Python,68,5,8,8,34,21,55,Pass
+2023BCA107,Aman Sethi,B,5,DBMS,69,7,9,7,32,23,55,Pass
+2023BCA107,Aman Sethi,Section B,5,Data Structures,79,6,9,9,33,24,57,Pass
+2023BCA107,Aman Sethi,B,5,Computer Networks,70,6,8,9,44,23,67,Pass
+2023BCA107,Aman Sethi,B,5,Discrete Maths,72,3,6,6,19,15,34,Fail
+2023BCA108,Ayaan Malhotra,B,5,Python,86,7,8,5,37,20,57,Pass
+2023BCA108,Ayaan Malhotra,B,5,DBMS,79,8,7,7,35,22,57,Pass
+2023BCA108,Ayaan Malhotra,B,5,Data Structures,79,5,8,9,26,22,48,Pass
+2023BCA108,Ayaan Malhotra,B,5,Computer Networks,78,8,10,9,36,27,63,Pass
+2023BCA108,Ayaan Malhotra,B,5,Discrete Maths,82,6,9,6,23,21,44,Pass
+2023BCA109,Meera Iyer,B,5,Python,78,7,10,11,37,28,65,Pass
+2023BCA109,Meera Iyer,B,5,DBMS,72,8,12,12,43,32,75,Pass
+2023BCA109,Meera Iyer,B,5,Data Structures,75,8,10,13,36,31,67,Pass
+2023BCA109,Meera Iyer,B,5,Computer Networks,87,8,10,7,39,25,64,Pass
+2023BCA109,Meera Iyer,Sec. B,5,Discrete Maths,76,5,5,4,21,14,35,Fail
+2023BCA110,Isha Joshi,Sec. B,5,Python,77,8,11,9,38,28,66,Pass
+2023BCA110,Isha Joshi,B,5,DBMS,74,7,12,11,52,30,82,Pass
+2023BCA110,Isha Joshi,B,5,Data Structures,85,9,11,13,53,33,86,Pass
+2023BCA110,Isha Joshi,B,5,Computer Networks,81,9,10,8,-,27,27,Fail
+2023BCA110,Isha Joshi,B,5,Discrete Maths,88,5,8,6,41,19,60,Pass
+2023BCA111,Priya Thakur,B,5,Python,75,4,6,6,22,16,38,Fail
+2023BCA111,Priya Thakur,B,5,DBMS,64,5,7,6,12,18,30,Fail
+2023BCA111,Priya Thakur,B,5,Data Structures,75,3,2,2,12,7,19,Fail
+2023BCA111,Priya Thakur,B,5,Computer Networks,69,4,7,7,20,18,38,Fail
+2023BCA111,Priya Thakur,B,5,Discrete Maths,63,3,4,4,5,11,16,Fail
+2023BCA112,Aadhya Nair,B,5,Python,91,8,12,13,34,33,67,Pass
+2023BCA112,Aadhya Nair,B,5,DBMS,79,7,AB,8,22,15,37,Fail
+2023BCA112,Aadhya Nair,B,5,Data Structures,83,6,7,8,26,21,47,Pass
+2023BCA112,Aadhya Nair,B,5,Computer Networks,89,6,8,8,25,22,47,Pass
+2023BCA112,Aadhya Nair,B,5,Discrete Maths,84,6,6,6,19,18,37,Fail
+2023BCA113,Nikhil Kapoor,B,5,Python,77,7,9,9,31,25,56,Pass
+2023BCA113,Nikhil Kapoor,B,5,DBMS,75,7,9,6,38,22,60,Pass
+2023BCA113,Nikhil Kapoor,B,5,Data Structures,81,7,12,13,33,32,65,Pass
+2023BCA113,Nikhil Kapoor,B,5,Computer Networks,89,7,11,11,46,29,75,Pass
+2023BCA113,Nikhil Kapoor,B,5,Discrete Maths,80,6,8,8,27,22,49,Pass
+2023BCA114,Vivaan Chauhan,b,5,Python,98,9,10,9,35,28,63,Pass
+2023BCA114,Vivaan Chauhan,Sec. B,5,DBMS,83,8,10,10,39,28,67,Pass
+2023BCA114,Vivaan Chauhan,B,5,Data Structures,79,8,11,13,48,32,80,Pass
+2023BCA114,Vivaan Chauhan,B,5,Computer Networks,82,8,8,5,26,21,47,Pass
+2023BCA114,Vivaan Chauhan,B,5,Discrete Maths,89,9,9,7,28,25,53,Pass
+2023BCA115,Siddharth Pandey,B,5,Python,73,,10,10,34,26,60,Pass
+2023BCA115,Siddharth Pandey,B,5,DBMS,67,7,10,8,34,25,59,Pass
+2023BCA115,Siddharth Pandey,B,5,Data Structures,73,5,5,7,30,17,47,Pass
+2023BCA115,Siddharth Pandey,B,5,Computer Networks,60,5,6,3,27,14,41,Pass
+2023BCA115,Siddharth Pandey,B,5,Discrete Maths,72,4,4,5,30,13,43,Pass
+2023BCA116,Manav Jain,B,5,Python,85,6,8,9,25,23,48,Pass
+2023BCA116,Manav Jain,B,5,DBMS,77,5,6,3,21,14,35,Fail
+2023BCA116,Manav Jain,B,5,Data Structures,77,6,5,7,24,18,42,Pass
+2023BCA116,Manav Jain,B,5,Computer Networks,69,2,4,5,13,11,24,Fail
+2023BCA116,Manav Jain,B,5,Discrete Maths,83,4,4,2,9,10,19,Fail
+2023BCA117,Krishna Thakur,Section B,5,Python,100,10,12,13,56,35,91,Pass
+2023BCA117,Krishna Thakur,B,5,DBMS,100,10,AB,13,44,23,67,Pass
+2023BCA117,Krishna Thakur,B,5,Data Structures,99,10,11,13,40,34,74,Pass
+2023BCA117,Krishna Thakur,B,5,Computer Networks,97,10,10,10,51,30,81,Pass
+2023BCA117,Krishna Thakur,B,5,Discrete Maths,82,10,7,5,24,22,46,Pass
+2023BCA118,Sai Jain,B,5,Python,92,10,14,12,50,36,86,Pass
+2023BCA118,Sai Jain,B,5,DBMS,76,8,9,8,24,25,49,Pass
+2023BCA118,Sai Jain,B,5,Data Structures,80,8,14,9,40,31,71,Pass
+2023BCA118,Sai Jain,B,5,Computer Networks,86,9,11,11,42,31,73,Pass
+2023BCA118,Sai Jain,B,5,Discrete Maths,93,8,12,8,42,28,70,Pass
+2023BCA119,Myra Kaur,B,5,Python,82,5,5,5,36,15,51,Pass
+2023BCA119,Myra Kaur,B,5,DBMS,91,8,11,8,26,27,53,Pass
+2023BCA119,Myra Kaur,B,5,Data Structures,89,7,8,9,22,24,46,Pass
+2023BCA119,Myra Kaur,B,5,Computer Networks,79,7,7,6,26,20,46,Pass
+2023BCA119,Myra Kaur,B,5,Discrete Maths,78,4,2,2,12,8,20,Fail
+2023BCA120,Sneha Pillai,B,5,Python,79,9,12,9,40,30,70,Pass
+2023BCA120,Sneha Pillai,B,5,DBMS,88,7,11,12,46,30,76,Pass
+2023BCA120,Sneha Pillai,B,5,Data Structures,81,8,10,12,36,30,66,Pass
+2023BCA120,Sneha Pillai,B,5,Computer Networks,80,10,12,10,31,32,63,Pass
+2023BCA120,Sneha Pillai,B,5,Discrete Maths,78,6,9,9,28,24,52,Pass
+2023BCA121,Neha Verma,c,5,Python,85,8,10,7,34,25,59,Pass
+2023BCA121,Neha Verma,c,5,DBMS,83,8,10,10,35,28,63,Pass
+2023BCA121,Neha Verma,C,5,Data Structures,82,7,10,8,29,25,54,Pass
+2023BCA121,Neha Verma,C,5,Computer Networks,73,8,11,13,40,32,72,Pass
+2023BCA121,Neha Verma,C,5,Discrete Maths,84,6,8,11,41,25,66,Pass
+2023BCA122,Shaurya Bhatia,C,5,Python,89,9,11,9,56,29,85,Pass
+2023BCA122,Shaurya Bhatia,C,5,DBMS,81,6,8,9,27,23,50,Pass
+2023BCA122,Shaurya Bhatia,C,5,Data Structures,72,7,9,8,37,24,61,Pass
+2023BCA122,Shaurya Bhatia,SEC C,5,Computer Networks,80,6,8,5,19,19,38,Fail
+2023BCA122,Shaurya Bhatia,C,5,Discrete Maths,61,6,9,10,36,25,61,Pass
+2023BCA123,Atharv Mehta,C,5,Python,73,6,9,10,31,25,56,Pass
+2023BCA123,Atharv Mehta,C,5,DBMS,68,7,9,9,36,25,61,Pass
+2023BCA123,Atharv Mehta,C,5,Data Structures,76,6,4,4,33,14,47,Pass
+2023BCA123,Atharv Mehta,SEC C,5,Computer Networks,67,5,9,10,26,24,50,Pass
+2023BCA123,Atharv Mehta,C,5,Discrete Maths,,6,3,1,13,10,23,Fail
+2023BCA124,Ira Patel,C,5,Python,69,5,5,7,36,17,53,Pass
+2023BCA124,Ira Patel,C,5,DBMS,75,5,7,4,34,16,50,Pass
+2023BCA124,Ira Patel,C,5,Data Structures,77,6,8,10,27,24,51,Pass
+2023BCA124,Ira Patel,SEC C,5,Computer Networks,72,6,9,9,32,24,56,Pass
+2023BCA124,Ira Patel,C,5,Discrete Maths,77,6,7,6,29,19,48,Pass
+2023BCA125,Kavya Gupta,C,5,Python,100,,15,13,50,38,88,Pass
+2023BCA125,Kavya Gupta,C,5,DBMS,84,10,15,14,56,39,95,Pass
+2023BCA125,Kavya Gupta,c,5,Data Structures,83,10,12,14,51,36,87,Pass
+2023BCA125,Kavya Gupta,C,5,Computer Networks,94,9,12,12,54,33,87,Pass
+2023BCA125,Kavya Gupta,C,5,Discrete Maths,91,10,12,12,50,34,84,Pass
+2023BCA126,Shaurya Thakur,SEC C,5,Python,77,10,15,14,54,39,93,Pass
+2023BCA126,Shaurya Thakur,C,5,DBMS,71,8,10,10,36,28,64,Pass
+2023BCA126,Shaurya Thakur,C,5,Data Structures,75,8,10,11,37,29,66,Pass
+2023BCA126,Shaurya Thakur,SEC C,5,Computer Networks,67,9,12,13,52,34,86,Pass
+2023BCA126,Shaurya Thakur,C,5,Discrete Maths,70,8,10,10,33,28,61,Pass
+2023BCA127,Neha Reddy,C,5,Python,94,10,13,9,48,32,80,Pass
+2023BCA127,Neha Reddy,C,5,DBMS,100,10,15,15,55,40,95,Pass
+2023BCA127,Neha Reddy,C,5,Data Structures,89,10,15,12,46,37,83,Pass
+2023BCA127,Neha Reddy,C,5,Computer Networks,84,10,13,13,52,36,88,Pass
+2023BCA127,Neha Reddy,C,5,Discrete Maths,87,8,11,10,46,29,75,Pass
+2023BCA128,Dev Grewal,C,5,Python,75,10,12,14,47,36,83,Pass
+2023BCA128,Dev Grewal,C,5,DBMS,95,10,15,15,56,40,96,Pass
+2023BCA128,Dev Grewal,C,5,Data Structures,93,10,10,10,45,30,75,Pass
+2023BCA128,Dev Grewal,C,5,Computer Networks,94,10,15,14,54,39,93,Pass
+2023BCA128,Dev Grewal,C,5,Discrete Maths,89,9,10,9,40,28,68,Pass
+2023BCA129,Divya Thakur,c,5,Python,79,10,10,12,52,32,84,Pass
+2023BCA129,Divya Thakur,C,5,DBMS,81,8,9,8,46,25,71,Pass
+2023BCA129,Divya Thakur,C,5,Data Structures,81,7,AB,6,43,13,56,Pass
+2023BCA129,Divya Thakur,C,5,Computer Networks,73,10,13,10,35,33,68,Pass
+2023BCA129,Divya Thakur,C,5,Discrete Maths,88,6,7,4,32,17,49,Pass
+2023BCA130,Aman Mehta,C,5,Python,72,9,13,13,51,35,86,Pass
+2023BCA130,Aman Mehta,C,5,DBMS,86,10,13,10,50,33,83,Pass
+2023BCA130,Aman Mehta,C,5,Data Structures,81,10,12,8,46,30,76,Pass
+2023BCA130,Aman Mehta,C,5,Computer Networks,81,8,15,15,53,38,91,Pass
+2023BCA130,Aman Mehta,C,5,Discrete Maths,83,10,15,15,55,40,95,Pass
+2023BCA131,Navya Thakur,C,5,Python,90,8,11,8,46,27,73,Pass
+2023BCA131,Navya Thakur,C,5,DBMS,92,8,9,9,46,26,72,Pass
+2023BCA131,Navya Thakur,C,5,Data Structures,76,9,10,8,33,27,60,Pass
+2023BCA131,Navya Thakur,C,5,Computer Networks,78,9,11,9,32,29,61,Pass
+2023BCA131,Navya Thakur,C,5,Discrete Maths,90,7,10,10,36,27,63,Pass
+2023BCA132,Dev Sharma,C,5,Python,85,10,15,12,56,37,93,Pass
+2023BCA132,Dev Sharma,C,5,DBMS,81,7,10,12,47,29,76,Pass
+2023BCA132,Dev Sharma,C,5,Data Structures,89,9,11,11,41,31,72,Pass
+2023BCA132,Dev Sharma,C,5,Computer Networks,77,9,12,13,45,34,79,Pass
+2023BCA132,Dev Sharma,C,5,Discrete Maths,63,7,6,8,32,21,53,Pass
+2023BCA133,Ishaan Bajwa,C,5,Python,86,9,9,11,43,29,72,Pass
+2023BCA133,Ishaan Bajwa,C,5,DBMS,80,8,8,8,28,24,52,Pass
+2023BCA133,Ishaan Bajwa,C,5,Data Structures,95,8,9,8,45,25,70,Pass
+2023BCA133,Ishaan Bajwa,C,5,Computer Networks,99,9,11,13,48,33,81,Pass
+2023BCA133,Ishaan Bajwa,C,5,Discrete Maths,98,7,9,9,40,25,65,Pass
+2023BCA134,Rahul Bhatia,C,5,Python,85,6,11,12,42,29,71,Pass
+2023BCA134,Rahul Bhatia,C,5,DBMS,61,6,10,12,45,28,73,Pass
+2023BCA134,Rahul Bhatia,C,5,Data Structures,68,4,8,4,22,16,38,Fail
+2023BCA134,Rahul Bhatia,C,5,Computer Networks,60,4,5,5,22,14,36,Fail
+2023BCA134,Rahul Bhatia,C,5,Discrete Maths,70,5,8,7,28,20,48,Pass
+2023BCA135,Varun Saini,c,5,Python,83,8,12,13,46,33,79,Pass
+2023BCA135,Varun Saini,C,5,DBMS,82,7,9,9,42,25,67,Pass
+2023BCA135,Varun Saini,C,5,Data Structures,66,7,6,5,29,18,47,Pass
+2023BCA135,Varun Saini,C,5,Computer Networks,71,7,7,8,40,22,62,Pass
+2023BCA135,Varun Saini,C,5,Discrete Maths,76,8,10,10,47,28,75,Pass
+2023BCA136,Vihaan Kaur,C,5,Python,79,9,12,11,46,32,78,Pass
+2023BCA136,Vihaan Kaur,C,5,DBMS,70,8,13,12,46,33,79,Pass
+2023BCA136,Vihaan Kaur,C,5,Data Structures,60,6,8,9,33,23,56,Pass
+2023BCA136,Vihaan Kaur,C,5,Computer Networks,73,5,11,8,50,24,74,Pass
+2023BCA136,Vihaan Kaur,C,5,Discrete Maths,60,5,10,11,33,26,59,Pass
+2023BCA137,Yash Bhatia,C,5,Python,,7,9,10,47,26,73,Pass
+2023BCA137,Yash Bhatia,C,5,DBMS,67,5,9,9,32,23,55,Pass
+2023BCA137,Yash Bhatia,C,5,Data Structures,61,6,10,10,29,26,55,Pass
+2023BCA137,Yash Bhatia,C,5,Computer Networks,74,5,7,7,33,19,52,Pass
+2023BCA137,Yash Bhatia,C,5,Discrete Maths,72,5,4,5,18,14,32,Fail
+2023BCA138,Kavya Bhatia,C,5,Python,88,,14,13,49,37,86,Pass
+2023BCA138,Kavya Bhatia,C,5,DBMS,95,10,13,10,41,33,74,Pass
+2023BCA138,Kavya Bhatia,C,5,Data Structures,97,10,15,15,54,40,94,Pass
+2023BCA138,Kavya Bhatia,C,5,Computer Networks,80,9,10,11,47,30,77,Pass
+2023BCA138,Kavya Bhatia,C,5,Discrete Maths,89,10,9,6,27,25,52,Pass
+2023BCA139,Aman Grewal,C,5,Python,85,8,9,Absent,42,17,59,Pass
+2023BCA139,Aman Grewal,C,5,DBMS,87,9,15,15,54,39,93,Pass
+2023BCA139,Aman Grewal,C,5,Data Structures,88,,10,6,32,24,56,Pass
+2023BCA139,Aman Grewal,C,5,Computer Networks,84,10,10,11,53,31,84,Pass
+2023BCA139,Aman Grewal,C,5,Discrete Maths,93,6,6,2,16,14,30,Fail
+2023BCA140,Ishaan Dhillon,C,5,Python,69,8,12,14,39,34,73,Pass
+2023BCA140,Ishaan Dhillon,C,5,DBMS,86,9,11,11,57,31,88,Pass
+2023BCA140,Ishaan Dhillon,C,5,Data Structures,69,7,12,14,45,33,78,Pass
+2023BCA140,Ishaan Dhillon,C,5,Computer Networks,84,8,15,15,49,38,87,Pass
+2023BCA140,Ishaan Dhillon,C,5,Discrete Maths,84,7,9,9,33,25,58,Pass
+2023BCA141,Aadhya Malhotra,C,5,Python,72,10,11,10,55,31,86,Pass
+2023BCA141,Aadhya Malhotra,C,5,DBMS,66,6,10,8,38,24,62,Pass
+2023BCA141,Aadhya Malhotra,C,5,Data Structures,64,7,13,11,42,31,73,Pass
+2023BCA141,Aadhya Malhotra,C,5,Computer Networks,80,7,11,9,41,27,68,Pass
+2023BCA141,Aadhya Malhotra,C,5,Discrete Maths,75,6,8,9,30,23,53,Pass
+2023BCA142,Priya Banerjee,C,5,Python,58,6,13,15,55,34,89,Pass
+2023BCA142,Priya Banerjee,C,5,DBMS,70,7,13,14,46,34,80,Pass
+2023BCA142,Priya Banerjee,C,5,Data Structures,59,8,11,11,50,30,80,Pass
+2023BCA142,Priya Banerjee,C,5,Computer Networks,73,9,15,12,48,36,84,Pass
+2023BCA142,Priya Banerjee,C,5,Discrete Maths,63,4,8,8,31,20,51,Pass
+2023BCA143,Ayesha Mehta,C,5,Python,82,9,12,10,44,31,75,Pass
+2023BCA143,Ayesha Mehta,C,5,DBMS,79,7,9,10,46,26,72,Pass
+2023BCA143,Ayesha Mehta,C,5,Data Structures,78,6,9,9,46,24,70,Pass
+2023BCA143,Ayesha Mehta,C,5,Computer Networks,83,8,12,13,44,33,77,Pass
+2023BCA143,Ayesha Mehta,C,5,Discrete Maths,70,7,9,6,37,22,59,Pass
+2023BCA144,Aadhya Sandhu,C,5,Python,92,9,7,4,34,20,54,Pass
+2023BCA144,Aadhya Sandhu,C,5,DBMS,85,8,8,9,40,25,65,Pass
+2023BCA144,Aadhya Sandhu,c,5,Data Structures,100,9,8,8,39,25,64,Pass
+2023BCA144,Aadhya Sandhu,C,5,Computer Networks,88,8,8,4,17,20,37,Fail
+2023BCA144,Aadhya Sandhu,C,5,Discrete Maths,100,9,7,3,36,19,55,Pass
+2023BCA145,Harleen Chopra,C,5,Python,76,8,11,10,42,29,71,Pass
+2023BCA145,Harleen Chopra,C,5,DBMS,90,9,10,11,46,30,76,Pass
+2023BCA145,Harleen Chopra,C,5,Data Structures,86,8,11,10,50,29,79,Pass
+2023BCA145,Harleen Chopra,C,5,Computer Networks,82,7,9,10,40,26,66,Pass
+2023BCA145,Harleen Chopra,C,5,Discrete Maths,85,6,8,11,43,25,68,Pass
+2023BCA146,Harjot Mittal,C,5,Python,76,6,7,7,36,20,56,Pass
+2023BCA146,Harjot Mittal,C,5,DBMS,75,6,8,9,34,23,57,Pass
+2023BCA146,Harjot Mittal,C,5,Data Structures,72,5,8,8,32,21,53,Pass
+2023BCA146,Harjot Mittal,C,5,Computer Networks,62,6,7,8,18,21,39,Fail
+2023BCA146,Harjot Mittal,C,5,Discrete Maths,77,4,10,11,32,25,57,Pass
+2023BCA147,Aarav Arora,C,5,Python,68,9,10,10,27,29,56,Pass
+2023BCA147,Aarav Arora,c,5,DBMS,86,10,9,8,36,27,63,Pass
+2023BCA147,Aarav Arora,C,5,Data Structures,82,6,10,10,36,26,62,Pass
+2023BCA147,Aarav Arora,SEC C,5,Computer Networks,70,7,8,9,32,24,56,Pass
+2023BCA147,Aarav Arora,C,5,Discrete Maths,83,7,9,8,35,24,59,Pass
+2023BCA148,Aadhya Patel,C,5,Python,70,9,13,9,39,31,70,Pass
+2023BCA148,Aadhya Patel,C,5,DBMS,76,9,12,12,47,33,80,Pass
+2023BCA148,Aadhya Patel,C,5,Data Structures,68,8,12,11,49,31,80,Pass
+2023BCA148,Aadhya Patel,SEC C,5,Computer Networks,71,9,13,14,47,36,83,Pass
+2023BCA148,Aadhya Patel,C,5,Discrete Maths,70,5,10,Absent,29,15,44,Pass
+2023BCA149,Manav Dhillon,C,5,Python,81,10,13,14,37,37,74,Pass
+2023BCA149,Manav Dhillon,C,5,DBMS,82,9,14,13,60,36,96,Pass
+2023BCA149,Manav Dhillon,SEC C,5,Data Structures,83,9,11,12,47,32,79,Pass
+2023BCA149,Manav Dhillon,C,5,Computer Networks,70,9,8,9,49,26,75,Pass
+2023BCA149,Manav Dhillon,C,5,Discrete Maths,80,5,10,8,39,23,62,Pass
+2023BCA150,Manav Gupta,C,5,Python,83,9,12,13,35,34,69,Pass
+2023BCA150,Manav Gupta,C,5,DBMS,70,6,8,10,39,24,63,Pass
+2023BCA150,Manav Gupta,C,5,Data Structures,,6,8,4,41,18,59,Pass
+2023BCA150,Manav Gupta,C,5,Computer Networks,82,8,8,4,36,20,56,Pass
+2023BCA150,Manav Gupta,C,5,Discrete Maths,78,7,8,3,35,18,53,Pass
+2023BCA151,Ira Agarwal,C,5,Python,78,7,11,10,26,28,54,Pass
+2023BCA151,Ira Agarwal,C,5,DBMS,69,6,10,9,23,25,48,Pass
+2023BCA151,Ira Agarwal,C,5,Data Structures,85,7,9,8,38,24,62,Pass
+2023BCA151,Ira Agarwal,C,5,Computer Networks,90,6,10,8,37,24,61,Pass
+2023BCA151,Ira Agarwal,SEC C,5,Discrete Maths,83,5,5,4,18,14,32,Fail
+2023BCA152,Ayaan Khan,C,5,Python,97,10,13,13,50,36,86,Pass
+2023BCA152,Ayaan Khan,C,5,DBMS,84,9,10,11,43,30,73,Pass
+2023BCA152,Ayaan Khan,C,5,Data Structures,74,9,13,13,33,35,68,Pass
+2023BCA152,Ayaan Khan,C,5,Computer Networks,87,8,11,12,41,31,72,Pass
+2023BCA152,Ayaan Khan,C,5,Discrete Maths,85,6,7,7,37,20,57,Pass
+2023BCA153,Karan Agarwal,C,5,Python,83,9,10,12,46,31,77,Pass
+2023BCA153,Karan Agarwal,C,5,DBMS,83,5,6,6,33,17,50,Pass
+2023BCA153,Karan Agarwal,C,5,Data Structures,87,8,8,4,34,20,54,Pass
+2023BCA153,Karan Agarwal,C,5,Computer Networks,75,5,8,10,28,23,51,Pass
+2023BCA153,Karan Agarwal,C,5,Discrete Maths,93,6,5,2,20,13,33,Fail
+2023BCA154,Isha Yadav,C,5,Python,90,10,11,6,43,27,70,Pass
+2023BCA154,Isha Yadav,C,5,DBMS,92,10,11,12,51,33,84,Pass
+2023BCA154,Isha Yadav,C,5,Data Structures,95,,10,12,48,31,79,Pass
+2023BCA154,Isha Yadav,C,5,Computer Networks,85,7,9,11,39,27,66,Pass
+2023BCA154,Isha Yadav,C,5,Discrete Maths,83,6,8,8,28,22,50,Pass
+2023BCA155,Zoya Chauhan,C,5,Python,75,8,12,12,46,32,78,Pass
+2023BCA155,Zoya Chauhan,c,5,DBMS,75,10,11,10,47,31,78,Pass
+2023BCA155,Zoya Chauhan,C,5,Data Structures,81,8,AB,12,44,20,64,Pass
+2023BCA155,Zoya Chauhan,C,5,Computer Networks,67,5,10,6,20,21,41,Pass
+2023BCA155,Zoya Chauhan,C,5,Discrete Maths,67,4,10,11,31,25,56,Pass
+2023BCA156,Pranav Gupta,C,5,Python,96,10,15,14,60,39,99,Pass
+2023BCA156,Pranav Gupta,C,5,DBMS,89,10,14,15,51,39,90,Pass
+2023BCA156,Pranav Gupta,SEC C,5,Data Structures,81,10,15,14,53,39,92,Pass
+2023BCA156,Pranav Gupta,C,5,Computer Networks,90,10,15,15,60,40,100,Pass
+2023BCA156,Pranav Gupta,C,5,Discrete Maths,90,8,10,9,49,27,76,Pass
+2023BCA157,Navya Sethi,C,5,Python,92,9,14,14,53,37,90,Pass
+2023BCA157,Navya Sethi,SEC C,5,DBMS,90,10,10,9,30,29,59,Pass
+2023BCA157,Navya Sethi,c,5,Data Structures,95,10,12,12,59,34,93,Pass
+2023BCA157,Navya Sethi,C,5,Computer Networks,97,9,8,8,39,25,64,Pass
+2023BCA157,Navya Sethi,C,5,Discrete Maths,83,10,10,9,45,29,74,Pass
+2023BCA158,Lakshmi Das,C,5,Python,57,4,6,6,28,16,44,Pass
+2023BCA158,Lakshmi Das,C,5,DBMS,58,4,4,2,19,10,29,Fail
+2023BCA158,Lakshmi Das,C,5,Data Structures,76,5,6,6,29,17,46,Pass
+2023BCA158,Lakshmi Das,C,5,Computer Networks,61,6,5,4,24,15,39,Fail
+2023BCA158,Lakshmi Das,c,5,Discrete Maths,66,2,5,4,12,11,23,Fail
+2023BCA159,Karan Verma,C,5,Python,68,9,13,10,44,32,76,Pass
+2023BCA159,Karan Verma,C,5,DBMS,81,6,11,11,44,28,72,Pass
+2023BCA159,Karan Verma,C,5,Data Structures,85,8,12,11,37,31,68,Pass
+2023BCA159,Karan Verma,C,5,Computer Networks,67,8,11,8,34,27,61,Pass
+2023BCA159,Karan Verma,C,5,Discrete Maths,87,5,5,3,23,13,36,Fail
+2023BCA160,Krishna Dhillon,C,5,Python,81,10,14,15,40,39,79,Pass
+2023BCA160,Krishna Dhillon,C,5,DBMS,88,9,12,11,45,32,77,Pass
+2023BCA160,Krishna Dhillon,C,5,Data Structures,89,8,9,10,42,27,69,Pass
+2023BCA160,Krishna Dhillon,C,5,Computer Networks,88,10,12,12,53,34,87,Pass
+2023BCA160,Krishna Dhillon,SEC C,5,Discrete Maths,85,9,7,7,33,23,56,Pass
+2023BCA161,Aadhya Kulkarni,C,5,Python,92,10,13,9,51,32,83,Pass
+2023BCA161,Aadhya Kulkarni,C,5,DBMS,83,9,12,14,44,35,79,Pass
+2023BCA161,Aadhya Kulkarni,C,5,Data Structures,84,7,8,10,55,25,80,Pass
+2023BCA161,Aadhya Kulkarni,c,5,Computer Networks,82,9,14,14,48,37,85,Pass
+2023BCA161,Aadhya Kulkarni,C,5,Discrete Maths,68,7,8,5,42,20,62,Pass
+2023BCA162,Manav Mittal,c,5,Python,100,10,12,12,50,34,84,Pass
+2023BCA162,Manav Mittal,C,5,DBMS,95,10,14,11,50,35,85,Pass
+2023BCA162,Manav Mittal,C,5,Data Structures,100,10,14,15,60,39,99,Pass
+2023BCA162,Manav Mittal,SEC C,5,Computer Networks,90,9,12,14,46,35,81,Pass
+2023BCA162,Manav Mittal,C,5,Discrete Maths,92,10,13,15,53,38,91,Pass
+2023BCA163,Nikhil Bansal,C,5,Python,70,4,7,7,33,18,51,Pass
+2023BCA163,Nikhil Bansal,C,5,DBMS,74,4,7,8,20,19,39,Fail
+2023BCA163,Nikhil Bansal,C,5,Data Structures,70,4,3,2,10,9,19,Fail
+2023BCA163,Nikhil Bansal,C,5,Computer Networks,78,6,8,8,25,22,47,Pass
+2023BCA163,Nikhil Bansal,C,5,Discrete Maths,76,4,3,4,15,11,26,Fail
+2023BCA164,Ayesha Joshi,C,5,Python,87,9,9,5,39,23,62,Pass
+2023BCA164,Ayesha Joshi,C,5,DBMS,88,10,11,10,38,31,69,Pass
+2023BCA164,Ayesha Joshi,C,5,Data Structures,85,9,9,11,50,29,79,Pass
+2023BCA164,Ayesha Joshi,C,5,Computer Networks,83,9,9,10,42,28,70,Pass
+2023BCA164,Ayesha Joshi,C,5,Discrete Maths,85,8,6,5,23,19,42,Pass
+2023BCA165,Kabir Bajwa,C,5,Python,79,9,11,9,48,29,77,Pass
+2023BCA165,Kabir Bajwa,C,5,DBMS,89,9,12,Absent,58,21,79,Pass
+2023BCA165,Kabir Bajwa,C,5,Data Structures,82,9,13,11,43,33,76,Pass
+2023BCA165,Kabir Bajwa,C,5,Computer Networks,98,9,13,15,49,37,86,Pass
+2023BCA165,Kabir Bajwa,C,5,Discrete Maths,83,6,11,10,27,27,54,Pass
+2023BCA166,Sara Khan,C,5,Python,66,5,7,9,21,21,42,Pass
+2023BCA166,Sara Khan,C,5,DBMS,76,6,9,8,30,23,53,Pass
+2023BCA166,Sara Khan,C,5,Data Structures,68,7,7,9,40,23,63,Pass
+2023BCA166,Sara Khan,C,5,Computer Networks,77,5,8,8,26,21,47,Pass
+2023BCA166,Sara Khan,C,5,Discrete Maths,74,7,5,6,23,18,41,Pass
+2023BCA167,Myra Sandhu,C,5,Python,100,10,12,10,58,32,90,Pass
+2023BCA167,Myra Sandhu,C,5,DBMS,87,10,14,10,48,34,82,Pass
+2023BCA167,Myra Sandhu,C,5,Data Structures,89,10,14,14,60,38,98,Pass
+2023BCA167,Myra Sandhu,C,5,Computer Networks,90,10,15,15,60,40,100,Pass
+2023BCA167,Myra Sandhu,C,5,Discrete Maths,100,10,14,10,37,34,71,Pass
+2023BCA168,Gurleen Banerjee,C,5,Python,76,9,12,13,60,34,94,Pass
+2023BCA168,Gurleen Banerjee,C,5,DBMS,76,7,11,12,46,30,76,Pass
+2023BCA168,Gurleen Banerjee,C,5,Data Structures,78,7,11,12,52,30,82,Pass
+2023BCA168,Gurleen Banerjee,C,5,Computer Networks,87,7,10,9,39,26,65,Pass
+2023BCA168,Gurleen Banerjee,C,5,Discrete Maths,79,8,12,8,41,28,69,Pass
+2023BCA169,Divya Grewal,C,5,Python,82,8,10,11,45,29,74,Pass
+2023BCA169,Divya Grewal,C,5,DBMS,74,7,13,12,38,32,70,Pass
+2023BCA169,Divya Grewal,C,5,Data Structures,66,8,9,9,38,26,64,Pass
+2023BCA169,Divya Grewal,C,5,Computer Networks,80,6,9,10,32,25,57,Pass
+2023BCA169,Divya Grewal,C,5,Discrete Maths,83,6,10,7,37,23,60,Pass
+2023BCA170,Shaurya Reddy,C,5,Python,76,8,11,12,43,31,74,Pass
+2023BCA170,Shaurya Reddy,C,5,DBMS,83,7,12,12,35,31,66,Pass
+2023BCA170,Shaurya Reddy,C,5,Data Structures,84,7,9,9,36,25,61,Pass
+2023BCA170,Shaurya Reddy,C,5,Computer Networks,76,6,10,12,37,28,65,Pass
+2023BCA170,Shaurya Reddy,SEC C,5,Discrete Maths,80,4,8,11,41,23,64,Pass
+2023BCA171,Diya Verma,C,5,Python,90,10,12,11,51,33,84,Pass
+2023BCA171,Diya Verma,C,5,DBMS,73,8,11,10,52,29,81,Pass
+2023BCA171,Diya Verma,SEC C,5,Data Structures,90,9,11,11,50,31,81,Pass
+2023BCA171,Diya Verma,c,5,Computer Networks,83,8,11,11,48,30,78,Pass
+2023BCA171,Diya Verma,C,5,Discrete Maths,88,10,14,15,51,39,90,Pass
+2023BCA172,Dev Chopra,C,5,Python,78,8,11,11,44,30,74,Pass
+2023BCA172,Dev Chopra,C,5,DBMS,75,6,10,9,48,25,73,Pass
+2023BCA172,Dev Chopra,C,5,Data Structures,74,9,14,10,50,33,83,Pass
+2023BCA172,Dev Chopra,C,5,Computer Networks,78,9,9,9,56,27,83,Pass
+2023BCA172,Dev Chopra,C,5,Discrete Maths,82,,7,7,33,21,54,Pass
+2023BCA173,Lakshmi Menon,C,5,Python,76,10,13,13,46,36,82,Pass
+2023BCA173,Lakshmi Menon,C,5,DBMS,95,7,9,9,34,25,59,Pass
+2023BCA173,Lakshmi Menon,C,5,Data Structures,81,,10,7,37,26,63,Pass
+2023BCA173,Lakshmi Menon,c,5,Computer Networks,75,8,12,14,40,34,74,Pass
+2023BCA173,Lakshmi Menon,C,5,Discrete Maths,83,6,9,8,26,23,49,Pass
+2023BCA174,Ishaan Arora,C,5,Python,,7,9,7,41,23,64,Pass
+2023BCA174,Ishaan Arora,SEC C,5,DBMS,78,8,11,11,41,30,71,Pass
+2023BCA174,Ishaan Arora,C,5,Data Structures,77,9,12,11,38,32,70,Pass
+2023BCA174,Ishaan Arora,C,5,Computer Networks,76,7,12,12,44,31,75,Pass
+2023BCA174,Ishaan Arora,C,5,Discrete Maths,78,6,9,10,35,25,60,Pass
+2023BCA175,Sai Yadav,C,5,Python,74,8,10,11,41,29,70,Pass
+2023BCA175,Sai Yadav,C,5,DBMS,89,10,12,14,54,36,90,Pass
+2023BCA175,Sai Yadav,C,5,Data Structures,85,9,10,9,43,28,71,Pass
+2023BCA175,Sai Yadav,C,5,Computer Networks,87,8,11,10,43,29,72,Pass
+2023BCA175,Sai Yadav,SEC C,5,Discrete Maths,93,9,10,9,35,28,63,Pass
+2023BCA176,Harleen Arora,SEC C,5,Python,61,4,6,1,20,11,31,Fail
+2023BCA176,Harleen Arora,C,5,DBMS,56,4,8,8,30,20,50,Pass
+2023BCA176,Harleen Arora,c,5,Data Structures,,7,5,4,31,16,47,Pass
+2023BCA176,Harleen Arora,C,5,Computer Networks,58,4,7,8,27,19,46,Pass
+2023BCA176,Harleen Arora,C,5,Discrete Maths,51,3,7,7,38,17,55,Pass
+2023BCA177,Rohan Arora,C,5,Python,78,5,8,5,35,18,53,Pass
+2023BCA177,Rohan Arora,C,5,DBMS,68,9,10,9,45,28,73,Pass
+2023BCA177,Rohan Arora,C,5,Data Structures,71,5,7,9,29,21,50,Pass
+2023BCA177,Rohan Arora,C,5,Computer Networks,84,7,7,7,32,21,53,Pass
+2023BCA177,Rohan Arora,C,5,Discrete Maths,79,8,9,8,31,25,56,Pass
+2023BCA178,Reyansh Sandhu,C,5,Python,61,6,6,8,44,20,64,Pass
+2023BCA178,Reyansh Sandhu,C,5,DBMS,64,5,5,4,40,14,54,Pass
+2023BCA178,Reyansh Sandhu,C,5,Data Structures,57,6,9,10,41,25,66,Pass
+2023BCA178,Reyansh Sandhu,C,5,Computer Networks,78,6,9,11,41,26,67,Pass
+2023BCA178,Reyansh Sandhu,C,5,Discrete Maths,77,5,8,8,31,21,52,Pass
+2023BCA179,Varun Joshi,C,5,Python,80,7,12,13,44,32,76,Pass
+2023BCA179,Varun Joshi,C,5,DBMS,68,10,13,13,55,36,91,Pass
+2023BCA179,Varun Joshi,C,5,Data Structures,73,8,9,8,-,25,25,Fail
+2023BCA179,Varun Joshi,C,5,Computer Networks,88,,10,9,44,27,71,Pass
+2023BCA179,Varun Joshi,c,5,Discrete Maths,68,8,10,12,40,30,70,Pass
+2023BCA180,Gurpreet Agarwal,C,5,Python,78,8,9,10,42,27,69,Pass
+2023BCA180,Gurpreet Agarwal,C,5,DBMS,87,9,14,15,40,38,78,Pass
+2023BCA180,Gurpreet Agarwal,c,5,Data Structures,94,10,12,13,47,35,82,Pass
+2023BCA180,Gurpreet Agarwal,C,5,Computer Networks,91,10,11,11,47,32,79,Pass
+2023BCA180,Gurpreet Agarwal,C,5,Discrete Maths,78,8,9,7,33,24,57,Pass
