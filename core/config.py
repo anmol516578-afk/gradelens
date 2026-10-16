@@ -87,7 +87,7 @@ class AnalysisConfig:
     max_total: float = 0.0
     pass_pct: float = 40.0
     attendance_threshold: float = 75.0
-    mst_change_tolerance: float = 5.0  # percentage points treated as "stable"
+    mst_change_tolerance: float = 10.0  # percentage points treated as "stable" (1.5 marks out of 15)
 
     def max_marks(self, component: str) -> float:
         if component == "internal_total":

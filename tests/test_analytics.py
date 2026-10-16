@@ -113,8 +113,8 @@ def test_attendance_performance(frame):
     assert result["above"]["avg_score"] == pytest.approx(68.75)
     assert result["above"]["fail_rate"] == 0
     bands = result["bands"].set_index("band")
-    assert bands.loc["Below 60%", "records"] == 1  # 50% attendance
-    assert bands.loc["85% and above", "records"] == 3
+    assert bands.loc["<60%", "records"] == 1  # 50% attendance
+    assert bands.loc["85%+", "records"] == 3
 
 
 def test_student_summary_and_top_bottom(frame):

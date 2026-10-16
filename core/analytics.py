@@ -16,7 +16,7 @@ from core.config import MARK_COMPONENTS
 
 GRADE_BANDS = (("O", 90.0), ("A+", 80.0), ("A", 70.0), ("B+", 60.0), ("B", 50.0), ("C", 0.0))
 GRADE_ORDER = ["O", "A+", "A", "B+", "B", "C", "F"]
-ATTENDANCE_BANDS = ((0, 60, "Below 60%"), (60, 75, "60-75%"), (75, 85, "75-85%"), (85, 101, "85% and above"))
+ATTENDANCE_BANDS = ((0, 60, "<60%"), (60, 75, "60-75%"), (75, 85, "75-85%"), (85, 101, "85%+"))
 TRENDS = ("Improved", "Stable", "Declined")
 
 

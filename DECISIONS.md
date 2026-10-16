@@ -37,3 +37,21 @@ Each entry records an ambiguity in the spec, the choice made, and why.
 
 9. **Sample data: 180 students, 5 subjects, seed 42, ~10.6% fail rate.** Section B and
    Discrete Maths are deliberately weaker so the dashboard has a story to tell.
+
+## Interface
+
+10. **Streamlit, single codebase.** An autonomous build can test it end to end (AppTest + headless
+    browser); a separate React frontend would double the surface and the failure points.
+
+11. **Tabs use `on_change="rerun"` with a key.** Only the open tab executes (faster), and the app can
+    switch tabs programmatically: selecting a student in a table opens the Student Profile tab.
+
+12. **Drill-down is driven by chart clicks *and* selectboxes.** Clicks are the fast path; the selectboxes
+    above the student table show the current drill-down and work on touch screens and with keyboards.
+
+13. **Colours follow a validated, colour-blind-checked palette.** Scores are blue, fail rates orange,
+    pass/fail and risk use reserved status colours that always come with a text label or icon.
+    Section colours follow the section (A is always blue), even when filters hide others.
+
+14. **MST change tolerance = 10 percentage points** (1.5 marks out of 15). Smaller tolerances treat
+    single-mark noise as a trend.
