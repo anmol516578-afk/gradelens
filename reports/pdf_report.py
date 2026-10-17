@@ -33,6 +33,7 @@ from reportlab.platypus import (
 from core.palette import RISK_COLORS, SCORE_COLOR, STATUS
 from reports import mpl_charts
 from reports.data import AT_RISK_LIMIT, ReportData
+from reports.scripts import has_indic, markup
 
 PAGE_W, PAGE_H = A4
 MARGIN = 16 * mm
@@ -83,14 +84,30 @@ def _pct(value, digits: int = 1) -> str:
     return f"{value:.{digits}f}%"
 
 
+_SHAPED: dict[str, ParagraphStyle] = {}
+
+
+def _para(text, style: ParagraphStyle) -> Paragraph:
+    """A Paragraph for user-supplied text. Indian scripts get their own font runs and HarfBuzz shaping
+    (reports/scripts.py); everything else is plain escaped text in DejaVu Sans."""
+    text = str(text)
+    if not has_indic(text):
+        return Paragraph(escape(text), style)
+    shaped = _SHAPED.get(style.name)
+    if shaped is None:
+        shaped = _SHAPED[style.name] = ParagraphStyle(f"{style.name}-shaped", parent=style, shaping=1)
+    return Paragraph(markup(text, bold=style.fontName.endswith("Bold")), shaped)
+
+
 def _table(rows: list[list], widths: list[float], styles: dict, numeric_from: int = 1, extra: list | None = None):
     """Header row + zebra stripes; numeric columns right-aligned."""
     regular, bold = _register_fonts()
-    data = [[Paragraph(escape(str(c)), styles["header"]) for c in rows[0]]]
+    data = [[_para(c, styles["header"]) for c in rows[0]]]
     for row in rows[1:]:
         # Plain cells are drawn literally (only Paragraphs parse markup), so they must not be escaped:
         # escaping showed "A&amp;B" for a section called "A&B" (DEBUG_LOG #40).
-        data.append([c if isinstance(c, Paragraph) else str(c) for c in row])
+        data.append([c if isinstance(c, Paragraph) else _para(c, styles["cell"]) if has_indic(str(c)) else str(c)
+                     for c in row])  # fmt: skip
     table = Table(data, colWidths=widths, repeatRows=1)
     commands = [
         ("FONT", (0, 0), (-1, -1), regular, 7.8),
@@ -145,10 +162,10 @@ def _kpi_strip(data: ReportData, styles: dict) -> Table:
 
 def _cover(data: ReportData, styles: dict) -> list:
     meta = data.meta
-    story = [Paragraph(escape(meta.title or "Student Performance Report"), styles["title"])]
+    story = [_para(meta.title or "Student Performance Report", styles["title"])]
     org = " · ".join(x for x in (meta.college, meta.department) if x)
     if org:
-        story.append(Paragraph(escape(org), styles["subtitle"]))
+        story.append(_para(org, styles["subtitle"]))
     details = [
         ("Semester", meta.semester or ", ".join(sorted(data.clean["semester"].astype(str).unique()))),
         ("Faculty", meta.faculty or "–"),
@@ -156,7 +173,7 @@ def _cover(data: ReportData, styles: dict) -> list:
         ("Stage", "Final results" if data.stage == "final" else "Mid-semester (no end-term marks yet)"),
         ("Generated", meta.generated),
     ]
-    rows = [[Paragraph(f"<b>{k}</b>", styles["small"]), Paragraph(escape(str(v)), styles["base"])] for k, v in details]
+    rows = [[Paragraph(f"<b>{k}</b>", styles["small"]), _para(str(v), styles["base"])] for k, v in details]
     table = Table(rows, colWidths=[28 * mm, CONTENT_W - 28 * mm])
     table.setStyle(
         TableStyle(
@@ -195,7 +212,7 @@ def _subject_table(data: ReportData, styles: dict) -> Table:
         rows.append(
             [
                 r.rank,
-                Paragraph(escape(str(r.subject)), styles["cell"]),
+                _para(str(r.subject), styles["cell"]),
                 f"{r.difficulty_index:.1f}",
                 _pct(r.avg_score),
                 _pct(r.fail_rate),
@@ -247,11 +264,11 @@ def _risk_section(data: ReportData, styles: dict) -> list:
         rows.append(
             [
                 r.roll_no,
-                Paragraph(escape(str(r.student_name)), styles["cell"]),
+                _para(str(r.student_name), styles["cell"]),
                 r.section,
                 Paragraph(r.risk_level, level_styles[r.risk_level]),
                 f"{int(r.risk_score)}",
-                Paragraph(escape(reasons), styles["cell"]),
+                _para(reasons, styles["cell"]),
             ]
         )
     widths = [CONTENT_W * w for w in (0.13, 0.19, 0.06, 0.09, 0.07, 0.46)]
@@ -291,7 +308,7 @@ def _co_section(data: ReportData, styles: dict) -> list:
         rows.append(
             [
                 r.co,
-                Paragraph(escape(str(r.questions)), styles["cell"]),
+                _para(str(r.questions), styles["cell"]),
                 f"{r.max_marks:g}",
                 r.students_attained,
                 r.students_assessed,
@@ -319,7 +336,13 @@ def _footer(canvas, doc, title: str) -> None:
     canvas.saveState()
     canvas.setFont(regular, 7)
     canvas.setFillColor(MUTED)
-    canvas.drawString(MARGIN, 9 * mm, f"GradeLens · {title}")
+    footer = f"GradeLens · {title}"
+    if has_indic(footer):  # canvas strings cannot switch fonts; a shaped Paragraph can
+        para = _para(footer, ParagraphStyle("footer", fontName=regular, fontSize=7, leading=8, textColor=MUTED))
+        para.wrapOn(canvas, PAGE_W / 2, 10 * mm)
+        para.drawOn(canvas, MARGIN, 9 * mm - 2)
+    else:
+        canvas.drawString(MARGIN, 9 * mm, footer)
     canvas.drawRightString(PAGE_W - MARGIN, 9 * mm, f"Page {doc.page}")
     canvas.setStrokeColor(RULE)
     canvas.line(MARGIN, 12 * mm, PAGE_W - MARGIN, 12 * mm)
@@ -329,7 +352,7 @@ def _footer(canvas, doc, title: str) -> None:
 def build_pdf(data: ReportData, summary: str) -> bytes:
     styles = _styles()
     story = _cover(data, styles)
-    story += [Paragraph("Executive summary", styles["h2"]), Paragraph(escape(summary), styles["base"]), Spacer(1, 8)]
+    story += [Paragraph("Executive summary", styles["h2"]), _para(summary, styles["base"]), Spacer(1, 8)]
     story += [_kpi_strip(data, styles), Spacer(1, 4)]
 
     story += [Paragraph("Results by section", styles["h2"]), _section_table(data, styles)]
@@ -380,7 +403,7 @@ def build_pdf(data: ReportData, summary: str) -> bytes:
         )
     if insights:
         story.append(Paragraph("Other findings", styles["h2"]))
-        story += [Paragraph("• " + escape(text), styles["base"]) for text in insights]
+        story += [_para("• " + text, styles["base"]) for text in insights]
 
     if data.risk_students is not None:
         story += _risk_section(data, styles)
@@ -390,9 +413,9 @@ def build_pdf(data: ReportData, summary: str) -> bytes:
         for t, b in zip(data.top.itertuples(), data.bottom.itertuples(), strict=False):
             rows.append(
                 [
-                    Paragraph(escape(f"{t.student_name} ({t.roll_no})"), styles["cell"]),
+                    _para(f"{t.student_name} ({t.roll_no})", styles["cell"]),
                     _pct(t.avg_score),
-                    Paragraph(escape(f"{b.student_name} ({b.roll_no})"), styles["cell"]),
+                    _para(f"{b.student_name} ({b.roll_no})", styles["cell"]),
                     _pct(b.avg_score),
                 ]
             )
@@ -418,7 +441,7 @@ def build_pdf(data: ReportData, summary: str) -> bytes:
     ]
     method += [f"Data note: {n}" for n in data.quality_notes]
     story += [CondPageBreak(30 * mm), Paragraph("Method and data notes", styles["h2"])]
-    story += [Paragraph("• " + escape(text), styles["small"]) for text in method]
+    story += [_para("• " + text, styles["small"]) for text in method]
 
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(

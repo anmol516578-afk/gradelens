@@ -18,8 +18,10 @@ import pandas as pd  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
 
 from core.palette import FAIL_COLOR, MUTED, ORANGE_RAMP, ORDINAL_BLUE, RISK_COLORS, STATUS  # noqa: E402
+from reports.scripts import configure_matplotlib  # noqa: E402
 
 DPI = 200
+configure_matplotlib()  # Indian-script names in chart labels draw as glyphs, not boxes
 TEXT = "#2b2b2b"
 
 
