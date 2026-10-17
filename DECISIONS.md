@@ -113,7 +113,7 @@ Each entry records an ambiguity in the spec, the choice made, and why.
 
 27. **Charts in reports use matplotlib, fonts come from matplotlib.** Plotly's static export needs a browser
     (kaleido), which breaks in slim containers. DejaVu Sans (bundled with matplotlib) gives the PDF symbols
-    such as ≥ and → with no system fonts installed.
+    such as ≥ and → with no system fonts installed. Indian scripts use bundled Noto fonts (see 52).
 
 28. **The PDF lists the top 40 at-risk students; the Excel sheet lists everyone.** The PDF is for reading,
     the workbook for working.
@@ -137,7 +137,7 @@ Each entry records an ambiguity in the spec, the choice made, and why.
     install (`pip install --only-binary=:all:`, the same command as the Dockerfile) plus `pip check`. Dev tools
     live in `requirements-dev.txt`.
 
-34. **Container runs as a non-root user (uid 10001)** with a HEALTHCHECK written in Python (curl is not in the
+34. **Container runs as a non-root user (UID 1000, see 44)** with a HEALTHCHECK written in Python (curl is not in the
     slim image). Sample data is generated at build time; `/app/models` is a Compose volume so a saved at-risk
     model survives restarts.
 
@@ -175,3 +175,37 @@ Each entry records an ambiguity in the spec, the choice made, and why.
 
 44. **Hosting: about 1 GB of RAM.** Free options are Streamlit Community Cloud and Hugging Face Spaces; the Render
     blueprint uses the 2 GB plan. The image listens on `$PORT` and runs as UID 1000.
+
+## Round 3 (scale, browser and container) decisions
+
+45. **Excel reports are streamed** (openpyxl write-only mode with `lxml`): memory stays flat however many students
+    there are. The cost is no merged cells, so the executive summary is written one sentence per line.
+
+46. **The risk model trains on at most 10,000 records**, a stratified sample when there are more. Four features
+    stop improving long before that, and slider moves on big sheets stay interactive. Records outside the sample
+    are scored by the trained model, which is a genuine out-of-sample prediction. The At-Risk tab says when a
+    sample was used.
+
+47. **Each cached step is keyed only on the settings it reads.** Cleaning depends on max marks, derived columns
+    on max marks and the pass mark, risk on everything. Caches hold a few entries each and expire after an hour,
+    so exploring sliders cannot grow memory without bound.
+
+48. **Widgets are reset by assigning their defaults**, from one table in `ui/state.py`. Deleting a widget's key
+    only resets the server's copy; the browser sends the old value back on the next click. Widgets with state
+    take their initial value from session state, never from `default=`/`value=`.
+
+49. **An interrupted AI question is marked, not hidden.** Any click reruns the app and stops the agent; the
+    question stays with "Stopped before finishing" and an **Ask again** button, so nothing silently disappears.
+
+50. **XSRF protection is turned off only on Hugging Face Spaces** (detected by `SPACE_ID`). Spaces embeds the app
+    cross-site, where the XSRF cookie is blocked and every upload fails. A global switch would weaken every other
+    deployment.
+
+51. **The image creates its group explicitly and disables the file watcher.** Whether `useradd` makes a group is
+    a distro default; without `watchdog` Streamlit would poll its own source files forever in production.
+
+52. **Indian scripts in the PDF: bundled Noto fonts, per-script runs, HarfBuzz shaping.** Nine scripts (2.9 MB of
+    OFL fonts) cover the languages of most Indian colleges. Text is split into runs so each font only draws
+    characters it has, and ReportLab is made to shape each run with its own font (it shapes a whole word with
+    the first font, which garbled punctuation next to Indian text). Chart labels get the glyphs but not shaping
+    (matplotlib cannot shape). Urdu and other right-to-left scripts are out of scope.
