@@ -20,7 +20,7 @@ WEAKEST = (
 @pytest.fixture()
 def no_llm_env(monkeypatch):
     for var in LLM_VARS:
-        monkeypatch.delenv(var, raising=False)
+        monkeypatch.setenv(var, "")  # empty, not deleted: a local .env must not fill it back in
 
 
 @pytest.fixture()

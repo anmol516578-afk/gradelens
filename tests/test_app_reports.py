@@ -11,7 +11,7 @@ from ui import components as C
 
 def reports_tab(monkeypatch):
     for var in LLM_VARS:
-        monkeypatch.delenv(var, raising=False)
+        monkeypatch.setenv(var, "")  # empty, not deleted: a local .env must not fill it back in
     return open_tab(loaded(), C.TAB_REPORTS)
 
 
@@ -51,7 +51,7 @@ def test_edited_summary_is_kept_and_can_be_reset(monkeypatch):
 
 def test_write_with_ai(monkeypatch):
     for var in LLM_VARS:
-        monkeypatch.delenv(var, raising=False)
+        monkeypatch.setenv(var, "")  # empty, not deleted: a local .env must not fill it back in
     monkeypatch.setenv("LLM_API_KEY", "sk-test")
     mocks: list[MockLLM] = []
 

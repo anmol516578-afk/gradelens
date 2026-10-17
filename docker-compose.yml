@@ -1,0 +1,21 @@
+# docker compose up --build    → http://localhost:8501
+# Settings come from a .env file next to this one (copy .env.example), or your shell.
+services:
+  gradelens:
+    build: .
+    image: gradelens:latest
+    ports:
+      - "8501:8501"
+    environment:
+      LLM_PROVIDER: ${LLM_PROVIDER:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+    volumes:
+      - gradelens-models:/app/models   # keeps a saved at-risk model across restarts
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # lets the container reach Ollama on your computer
+    restart: unless-stopped
+
+volumes:
+  gradelens-models:
