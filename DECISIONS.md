@@ -146,3 +146,32 @@ Each entry records an ambiguity in the spec, the choice made, and why.
 
 36. **The run scripts reinstall only when `requirements.txt` changes** (they keep a copy of the last installed
     file in `.venv`), so the second start is instant.
+
+## Round 2 (bug hunt) decisions
+
+37. **Maxima follow the sheet.** With automatic maxima, internal and total maxima count only the components
+    present (a sheet without an assignment column is out of 30 internal marks, not 40). Maxima typed in the
+    sidebar always win.
+
+38. **A whole class marked absent is a data issue.** When ≥ 80% of a subject's students (and at least 5) are
+    "AB" for one test, GradeLens warns in Data Quality ("was the test held?") and does not count it as an
+    individual risk signal. Scores are not changed: the teacher decides.
+
+39. **Exports never contain live formulas.** Excel cells that start with "=" are stored as text; CSV cells
+    starting with = + - @ get a leading apostrophe (plain numbers excepted). CSVs are written with a BOM so
+    Excel shows names like "Zoë" correctly.
+
+40. **Section labels keep their punctuation** ("AI&ML", "CSE-A"); only a "Section/Sec" prefix and stray edge
+    punctuation are removed.
+
+41. **Masking skips names that identify no one:** under 3 letters, or equal to a subject/section/semester value.
+    Masking those would corrupt ordinary questions ("Section A").
+
+42. **The agent forgives common model habits** (fenced code, imports of provided modules, code sent as text,
+    alternative argument names) without loosening the sandbox: any other import or blocked call still fails.
+
+43. **Optional features fail softly.** Model training or risk scoring errors fall back to rules (then "–"),
+    report errors are shown as messages; the dashboard and every other tab keep working.
+
+44. **Hosting: about 1 GB of RAM.** Free options are Streamlit Community Cloud and Hugging Face Spaces; the Render
+    blueprint uses the 2 GB plan. The image listens on `$PORT` and runs as UID 1000.
