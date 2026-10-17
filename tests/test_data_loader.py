@@ -84,7 +84,7 @@ def test_detect_header_row_defaults_to_zero_when_unclear():
 
 
 def test_xls_files_are_read(tmp_path):
-    xlwt = pytest.importorskip("xlwt")
+    import xlwt  # dev dependency (requirements-dev.txt): fail loudly rather than skip
     book = xlwt.Workbook()
     sheet = book.add_sheet("Marks")
     for col, value in enumerate(["Roll No", "Total"]):
