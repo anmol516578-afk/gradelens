@@ -32,7 +32,7 @@ MARKER = "__GRADELENS_RESULT__"
 DEFAULT_TIMEOUT = 10
 STARTUP_BUDGET = 25  # seconds for interpreter start + imports, on top of the code's own timeout
 
-PREINJECTED = {"df", "pd", "np", "px", "go"}
+PREINJECTED = {"df", "pd", "np", "px", "go", "math"}
 BANNED_NAMES = {
     "open", "exec", "eval", "compile", "__import__", "globals", "locals", "vars", "getattr", "setattr",
     "delattr", "input", "breakpoint", "help", "exit", "quit", "memoryview", "type", "super",

@@ -96,7 +96,8 @@ students, include student_id and the relevant numbers; the app shows the real na
 7. When a chart helps (comparisons, distributions, trends), build one simple Plotly figure in `fig` with a clear \
 title and axis labels. Skip charts for single numbers.
 8. If the data cannot answer the question (e.g. a needed column does not exist), say so plainly instead of guessing.
-9. Keep code short. Do not import anything. No file, network or eval access.
+9. Keep code short. Do not import anything (pd, np, px, go, math are ready). No file, network or eval access:
+df.query() and df.eval() are blocked, so filter with boolean indexing, e.g. df[df['score_pct'] < 40].
 10. Finish by calling final_answer. Lead with the direct answer and key numbers (1-5 short sentences or bullets). \
 Round percentages to 1 decimal. Put interpretation choices in `assumptions`.
 """

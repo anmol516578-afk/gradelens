@@ -6,6 +6,7 @@ model is truncated to the shape plus at most ``LLM_MAX_ROWS`` rows.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -19,6 +20,35 @@ LLM_MAX_CHARS = 6000
 MAX_DISTINCT = 50
 
 RUN_PYTHON, RUN_SQL, COLUMN_VALUES, FINAL_ANSWER = "run_python", "run_sql", "get_column_values", "final_answer"
+
+FENCED_BLOCK = re.compile(r"```[ \t]*(?:python|py|sql|duckdb)?[ \t]*\n(.*?)```", re.DOTALL | re.IGNORECASE)
+# Imports of modules the sandbox already provides; models add these out of habit (DEBUG_LOG #42).
+PROVIDED_IMPORT = re.compile(
+    r"^\s*(import pandas as pd|import numpy as np|import math|import plotly\.express as px"
+    r"|import plotly\.graph_objects as go|from plotly import (express as px|graph_objects as go))\s*(#.*)?$"
+)
+
+
+def extract_code(text: str) -> str | None:
+    """The first fenced code block in a message, if any."""
+    match = FENCED_BLOCK.search(text or "")
+    return match.group(1).strip() if match else None
+
+
+def normalize_code(code: str) -> tuple[str, list[str]]:
+    """Strip markdown fences and imports of already-provided modules. Returns (code, notes for the model)."""
+    notes = []
+    fenced = extract_code(code) if "```" in code else None
+    if fenced is not None:
+        code = fenced
+    kept = []
+    for line in code.splitlines():
+        if PROVIDED_IMPORT.match(line):
+            notes.append("Imports are not needed: pd, np, px, go and math are already available.")
+            continue
+        kept.append(line)
+    return "\n".join(kept).strip(), list(dict.fromkeys(notes))
+
 
 _PURPOSE = {
     "type": "string",
@@ -178,9 +208,10 @@ class Toolbox:
         args = call.arguments
         purpose = str(args.get("purpose") or "").strip()
         if call.name == RUN_PYTHON:
-            return self._run_code("python", str(args.get("code") or ""), purpose)
+            code = args.get("code") or args.get("python") or args.get("source") or ""
+            return self._run_code("python", str(code), purpose)
         if call.name == RUN_SQL:
-            return self._run_code("sql", str(args.get("query") or args.get("sql") or ""), purpose)
+            return self._run_code("sql", str(args.get("query") or args.get("sql") or args.get("code") or ""), purpose)
         if call.name == COLUMN_VALUES:
             return self._column_values(str(args.get("column") or ""))
         message = f"Unknown tool '{call.name}'. Use run_python, run_sql, get_column_values or final_answer."
@@ -188,11 +219,15 @@ class Toolbox:
 
     def _run_code(self, mode: str, code: str, purpose: str) -> ToolOutcome:
         tool = RUN_SQL if mode == "sql" else RUN_PYTHON
+        code, notes = normalize_code(code)
         extra = {"figure_style": self.figure_style} if self.figure_style else {}
         result = self._execute(mode, code, self.df, timeout=self.timeout, **extra)
+        result.notes = [*notes, *result.notes]
         if not result.ok:
             error = result.error or "Unknown error"
             text = f"Error: {error}\nFix the code and try again (check column names and dtypes)."
+            if "'.query'" in error or "'.eval'" in error:
+                text += " Use boolean indexing, e.g. df[df['score_pct'] < 40], instead of query()/eval()."
             return ToolOutcome(tool, False, _truncate(text), purpose, code, error=error)
         has_scalar = result.kind in ("scalar", "json", "text")
         return ToolOutcome(

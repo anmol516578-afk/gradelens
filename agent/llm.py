@@ -163,7 +163,8 @@ class LLMReply:
 
     def to_message(self) -> dict:
         """The assistant message to append to the conversation (OpenAI format)."""
-        message: dict[str, Any] = {"role": "assistant", "content": self.content or ""}
+        # With tool calls and no text, content is null: the canonical form some providers insist on.
+        message: dict[str, Any] = {"role": "assistant", "content": self.content or (None if self.tool_calls else "")}
         if self.tool_calls:
             message["tool_calls"] = [
                 {

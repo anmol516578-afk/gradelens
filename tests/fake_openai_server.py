@@ -22,14 +22,16 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 BUGGY = "graded = df[df['result'].isin(['Pass', 'Fail'])]\nresult = graded.groupby('sec')['result'].count()"
+# Written like a real model would: inside a markdown fence, with a habitual import.
 FIXED = (
+    "```python\nimport pandas as pd\n"
     "graded = df[df['result'].isin(['Pass', 'Fail'])]\n"
     "result = (graded.assign(failed=graded['result'].eq('Fail'))\n"
     "          .groupby('section', as_index=False)['failed'].mean())\n"
     "result['fail_rate'] = (result.pop('failed') * 100).round(1)\n"
     "result = result.sort_values('fail_rate', ascending=False)\n"
     "fig = px.bar(result, x='section', y='fail_rate', title='Fail rate by section (%)',\n"
-    "             labels={'fail_rate': 'Fail rate (%)', 'section': 'Section'})"
+    "             labels={'fail_rate': 'Fail rate (%)', 'section': 'Section'})\n```"
 )
 WEAKEST = (
     "per_student = df.groupby('student_id', as_index=False)['score_pct'].mean().round(1)\n"

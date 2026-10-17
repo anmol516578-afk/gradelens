@@ -151,7 +151,7 @@ def run_python(job: dict) -> dict:
 
     namespace = {"__builtins__": {n: __builtins__[n] if isinstance(__builtins__, dict) else getattr(__builtins__, n)
                                   for n in SAFE_BUILTIN_NAMES}}  # fmt: skip
-    namespace.update({"df": job["df"], "pd": pd, "np": np})
+    namespace.update({"df": job["df"], "pd": pd, "np": np, "math": math})
     if job.get("needs_plotly"):
         import plotly.express as px
         import plotly.graph_objects as go

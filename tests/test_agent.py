@@ -197,3 +197,66 @@ def test_fake_executor_can_be_injected(masked, config):
     llm = MockLLM([tool_reply("run_sql", query="SELECT 42"), tool_reply("final_answer", answer="42")])
     result = make_agent(llm, masked, config, toolbox=Toolbox(masked, executor=fake)).run("Q")
     assert calls == ["sql"] and result.scalar == 42 and result.has_scalar
+
+
+# --- Realistic model habits (DEBUG_LOG #42) ---------------------------------------------
+
+
+def test_fenced_code_and_habitual_imports_still_run(masked):
+    code = "```python\nimport pandas as pd\nimport numpy as np\nresult = round(df['score_pct'].mean(), 1)\n```"
+    outcome = Toolbox(masked).run(ToolCall("c", "run_python", {"code": code}))
+    assert outcome.ok, outcome.error
+    assert "Imports are not needed" in outcome.llm_text
+    assert outcome.code == "result = round(df['score_pct'].mean(), 1)"
+
+
+def test_other_imports_are_still_blocked_inside_fences(masked):
+    outcome = Toolbox(masked).run(ToolCall("c", "run_python", {"code": "```python\nimport os\nresult = 1\n```"}))
+    assert not outcome.ok and "import" in outcome.error
+
+
+def test_query_error_suggests_boolean_indexing(masked):
+    outcome = Toolbox(masked).run(ToolCall("c", "run_python", {"code": "result = df.query('score_pct < 40')"}))
+    assert not outcome.ok and "boolean indexing" in outcome.llm_text
+
+
+def test_argument_aliases(masked):
+    assert Toolbox(masked).run(ToolCall("c", "run_python", {"python": "result = len(df)"})).ok
+    assert Toolbox(masked).run(ToolCall("c", "run_sql", {"sql": "SELECT COUNT(*) AS n FROM marks"})).ok
+
+
+def test_code_written_as_text_is_run_before_anything_succeeds(masked, config):
+    llm = MockLLM(
+        [
+            text_reply("Let me compute it:\n```python\nresult = df.groupby('section')['score_pct'].mean()\n```"),
+            tool_reply("final_answer", answer="Averages computed."),
+        ]
+    )
+    result = make_agent(llm, masked, config).run("Average by section?")
+    assert result.status == ANSWERED and len(result.steps) == 1 and result.steps[0].ok
+    assert len(result.table) == 3
+    assert "I ran the code in your message" in llm.calls[1]["messages"][-1]["content"]
+
+
+def test_final_text_with_example_code_is_not_executed(masked, config):
+    llm = MockLLM(
+        [
+            tool_reply("run_python", code="result = len(df)"),
+            text_reply("There are 900 rows. You could check with:\n```python\nlen(df)\n```"),
+        ]
+    )
+    result = make_agent(llm, masked, config).run("How many rows?")
+    assert result.status == ANSWERED and len(result.steps) == 1
+    assert result.answer.startswith("There are 900 rows.")
+
+
+def test_final_answer_without_answer_falls_back_to_reply_text(masked, config):
+    reply = tool_reply("final_answer", content="Section B is weakest.", assumptions=["Used score_pct"])
+    result = make_agent(MockLLM([reply]), masked, config).run("Weakest section?")
+    assert result.answer == "Section B is weakest." and result.assumptions == ["Used score_pct"]
+
+
+def test_tool_call_messages_use_null_content():
+    message = tool_reply("run_python", code="result = 1").to_message()
+    assert message["content"] is None and message["tool_calls"]
+    assert text_reply("hi").to_message()["content"] == "hi"

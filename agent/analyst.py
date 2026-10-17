@@ -15,8 +15,8 @@ from dataclasses import dataclass, field
 import pandas as pd
 
 from agent import prompts
-from agent.llm import ChatModel, LLMError
-from agent.tools import FINAL_ANSWER, TOOL_SPECS, Toolbox, ToolOutcome
+from agent.llm import ChatModel, LLMError, ToolCall
+from agent.tools import FINAL_ANSWER, RUN_PYTHON, RUN_SQL, TOOL_SPECS, Toolbox, ToolOutcome, extract_code
 from core.config import AnalysisConfig
 
 log = logging.getLogger("gradelens.agent")
@@ -137,6 +137,29 @@ class AnalystAgent:
             messages.append(reply.to_message())
 
             if not reply.tool_calls:
+                code = extract_code(reply.content or "")
+                if code and latest_output is None:
+                    # Weaker (often local) models write the code as text instead of calling run_python.
+                    # Run it for them, but only before anything has succeeded, so a final answer that
+                    # merely shows example code is not executed (DEBUG_LOG #42).
+                    mode = RUN_SQL if code.lstrip().upper().startswith(("SELECT", "WITH")) else RUN_PYTHON
+                    key = "query" if mode == RUN_SQL else "code"
+                    call = ToolCall(f"text_{step_number}", mode, {key: code, "purpose": "Code from the reply"})
+                    outcome = self._run_tool(call, step_number, result, emit)
+                    messages.append(
+                        {
+                            "role": "user",
+                            "content": "I ran the code in your message. "
+                            + outcome.llm_text
+                            + "\nUse the tools from now on.",
+                        }
+                    )
+                    if outcome.ok:
+                        consecutive_errors = 0
+                        latest_output = outcome if outcome.has_output else latest_output
+                    else:
+                        consecutive_errors += 1
+                    continue
                 if reply.content:
                     # Some models answer in plain text instead of calling final_answer.
                     result.answer, result.status = reply.content, ANSWERED
@@ -162,7 +185,8 @@ class AnalystAgent:
 
             if final_call is not None:
                 args = final_call.arguments
-                result.answer = str(args.get("answer") or "").strip() or "(The model gave an empty answer.)"
+                answer = str(args.get("answer") or args.get("text") or "").strip() or (reply.content or "").strip()
+                result.answer = answer or "(The model gave an empty answer.)"
                 raw_assumptions = args.get("assumptions") or []
                 if isinstance(raw_assumptions, str):
                     raw_assumptions = [raw_assumptions]
@@ -195,8 +219,10 @@ class AnalystAgent:
         code = str(args.get("code") or args.get("query") or args.get("sql") or "")
         purpose = str(args.get("purpose") or "").strip()
         retrying = bool(result.steps) and not result.steps[-1].ok
-        emit("tool_start", {"step": step_number, "tool": call.name, "purpose": purpose, "code": code,
-                            "retrying": retrying})  # fmt: skip
+        emit(
+            "tool_start",
+            {"step": step_number, "tool": call.name, "purpose": purpose, "code": code, "retrying": retrying},
+        )
         outcome = self.toolbox.run(call)
         summary = _first_line(outcome.llm_text)
         result.steps.append(
@@ -208,7 +234,7 @@ class AnalystAgent:
                 outcome.ok,
                 outcome.error,
                 summary,
-            )  # fmt: skip
+            )
         )
         if outcome.ok:
             emit("tool_ok", {"step": step_number, "tool": call.name, "summary": summary})
