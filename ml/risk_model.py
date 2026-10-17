@@ -314,18 +314,31 @@ class RiskModel:
 
     def explain(self, row: pd.Series) -> list[str]:
         """Early indicators where this row is clearly worse than the training average."""
+        return self.explain_many(pd.DataFrame([row]))[0]
+
+    def explain_many(self, X: pd.DataFrame) -> list[list[str]]:
+        """``explain`` for many rows at once: arrays first, then tiny per-row Python lists.
+
+        (Building a one-row DataFrame per student made scoring 5,000 students take ~6 s.)
+        """
+        features = self.features
         weights = self.report.importance.set_index("feature")["importance"]
-        scored = []
-        for feature in self.features:
-            value = row.get(feature)
-            mean, std = self.feature_means[feature], self.feature_stds[feature] or 1.0
-            if value is None or pd.isna(value):
-                continue
-            deficit = (mean - float(value)) / std
-            if deficit > 0.5:
-                scored.append((deficit * float(weights.get(feature, 0.0)), feature, float(value), mean))
-        scored.sort(reverse=True)
-        return [f"{FEATURE_LABELS[f]} {v:.0f}% vs {m:.0f}% average" for _, f, v, m in scored[:2]]
+        w = [float(weights.get(f, 0.0)) for f in features]
+        means = [self.feature_means[f] for f in features]
+        stds = [self.feature_stds[f] or 1.0 for f in features]
+        values = X.reindex(columns=features).to_numpy(dtype=float)
+        out = []
+        for row in values.tolist():
+            scored = []
+            for j, value in enumerate(row):
+                if value != value:  # NaN
+                    continue
+                deficit = (means[j] - value) / stds[j]
+                if deficit > 0.5:
+                    scored.append((deficit * w[j], features[j], value, means[j]))
+            scored.sort(reverse=True)
+            out.append([f"{FEATURE_LABELS[f]} {v:.0f}% vs {m:.0f}% average" for _, f, v, m in scored[:2]])
+        return out
 
 
 def training_rows(df: pd.DataFrame) -> pd.DataFrame:
@@ -527,26 +540,34 @@ def assess(
             by_roll = work.loc[work.groupby("roll_no")["_proba"].idxmax()].set_index("roll_no")
             students["ml_prob"] = students["roll_no"].map(by_roll["_proba"]).astype(float)
             students["ml_subject"] = students["roll_no"].map(by_roll["subject"])
-            for roll, row in by_roll.iterrows():
-                if row["_proba"] >= ML_MEDIUM_AT:
-                    factors = model.explain(build_features(row.to_frame().T, model.features).iloc[0])
-                    text = f"Model: {row['_proba'] * 100:.0f}% chance of failing {row['subject']}"
-                    ml_reasons[roll] = [text + (f" ({'; '.join(factors)})" if factors else "")]
-
-    def combine(row) -> pd.Series:
-        ml_level = level_for_probability(row["ml_prob"])
-        rule_level = row["rule_level"]
-        level = min((rule_level, ml_level), key=LEVELS.index)
-        ml_points = 0.0 if pd.isna(row["ml_prob"]) else row["ml_prob"] * 100
-        reasons = list(row["rule_reasons"]) + ml_reasons.get(row["roll_no"], [])
-        return pd.Series({"risk_level": level, "risk_score": round(max(row["rule_score"], ml_points)),
-                          "reasons": reasons})  # fmt: skip
+            flagged = by_roll[by_roll["_proba"] >= ML_MEDIUM_AT]
+            if not flagged.empty:
+                factors = model.explain_many(build_features(flagged, model.features))
+                for roll, prob, subject, why in zip(flagged.index, flagged["_proba"], flagged["subject"], factors,
+                                                    strict=True):  # fmt: skip
+                    text = f"Model: {prob * 100:.0f}% chance of failing {subject}"
+                    ml_reasons[roll] = [text + (f" ({'; '.join(why)})" if why else "")]
 
     if students.empty:
         students = students.assign(risk_level=pd.Series(dtype=str), risk_score=pd.Series(dtype=int),
                                    reasons=pd.Series(dtype=object))  # fmt: skip
     else:
-        students = pd.concat([students, students.apply(combine, axis=1)], axis=1)
+        # Plain Python over columns: a row-wise DataFrame.apply took seconds on thousands of students.
+        probs = [None if p != p else p for p in students["ml_prob"].tolist()]
+        rule_levels = students["rule_level"].tolist()
+        rule_points = students["rule_score"].tolist()
+        students["risk_level"] = [
+            min((rule, level_for_probability(prob)), key=LEVELS.index)
+            for rule, prob in zip(rule_levels, probs, strict=True)
+        ]
+        students["risk_score"] = [
+            round(max(points, 0.0 if prob is None else prob * 100))
+            for points, prob in zip(rule_points, probs, strict=True)
+        ]
+        students["reasons"] = [
+            list(reasons) + ml_reasons.get(roll, [])
+            for reasons, roll in zip(students["rule_reasons"].tolist(), students["roll_no"].tolist(), strict=True)
+        ]
     order = {level: i for i, level in enumerate(LEVELS)}
     students = students.sort_values(
         ["risk_level", "risk_score", "avg_score"], key=lambda s: s.map(order) if s.name == "risk_level" else s,

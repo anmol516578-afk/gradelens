@@ -61,3 +61,10 @@ Notable bugs found while building and testing, with root cause and fix.
 | 50 | Deploy | Empty `LLM_*` variables (what docker-compose passes for unset keys) hid Streamlit secrets | An empty string counted as "set" | Empty variables fall through to secrets; AppTest covers the secrets path |
 | 51 | Deploy | Sizing: peak memory ≈ 600 MB (≈470 MB steady + ≈100 MB for the AI sandbox), stable across sessions | 512 MB plans (Render free/starter) would be killed | README recommends 1 GB; `render.yaml` uses the 2 GB plan; free options documented: Streamlit Community Cloud, Hugging Face Spaces |
 | 52 | Data Quality | The "Marks scheme in use" table listed "Assignment 10" for sheets with no assignment column, beside an internal maximum of 30 | It listed every component regardless of the sheet | Missing components show "not in this sheet"; test checks the table, the sidebar caption and the average (69.4%, which the old scoring reported as 52%) |
+
+### Bug hunt, round 3 (multi-step sessions, 5,000-student scale, deployment in a real container)
+
+| # | Area | Symptom | Root cause | Fix |
+|---|------|---------|------------|-----|
+| 53 | **Speed** | **With 5,000 students, every filter change waited ~6 s for risk scores** (the KPI card is recomputed on each change) | For each flagged student the model explanation built a one-row DataFrame, and levels were combined with a row-wise `DataFrame.apply` | Features for all flagged students in one pass; explanations and levels from plain arrays. 6.1 s → 0.33 s, output verified identical (levels, scores, probabilities, every reason string) on five datasets |
+| 54 | **Memory** | **The Excel report for 5,000 students × 8 subjects took 9.8 s and +258 MB** — enough to push a 1 GB host over the edge on top of the app's ~470 MB | openpyxl kept ~760,000 Cell objects in memory and serialised them with its pure-Python XML writer | Workbook written in openpyxl's streaming write-only mode, values converted per column, `lxml` added so openpyxl uses its C writer: 5.1 s and +22 MB. The executive summary is one sentence per line (write-only sheets cannot merge cells) |
