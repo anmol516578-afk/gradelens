@@ -8,6 +8,7 @@ import streamlit as st
 from core.cleaning import INFO, DataQualityReport
 from core.column_mapping import mapping_from_tuple
 from core.config import ALL_ROLES, IGNORE, ROLE_LABELS, AnalysisConfig
+from core.derive import has_component
 from ui import components as C
 from ui import state
 from ui.context import AppContext
@@ -91,9 +92,16 @@ def _issue_block(issues, title: str, icon: str, expanded: bool) -> None:
                 st.dataframe(pd.DataFrame(issue.examples), hide_index=True, width="stretch")
 
 
-def _scheme_table(config: AnalysisConfig) -> pd.DataFrame:
-    rows = [(ROLE_LABELS[c], config.max_marks(c)) for c in ("assignment", "mst1", "mst2", "end_term")]
-    rows += [("Internal total", config.internal_max), ("Total", config.total_max)]
+def _scheme_table(config: AnalysisConfig, clean: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Components missing from the sheet are labelled as such: they don't count towards the maxima."""
+
+    def max_label(component: str) -> str:
+        if clean is not None and not has_component(clean, component):
+            return "not in this sheet"
+        return f"{config.max_marks(component):g}"
+
+    rows = [(ROLE_LABELS[c], max_label(c)) for c in ("assignment", "mst1", "mst2", "end_term")]
+    rows += [("Internal total", f"{config.internal_max:g}"), ("Total", f"{config.total_max:g}")]
     rows += [("Pass mark", f"{config.pass_pct:g}%"), ("Attendance requirement", f"{config.attendance_threshold:g}%")]
     return pd.DataFrame(rows, columns=["Setting", "Value"]).astype(str)
 
@@ -121,7 +129,7 @@ def render(ctx: AppContext) -> None:
         mapping_editor(ctx.raw)
     with right:
         C.heading("Marks scheme in use", "Change it under 'Marks scheme' in the sidebar.")
-        st.dataframe(_scheme_table(ctx.config), hide_index=True, width="stretch")
+        st.dataframe(_scheme_table(ctx.config, ctx.prepared.clean), hide_index=True, width="stretch")
 
     st.divider()
     C.heading("Cleaned data", f"{len(ctx.prepared.clean):,} rows. Absences are blank values with an _absent flag.")

@@ -160,3 +160,23 @@ def test_marks_scheme_inferred_from_headers():
     at.sidebar.file_uploader[0].upload("m.csv", sheet.to_csv(index=False).encode()).run()
     assert not at.exception
     assert at.session_state["cfg_max_mst1"] == 24.0
+
+
+def test_marks_scheme_table_follows_the_sheet():
+    """A sheet with only MSTs is out of 30 internal marks, and says which components are missing."""
+    at = fresh()
+    sheet = pd.DataFrame(
+        {
+            "Roll No": [str(i) for i in range(6)],
+            "Name": [f"S {i}" for i in range(6)],
+            "Subject": ["Py"] * 6,
+            "MST 1": ["15", "10", "8", "12", "5", "14"],
+            "MST 2": ["15", "9", "7", "11", "6", "13"],
+        }
+    )
+    at.sidebar.file_uploader[0].upload("mst.csv", sheet.to_csv(index=False).encode()).run()
+    open_tab(at, C.TAB_QUALITY)
+    table = next(df.value for df in at.dataframe if "Setting" in df.value.columns).set_index("Setting")["Value"]
+    assert table["Internal total"] == "30" and table["Assignment"] == "not in this sheet"
+    assert any("internal out of **30**" in c.value for c in at.sidebar.caption)
+    assert metric(at, "Average score") == "69.4%"  # totals 30,19,15,23,11,27 -> 20.83 of 30

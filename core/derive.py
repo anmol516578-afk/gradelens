@@ -17,7 +17,7 @@ from core.config import INTERNAL_COMPONENTS, MARK_COMPONENTS, AnalysisConfig
 RESULT_PASS, RESULT_FAIL, RESULT_INCOMPLETE = "Pass", "Fail", "Incomplete"
 
 
-def _has_component(df: pd.DataFrame, component: str) -> bool:
+def has_component(df: pd.DataFrame, component: str) -> bool:
     if component not in df:
         return False
     absent = df.get(f"{component}_absent", pd.Series(False, index=df.index))
@@ -32,12 +32,12 @@ def effective_config(config: AnalysisConfig, df: pd.DataFrame) -> AnalysisConfig
     the user set explicitly are kept as they are.
     """
     updates: dict[str, float] = {}
-    present = [c for c in INTERNAL_COMPONENTS if _has_component(df, c)]
+    present = [c for c in INTERNAL_COMPONENTS if has_component(df, c)]
     internal_max = config.internal_max
     if config.max_internal_total <= 0 and present:
         internal_max = float(sum(config.max_marks(c) for c in present))
         updates["max_internal_total"] = internal_max
-    if config.max_total <= 0 and _has_component(df, "end_term") and (present or "internal_total" in df):
+    if config.max_total <= 0 and has_component(df, "end_term") and (present or "internal_total" in df):
         updates["max_total"] = internal_max + config.max_end_term
     if not updates:
         return config
