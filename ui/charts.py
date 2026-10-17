@@ -109,7 +109,8 @@ def score_histogram(df: pd.DataFrame, pass_pct: float):
     )
     fig.add_vline(
         x=pass_pct, line_dash="dash", line_color=STATUS["critical"], line_width=2,
-        annotation_text=f"Pass mark {pass_pct:g}%", annotation_position="top right",
+        annotation_text=f"Pass mark {pass_pct:g}%", annotation_position="top left",
+        annotation_font_color=STATUS["critical"],
     )  # fmt: skip
     fig.update_xaxes(title="Score (%)", ticksuffix="%")
     fig.update_yaxes(title="Records", showgrid=True)
