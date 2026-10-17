@@ -14,6 +14,7 @@ agree exactly ("MST 1" never maps to MST-2) and headers such as
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass, field
 
 import pandas as pd
@@ -257,6 +258,19 @@ def header_score(cells: list[str]) -> float:
     return score
 
 
+def letter_count(text: str) -> int:
+    r"""Letters in any script ("गणित", "ਪੰਜਾਬੀ"), not just A-Z.
+
+    Counted in Python on purpose: pandas 3 runs ``.str`` regexes on pyarrow (RE2), where ``\w`` is
+    ASCII-only, so a regex test silently fails for Indian scripts.
+    """
+    return sum(unicodedata.category(ch).startswith("L") for ch in str(text))
+
+
+def _has_non_latin_letters(text: str) -> bool:
+    return any(ord(ch) > 0x24F and unicodedata.category(ch).startswith("L") for ch in str(text))
+
+
 def split_subject_component(name: str) -> tuple[str, str, float] | None:
     """Split 'Python - MST1' style headers into (subject, role, confidence)."""
     text = strip_max_hint(name)
@@ -283,7 +297,7 @@ def split_subject_component(name: str) -> tuple[str, str, float] | None:
         subject_role, subject_score = match_role(subject)
         if subject_role is not None and subject_score >= 80:
             continue
-        if not re.search(r"[A-Za-z]{2,}", subject) or normalize_name(subject) in GENERIC_WORDS:
+        if letter_count(subject) < 2 or normalize_name(subject) in GENERIC_WORDS:
             continue
         if best is None or score > best[2] or (score == best[2] and len(subject) > len(best[0])):
             best = (subject, role, score)
@@ -315,7 +329,7 @@ def looks_like_section(values: pd.Series) -> bool:
     vals = _non_empty(values)
     if vals.empty or looks_numeric(values):
         return False
-    return vals.nunique() <= 12 and vals.str.len().max() <= 12 and vals.str.contains(r"[A-Za-z]").all()
+    return vals.nunique() <= 12 and vals.str.len().max() <= 12 and vals.map(letter_count).gt(0).all()
 
 
 @dataclass
@@ -377,7 +391,9 @@ def guess_mapping(df: pd.DataFrame) -> MappingGuess:
     for column in df.columns:
         role, score = match_role(column)
         entry = MappingEntry(column=column, role=role or IGNORE, confidence=score, max_hint=extract_max_hint(column))
-        if score < 100:
+        # A header in another script ("गणित - MST 1") normalises to its English part alone and matches a
+        # role exactly, so it is also tried as subject + component.
+        if score < 100 or _has_non_latin_letters(column):
             split = split_subject_component(column)
             if split:
                 splits[column] = split
@@ -385,8 +401,14 @@ def guess_mapping(df: pd.DataFrame) -> MappingGuess:
 
     has_subject = any(e.role == "subject" and e.confidence >= 80 for e in entries)
     split_subjects = {s[0].lower() for s in splits.values()}
+    subjects_per_role: dict[str, set[str]] = {}
+    for subject, role, _ in splits.values():
+        subjects_per_role.setdefault(role, set()).add(subject.lower())
+    # In a wide sheet the same exam repeats for each subject. Bilingual headers such as
+    # "MST 1 / मध्य सत्र 1" and "MST 2 / मध्य सत्र 2" split too, but no exam repeats: still one subject.
+    exam_repeats = any(len(subjects) >= 2 for subjects in subjects_per_role.values())
     data_format = "long"
-    if not has_subject and len(split_subjects) >= 2:
+    if not has_subject and len(split_subjects) >= 2 and exam_repeats:
         data_format = "wide"
         for entry in entries:
             if entry.column in splits:

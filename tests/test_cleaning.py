@@ -227,7 +227,9 @@ def test_mid_semester_data_uses_internals(config):
 @pytest.mark.parametrize(
     ("raw", "expected"),
     [("Sec A", "A"), ("sec-a", "A"), ("Section-B", "B"), ("Sec. C", "C"), ("(A)", "A"),
-     ("AI&ML", "AI&ML"), ("CSE-A", "CSE-A"), ("B.Tech A", "B.TECH A")],
+     ("AI&ML", "AI&ML"), ("CSE-A", "CSE-A"), ("B.Tech A", "B.TECH A"),
+     # Indian scripts: same prefix/edge rules; vowel signs are part of the label.
+     ("Section क", "क"), ("क.", "क"), ("(कि)", "कि"), ("Sec: ਬੀ", "ਬੀ")],
 )  # fmt: skip
 def test_section_labels_keep_their_own_punctuation(raw, expected):
     assert normalize_section(raw) == expected

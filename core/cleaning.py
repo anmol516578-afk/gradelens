@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import math
 import re
+import unicodedata
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -86,9 +87,22 @@ def normalize_section(value: object) -> str:
     # Drop a "Section"/"Sec." prefix and stray punctuation at the edges, but keep the label's own
     # punctuation: "AI&ML" and "CSE-A" are real section names (DEBUG_LOG #41).
     stripped = re.sub(r"(?i)\b(section|sec)\b\.?", " ", text)
-    stripped = re.sub(r"^[^A-Za-z0-9]+|[^A-Za-z0-9]+$", "", stripped.strip())
-    stripped = re.sub(r"\s+", " ", stripped)
+    stripped = re.sub(r"\s+", " ", _strip_edge_punctuation(stripped))
     return (stripped or text).upper()
+
+
+def _strip_edge_punctuation(text: str) -> str:
+    """Trim anything that is not a letter, vowel sign or digit (in any script) from both ends."""
+
+    def keep(ch: str) -> bool:
+        return unicodedata.category(ch)[0] in "LMN"
+
+    start, end = 0, len(text)
+    while start < end and not keep(text[start]):
+        start += 1
+    while end > start and not keep(text[end - 1]):
+        end -= 1
+    return text[start:end]
 
 
 def normalize_semester(value: object) -> str:

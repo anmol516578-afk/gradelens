@@ -99,3 +99,23 @@ def test_short_or_ambiguous_names_do_not_corrupt_questions():
     pseudo = Pseudonymizer.from_frame(frame)
     masked = pseudo.mask_text("Fail rate in Section A for Python? And Kiran Bedi?")
     assert masked == "Fail rate in Section A for Python? And S003?"
+
+
+def test_indian_script_names_are_masked_as_whole_words():
+    """Vowel signs are not \\w: "राम" counted as 2 letters (never masked) and could match inside "श्रीराम"."""
+    frame = pd.DataFrame(
+        {
+            "roll_no": ["R0001", "R0002", "R0003", "R0004"],
+            "student_name": ["राम", "ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ", "சிவா", "Ram"],
+            "section": ["A"] * 4,
+            "subject": ["Python"] * 4,
+        }
+    )
+    pseudo = Pseudonymizer.from_frame(frame)
+    assert pseudo.mask_text("How are राम, ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ and சிவா doing? राम।") == (
+        "How are S001, S002 and S003 doing? S001।"
+    )
+    assert pseudo.mask_text("Ram and Rama") == "S004 and Rama"
+    # Part of a longer word is not a name.
+    assert pseudo.mask_text("श्रीराम and रामा") == "श्रीराम and रामा"
+    assert pseudo.unmask_text("S001 needs support", with_roll=False) == "राम needs support"

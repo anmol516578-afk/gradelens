@@ -7,6 +7,7 @@ import json
 import logging
 import re
 import time
+import unicodedata
 
 import streamlit as st
 
@@ -52,7 +53,9 @@ def co_for_report(ctx: AppContext) -> dict | None:
 
 
 def _slug(text: str) -> str:
-    return re.sub(r"[^A-Za-z0-9]+", "_", text).strip("_")[:60] or "report"
+    """File-name-safe text: letters in any script (with vowel signs) and digits; anything else becomes "_"."""
+    kept = "".join(ch if unicodedata.category(ch)[0] in "LMN" else "_" for ch in text)
+    return re.sub(r"_+", "_", kept).strip("_")[:60] or "report"
 
 
 def _meta(ctx: AppContext, include_names: bool) -> ReportMeta:

@@ -165,3 +165,47 @@ def test_mapping_tuple_roundtrip_and_hints():
     ]
     assert max_hints(entries) == {"mst1": 24.0}
     assert detect_format(entries) == "long"
+
+
+def _sheet(columns: dict[str, list]) -> pd.DataFrame:
+    return pd.DataFrame(columns)
+
+
+def test_wide_sheet_with_subject_names_in_indian_scripts():
+    """ "गणित - MST 1" normalised to "mst 1" alone and was taken as a plain MST-1 column."""
+    marks = [10, 12, 8]
+    columns = {"Roll No": ["R1", "R2", "R3"], "Name": ["A1", "B1", "C1"]}
+    for subject in ("गणित", "ਪੰਜਾਬੀ", "Python"):
+        columns[f"{subject} - MST 1"] = marks
+        columns[f"{subject} - End Term"] = [40, 50, 30]
+    guess = guess_mapping(_sheet(columns))
+    subjects = {(e.subject, e.role) for e in guess.entries if e.subject}
+    assert ("गणित", "mst1") in subjects and ("ਪੰਜਾਬੀ", "end_term") in subjects and ("Python", "mst1") in subjects
+    assert len(subjects) == 6
+
+
+def test_bilingual_headers_stay_one_subject():
+    """Headers like "MST 1 / मध्य सत्र 1" split into a 'subject' too, but no exam repeats: not wide."""
+    columns = {
+        "Roll No / अनुक्रमांक": ["R1", "R2", "R3"],
+        "Name / नाम": ["A1", "B1", "C1"],
+        "MST 1 / मध्य सत्र 1": [10, 12, 8],
+        "MST 2 / मध्य सत्र 2": [11, 9, 13],
+        "End Term / अंतिम परीक्षा": [40, 50, 30],
+    }
+    roles = {e.column: (e.role, e.subject) for e in guess_mapping(_sheet(columns)).entries}
+    assert roles["MST 1 / मध्य सत्र 1"] == ("mst1", "")
+    assert roles["MST 2 / मध्य सत्र 2"] == ("mst2", "")
+    assert roles["End Term / अंतिम परीक्षा"] == ("end_term", "")
+    assert roles["Roll No / अनुक्रमांक"] == ("roll_no", "")
+
+
+def test_section_values_in_indian_scripts_are_recognised():
+    """pandas 3 runs .str regexes with RE2, where [^\\W\\d_] is ASCII-only; letters are counted in Python."""
+    columns = {
+        "Roll No": [f"R{i}" for i in range(6)],
+        "Python MST1": [10, 12, 8, 9, 11, 7],
+        "Group": ["क", "ख", "क", "ख", "क", "ख"],
+    }
+    roles = {e.column: e.role for e in guess_mapping(_sheet(columns)).entries}
+    assert roles["Group"] == "section"

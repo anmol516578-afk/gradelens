@@ -209,3 +209,9 @@ Each entry records an ambiguity in the spec, the choice made, and why.
     characters it has, and ReportLab is made to shape each run with its own font (it shapes a whole word with
     the first font, which garbled punctuation next to Indian text). Chart labels get the glyphs but not shaping
     (matplotlib cannot shape). Urdu and other right-to-left scripts are out of scope.
+
+53. **A sheet is "wide" only when an exam repeats under two or more subjects** ("Python - MST 1",
+    "DBMS - MST 1"). Bilingual headers ("MST 1 / मध्य सत्र 1", "MST 2 / मध्य सत्र 2") also split into a
+    "subject" and an exam, but nothing repeats, so they stay one subject. Text tests (letters, edge
+    punctuation, word boundaries) use Unicode categories in Python, never `.str` regexes: pandas 3 runs those
+    on pyarrow's RE2, where `\w` is ASCII-only.

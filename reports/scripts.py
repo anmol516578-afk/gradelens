@@ -32,6 +32,7 @@ SCRIPTS: tuple[tuple[str, tuple[tuple[int, int], ...], str], ...] = (
     ("Knda", ((0x0C80, 0x0CFF),), "NotoSansKannada"),
     ("Mlym", ((0x0D00, 0x0D7F),), "NotoSansMalayalam"),
 )
+SHAPING_FEATURES = {"kern": True, "liga": True}  # HarfBuzz defaults; no discretionary ligatures
 JOINERS = {"‌", "‍"}  # zero-width (non-)joiner: part of the word they sit in
 _INDIC = re.compile("[" + "".join(f"\\u{a:04x}-\\u{b:04x}" for _, ranges, _ in SCRIPTS for a, b in ranges) + "]")
 
@@ -87,7 +88,11 @@ def shape_each_font_separately() -> bool:
     (``reportlab.pdfbase.ttfonts.shapeFragWord``). A word that switches font with no space, such as
     "शर्मा," or "(ब)", was shaped with the wrong font and its glyphs overlapped. This wraps the
     function ``Paragraph`` calls so each font's stretch is shaped with that font; words in a single
-    font go through ReportLab unchanged. Returns False if this ReportLab version has no such hook.
+    font are shaped by ReportLab as before. Returns False if this ReportLab version has no such hook.
+
+    It also leaves out ReportLab's default discretionary ligatures (``dlig``), which made DejaVu Sans
+    draw "st" in "students" as one ornamental glyph. Indian-script conjuncts come from the features
+    HarfBuzz always applies for those scripts, not from ``dlig``.
     """
     from reportlab.pdfbase import pdfmetrics, ttfonts
     from reportlab.platypus import paragraph
@@ -99,6 +104,8 @@ def shape_each_font_separately() -> bool:
         return True
 
     def shape(word, *args, **kwargs):
+        if not args:
+            kwargs.setdefault("features", SHAPING_FEATURES)
         pieces = word[1:]
         if (
             isinstance(word, ttfonts.ShapedFragWord)

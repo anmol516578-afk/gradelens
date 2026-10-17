@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from dataclasses import dataclass, field
 
 import pandas as pd
@@ -53,6 +54,18 @@ AGENT_COLUMNS = (
 )
 
 
+# Vowel signs, viramas and other combining marks (plus zero-width joiners) are part of a word in Indian
+# scripts, but Python's \w does not include them: "राम" would match inside "श्रीराम", and "सिवा" would count
+# as two letters.
+_MARKS = "".join(chr(c) for c in range(0x0300, 0x2000) if unicodedata.category(chr(c)).startswith("M"))
+_WORD_CHAR = "[\\w" + _MARKS + "\u200c\u200d]"
+
+
+def _letter_count(text: str) -> int:
+    """Letters including combining marks, so "राम" counts 3 like "Ram"."""
+    return sum(unicodedata.category(ch)[0] in "LM" for ch in text)
+
+
 def _phrase_pattern(phrases: list[str]) -> re.Pattern | None:
     """Case-insensitive, whitespace-tolerant, whole-word alternation (longest first)."""
     parts = []
@@ -62,7 +75,7 @@ def _phrase_pattern(phrases: list[str]) -> re.Pattern | None:
             parts.append(r"\s+".join(re.escape(w) for w in words))
     if not parts:
         return None
-    return re.compile(r"(?<![\w])(?:" + "|".join(parts) + r")(?![\w])", re.IGNORECASE)
+    return re.compile(f"(?<!{_WORD_CHAR})(?:" + "|".join(parts) + f")(?!{_WORD_CHAR})", re.IGNORECASE)
 
 
 @dataclass
@@ -109,7 +122,7 @@ class Pseudonymizer:
             # A name shared by two students is still masked; it maps to the first ID.
             # Very short names ("A") or names equal to a subject or section would corrupt ordinary
             # questions ("Section A" -> "Section S001"); they identify no one, so they are not masked.
-            letters = sum(ch.isalpha() for ch in key)
+            letters = _letter_count(key)
             if letters < MIN_NAME_LETTERS or key in reserved:
                 continue
             if key and key not in ("nan", "none") and key not in names:

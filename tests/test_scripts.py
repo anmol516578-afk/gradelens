@@ -95,3 +95,12 @@ def test_pdf_embeds_a_font_for_each_indian_script(derived, config):
     for _, _, stem in scripts.SCRIPTS:
         assert f"{stem}-Regular" in fonts, (stem, sorted(fonts))
     assert "NotoSansDevanagari-Bold" in fonts  # the title
+
+
+def test_latin_text_beside_indian_text_has_no_ornamental_ligatures():
+    """ReportLab's default features include dlig: "students" was drawn with an "ﬆ" ligature."""
+    styles = pdf_report._styles()
+    para = pdf_report._para("32 students (section क) in the list", styles["base"])
+    para.wrap(1000, 100)
+    latin = "".join(w.text for w in para.blPara.lines[0].words if not w.fontName.startswith("GL-"))
+    assert "students" in latin and "list" in latin and "ﬆ" not in latin

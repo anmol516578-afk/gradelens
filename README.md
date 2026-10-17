@@ -95,8 +95,9 @@ works as a mid-semester sheet. Max marks (default assignment 10, MSTs 15, end te
 as `MST-1 (24)` or from the data, and can be changed under **Marks scheme** in the sidebar. The pass mark (default 40%)
 and attendance requirement (default 75%) are sliders.
 
-Names, sections and report headings can be in English or in Hindi, Punjabi, Bengali, Gujarati, Odia, Tamil,
-Telugu, Kannada or Malayalam: the PDF report bundles fonts for these scripts. Sheets of 5,000 students × 8 subjects
+Names, sections, subjects and report headings can be in English or in Hindi, Punjabi, Bengali, Gujarati, Odia,
+Tamil, Telugu, Kannada or Malayalam (the PDF report bundles fonts for these scripts), and bilingual headers such as
+`MST 1 / मध्य सत्र 1` are understood. Names in any script are masked before a question reaches the AI. Sheets of 5,000 students × 8 subjects
 have been tested: filters respond in under a second and the PDF and Excel reports together take about 7 seconds.
 
 **CO attainment** needs a separate question-wise sheet: one row per student, columns `Q1, Q2, …` (optionally
