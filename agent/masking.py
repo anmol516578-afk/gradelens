@@ -22,7 +22,8 @@ import pandas as pd
 
 ID_COLUMN = "student_id"
 ID_PATTERN = re.compile(r"(?<![A-Za-z0-9_])S\d{3,}(?![A-Za-z0-9_])")
-MIN_ROLL_LENGTH = 5  # shorter roll numbers ("12") are not identifying and would collide with ordinary numbers
+MIN_ROLL_LENGTH = 5
+MIN_NAME_LETTERS = 3  # shorter roll numbers ("12") are not identifying and would collide with ordinary numbers
 
 # Columns the agent may see, in order. Identity columns are deliberately absent.
 AGENT_COLUMNS = (
@@ -92,14 +93,25 @@ class Pseudonymizer:
         id_to_roll = {v: k for k, v in roll_to_id.items()}
         id_to_name = dict(zip(ids, roster["student_name"], strict=True))
         pseudo = cls(roll_to_id, id_to_roll, id_to_name)
-        pseudo._build_patterns()
+        reserved = set()
+        for column in ("subject", "section", "semester"):
+            if column in df:
+                reserved |= {" ".join(str(v).split()).lower() for v in df[column].dropna().unique()}
+        pseudo._build_patterns(reserved)
         return pseudo
 
-    def _build_patterns(self) -> None:
+    def _build_patterns(self, reserved: set[str] | None = None) -> None:
+        """``reserved``: subject/section/semester values that must never be read as a name."""
+        reserved = reserved or set()
         names: dict[str, str] = {}
         for sid, name in self.id_to_name.items():
             key = " ".join(str(name).split()).lower()
             # A name shared by two students is still masked; it maps to the first ID.
+            # Very short names ("A") or names equal to a subject or section would corrupt ordinary
+            # questions ("Section A" -> "Section S001"); they identify no one, so they are not masked.
+            letters = sum(ch.isalpha() for ch in key)
+            if letters < MIN_NAME_LETTERS or key in reserved:
+                continue
             if key and key not in ("nan", "none") and key not in names:
                 names[key] = sid
         self._name_lookup = names

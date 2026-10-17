@@ -88,7 +88,9 @@ def _table(rows: list[list], widths: list[float], styles: dict, numeric_from: in
     regular, bold = _register_fonts()
     data = [[Paragraph(escape(str(c)), styles["header"]) for c in rows[0]]]
     for row in rows[1:]:
-        data.append([c if isinstance(c, Paragraph) else escape(str(c)) for c in row])
+        # Plain cells are drawn literally (only Paragraphs parse markup), so they must not be escaped:
+        # escaping showed "A&amp;B" for a section called "A&B" (DEBUG_LOG #40).
+        data.append([c if isinstance(c, Paragraph) else str(c) for c in row])
     table = Table(data, colWidths=widths, repeatRows=1)
     commands = [
         ("FONT", (0, 0), (-1, -1), regular, 7.8),

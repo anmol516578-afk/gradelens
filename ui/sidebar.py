@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import pandas as pd
 import streamlit as st
 
-from core.config import ROLE_LABELS
+from core.config import ROLE_LABELS, AnalysisConfig
 from core.data_loader import SUPPORTED_EXTENSIONS, LoadError
 from ui import state
 
@@ -119,8 +119,9 @@ def render_filters(df_all: pd.DataFrame) -> Filters:
     return Filters(semester, tuple(sections), tuple(subjects))
 
 
-def render_marks_scheme() -> None:
-    config = state.current_config()
+def render_marks_scheme(effective: AnalysisConfig | None = None) -> None:
+    """``effective`` is the scheme in use for this sheet (only the components it contains)."""
+    config = effective or state.current_config()
     with st.sidebar:
         with st.expander("Marks scheme", expanded=False):
             overrides = st.session_state.get("detected_overrides") or {}

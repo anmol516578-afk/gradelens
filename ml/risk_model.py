@@ -37,6 +37,7 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
+from core.cleaning import class_wide_absence
 from core.config import AnalysisConfig
 
 log = logging.getLogger("gradelens.risk")
@@ -140,7 +141,8 @@ def _row_flags(df: pd.DataFrame, config: AnalysisConfig) -> pd.DataFrame:
     )
     for component in ("mst1", "mst2", "assignment"):
         flag = f"{component}_absent"
-        flags[f"absent_{component}"] = df[flag].astype(bool) if flag in df else false
+        individual = ~class_wide_absence(df, component)  # a whole class "absent" is a data issue, not a warning sign
+        flags[f"absent_{component}"] = (df[flag].astype(bool) & individual) if flag in df else false
     return flags
 
 

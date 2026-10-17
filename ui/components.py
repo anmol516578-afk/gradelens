@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import html
 import math
+import re
 
 import pandas as pd
 import streamlit as st
@@ -30,6 +32,12 @@ def fmt_num(value: float | None) -> str:
     if value is None or (isinstance(value, float) and math.isnan(value)):
         return "–"
     return f"{int(value):,}"
+
+
+def chips(items: list[str]) -> None:
+    """Pill labels. Values come from uploaded sheets, so they are HTML-escaped (see DEBUG_LOG #38)."""
+    html_chips = " ".join(f'<span class="gl-chip">{html.escape(str(item))}</span>' for item in items)
+    st.markdown(html_chips, unsafe_allow_html=True)
 
 
 def heading(title: str, caption: str | None = None) -> None:
@@ -121,10 +129,32 @@ def kpi_row(current: dict, baseline: dict | None) -> None:
     )
 
 
+FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
+PLAIN_NUMBER = re.compile(r"[-+]?\d+(\.\d+)?%?")
+
+
+def _looks_like_formula(value) -> bool:
+    return isinstance(value, str) and value.startswith(FORMULA_PREFIXES) and not PLAIN_NUMBER.fullmatch(value.strip())
+
+
+def csv_safe(df: pd.DataFrame) -> pd.DataFrame:
+    """Neutralise spreadsheet formulas in text cells (CSV injection, OWASP).
+
+    Excel runs a CSV cell that starts with = + - @ as a formula. Text cells that do get a leading
+    apostrophe, which Excel hides; numbers are untouched.
+    """
+    out = df.copy()
+    for column in out.columns:
+        if out[column].dtype == object or pd.api.types.is_string_dtype(out[column]):
+            values = out[column]
+            risky = values.map(_looks_like_formula)
+            out.loc[risky, column] = "'" + values[risky].astype(str)
+    return out
+
+
 def download_csv(df: pd.DataFrame, filename: str, label: str = "Download CSV", key: str | None = None) -> None:
-    st.download_button(
-        label, df.to_csv(index=False).encode("utf-8"), file_name=filename, mime="text/csv", key=key, icon="⬇️"
-    )
+    data = csv_safe(df).to_csv(index=False).encode("utf-8-sig")  # BOM: Excel then reads names like "Zoë" correctly
+    st.download_button(label, data, file_name=filename, mime="text/csv", key=key, icon="⬇️")
 
 
 def score_column(label: str = "Score", help_text: str | None = None):

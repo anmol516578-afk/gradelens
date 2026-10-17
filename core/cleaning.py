@@ -83,8 +83,11 @@ def normalize_section(value: object) -> str:
     text = str(value).strip()
     if not text or text.lower() in MISSING_MARKERS:
         return ""
+    # Drop a "Section"/"Sec." prefix and stray punctuation at the edges, but keep the label's own
+    # punctuation: "AI&ML" and "CSE-A" are real section names (DEBUG_LOG #41).
     stripped = re.sub(r"(?i)\b(section|sec)\b\.?", " ", text)
-    stripped = re.sub(r"[^A-Za-z0-9]+", " ", stripped).strip()
+    stripped = re.sub(r"^[^A-Za-z0-9]+|[^A-Za-z0-9]+$", "", stripped.strip())
+    stripped = re.sub(r"\s+", " ", stripped)
     return (stripped or text).upper()
 
 
@@ -319,6 +322,17 @@ def clean(
                 f"{ROLE_LABELS[col]}: {int(absent.sum())} 'AB'/'Absent'/'-' marker(s) recorded as absent (not zero).",
                 col,
             )
+            class_wide = class_wide_absence(df.assign(**{f"{col}_absent": absent}), col)
+            if class_wide.any():
+                subjects = sorted(df.loc[class_wide, "subject"].unique())
+                report.add(
+                    "Class-wide absence",
+                    ATTENTION,
+                    class_wide.sum(),
+                    f"{ROLE_LABELS[col]}: almost everyone is marked absent in {', '.join(subjects)}. If this test "
+                    "has not been held yet, leave the cells blank instead of 'AB' (absences count as 0 marks).",
+                    col,
+                )
         if col == "attendance_pct":
             valid = values.dropna()
             if len(valid) >= 5 and valid.max() <= 1.0:
@@ -382,6 +396,24 @@ def clean(
     report.students = int(df["roll_no"].nunique())
     report.subjects = int(df["subject"].nunique())
     return df, report
+
+
+CLASS_WIDE_SHARE, CLASS_WIDE_MIN_ROWS = 0.8, 5
+
+
+def class_wide_absence(df: pd.DataFrame, component: str) -> pd.Series:
+    """Rows in a subject where at least 80% of the class is absent for this component.
+
+    That pattern usually means the test was not held or marks were not entered, not that
+    each student skipped it, so it is reported once instead of as individual warnings.
+    """
+    flag = f"{component}_absent"
+    if flag not in df or "subject" not in df:
+        return pd.Series(False, index=df.index)
+    grouped = df.groupby("subject")[flag]
+    share = grouped.transform("mean")
+    size = grouped.transform("size")
+    return (share >= CLASS_WIDE_SHARE) & (size >= CLASS_WIDE_MIN_ROWS)
 
 
 def _component_sum(df: pd.DataFrame, components: tuple[str, ...]) -> tuple[pd.Series, pd.Series]:

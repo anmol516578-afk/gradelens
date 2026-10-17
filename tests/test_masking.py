@@ -83,3 +83,19 @@ def test_real_names_on_sample_data(derived):
     assert masked[ID_COLUMN].nunique() == derived["roll_no"].nunique() == 180
     blob = masked.to_csv()
     assert not any(name in blob for name in pseudo.real_names())
+
+
+def test_short_or_ambiguous_names_do_not_corrupt_questions():
+    frame = pd.DataFrame(
+        {
+            "roll_no": ["R0001", "R0002", "R0003"],
+            "student_name": ["A", "Python", "Kiran Bedi"],
+            "section": ["A", "B", "B"],
+            "subject": ["Python", "Python", "Python"],
+            "score_pct": [50.0, 60.0, 70.0],
+            "result": ["Pass", "Pass", "Pass"],
+        }
+    )
+    pseudo = Pseudonymizer.from_frame(frame)
+    masked = pseudo.mask_text("Fail rate in Section A for Python? And Kiran Bedi?")
+    assert masked == "Fail rate in Section A for Python? And S003?"

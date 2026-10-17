@@ -144,7 +144,9 @@ def attendance_performance(df: pd.DataFrame, threshold: float = 75.0) -> dict:
     if "attendance_pct" not in df:
         return {"r": float("nan"), "n": 0, "bands": pd.DataFrame(), "below": {}, "above": {}}
     paired = df.dropna(subset=["attendance_pct", "score_pct"])
-    r = float(paired["attendance_pct"].corr(paired["score_pct"])) if len(paired) >= 3 else float("nan")
+    varies = paired["attendance_pct"].nunique() > 1 and paired["score_pct"].nunique() > 1
+    # A constant column has no correlation; skip it rather than divide by zero (numpy warns).
+    r = float(paired["attendance_pct"].corr(paired["score_pct"])) if len(paired) >= 3 and varies else float("nan")
     labels = [label for _, _, label in ATTENDANCE_BANDS]
     edges = [ATTENDANCE_BANDS[0][0]] + [hi for _, hi, _ in ATTENDANCE_BANDS]
     banded = paired.assign(band=pd.cut(paired["attendance_pct"], bins=edges, labels=labels, right=False))

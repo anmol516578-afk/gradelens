@@ -6,6 +6,8 @@ these cheap columns, not the whole ingestion pipeline.
 
 from __future__ import annotations
 
+from dataclasses import asdict
+
 import numpy as np
 import pandas as pd
 
@@ -15,7 +17,35 @@ from core.config import INTERNAL_COMPONENTS, MARK_COMPONENTS, AnalysisConfig
 RESULT_PASS, RESULT_FAIL, RESULT_INCOMPLETE = "Pass", "Fail", "Incomplete"
 
 
+def _has_component(df: pd.DataFrame, component: str) -> bool:
+    if component not in df:
+        return False
+    absent = df.get(f"{component}_absent", pd.Series(False, index=df.index))
+    return bool(df[component].notna().any() or absent.any())
+
+
+def effective_config(config: AnalysisConfig, df: pd.DataFrame) -> AnalysisConfig:
+    """The marks scheme for the components this sheet actually has.
+
+    With automatic maxima (0), internal and total maxima only count components that exist: a sheet
+    with MST-1 and MST-2 but no assignment column is out of 30, not 40 (see DEBUG_LOG #36). Maxima
+    the user set explicitly are kept as they are.
+    """
+    updates: dict[str, float] = {}
+    present = [c for c in INTERNAL_COMPONENTS if _has_component(df, c)]
+    internal_max = config.internal_max
+    if config.max_internal_total <= 0 and present:
+        internal_max = float(sum(config.max_marks(c) for c in present))
+        updates["max_internal_total"] = internal_max
+    if config.max_total <= 0 and _has_component(df, "end_term") and (present or "internal_total" in df):
+        updates["max_total"] = internal_max + config.max_end_term
+    if not updates:
+        return config
+    return AnalysisConfig(**{**asdict(config), **updates})
+
+
 def add_derived(clean: pd.DataFrame, config: AnalysisConfig) -> pd.DataFrame:
+    config = effective_config(config, clean)
     df = clean.copy()
     index = df.index
 

@@ -339,12 +339,27 @@ def _data_sheet(wb: Workbook, data: ReportData) -> None:
         ws.column_dimensions[letters["Name"]].width = 24
 
 
+def _neutralise_formulas(wb: Workbook) -> None:
+    """Store text that starts with "=" as text, never as a formula.
+
+    openpyxl turns any string beginning with "=" into a live formula, so a student named
+    '=HYPERLINK("http://…")' in an uploaded sheet would become a clickable link in the HOD's
+    workbook (formula injection, DEBUG_LOG #39). GradeLens never writes real formulas.
+    """
+    for ws in wb.worksheets:
+        for row in ws.iter_rows():
+            for cell in row:
+                if cell.data_type == "f":
+                    cell.data_type = "s"
+
+
 def build_excel(data: ReportData, summary: str) -> bytes:
     wb = Workbook()
     _summary_sheet(wb, data, summary)
     _risk_sheet(wb, data)
     _co_sheet(wb, data)
     _data_sheet(wb, data)
+    _neutralise_formulas(wb)
     wb.properties.title = data.meta.title
     wb.properties.creator = "GradeLens"
     buffer = io.BytesIO()

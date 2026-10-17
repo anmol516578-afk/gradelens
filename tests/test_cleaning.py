@@ -222,3 +222,12 @@ def test_mid_semester_data_uses_internals(config):
     assert assessment_stage(derived) == "mid-semester"
     empty = add_derived(clean(raw([{"roll_no": "1", "subject": "Py", "attendance_pct": "80"}]), config)[0], config)
     assert empty.loc[0, "result"] == "Incomplete"
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [("Sec A", "A"), ("sec-a", "A"), ("Section-B", "B"), ("Sec. C", "C"), ("(A)", "A"),
+     ("AI&ML", "AI&ML"), ("CSE-A", "CSE-A"), ("B.Tech A", "B.TECH A")],
+)  # fmt: skip
+def test_section_labels_keep_their_own_punctuation(raw, expected):
+    assert normalize_section(raw) == expected

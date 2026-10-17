@@ -168,7 +168,7 @@ def load_upload(data: bytes, filename: str) -> None:
 
 def sheet_options() -> list[str]:
     source = st.session_state.get("source")
-    if source == "upload" and st.session_state.get("upload_bytes"):
+    if source == "upload" and st.session_state.get("upload_bytes") is not None:  # b"" must reach the reader
         return cached_sheets(st.session_state["upload_bytes"], st.session_state["upload_name"])
     if source == "sample" and st.session_state.get("sample_kind") == "xlsx":
         ensure_sample_files()
@@ -195,7 +195,7 @@ def current_raw() -> pd.DataFrame | None:
     if source == "sample":
         kind = st.session_state["sample_kind"]
         return cached_sample_raw(kind, sheet if kind == "xlsx" else None)
-    if source == "upload" and st.session_state.get("upload_bytes"):
+    if source == "upload" and st.session_state.get("upload_bytes") is not None:  # b"" must reach the reader
         return cached_read(st.session_state["upload_bytes"], st.session_state["upload_name"], sheet)
     return None
 

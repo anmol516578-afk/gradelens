@@ -174,3 +174,52 @@ def test_on_full_sample(derived):
     assert sections["fail_rate"].idxmax() == "B"
     assert an.attendance_performance(derived)["r"] > 0.3
     assert isinstance(an.fail_rate_matrix(derived), pd.DataFrame)
+
+
+# --- Marks scheme follows the components the sheet has (DEBUG_LOG #36) -----------------
+
+
+def _mst_only_sheet(with_end_term: bool = False, assignment: str | None = None) -> pd.DataFrame:
+    data = {"Roll No": [str(i) for i in range(8)], "Name": [f"S {i}" for i in range(8)], "Subject": ["Py"] * 8,
+            "MST 1": ["15"] * 4 + ["8"] * 4, "MST 2": ["15"] * 4 + ["8"] * 4}  # fmt: skip
+    if with_end_term:
+        data["End Term"] = ["60"] * 8
+    if assignment is not None:
+        data["Assignment"] = [assignment] * 8
+    return pd.DataFrame(data)
+
+
+def _derive_sheet(raw, config=None):
+    from core.config import AnalysisConfig
+    from core.derive import add_derived, effective_config
+    from core.pipeline import auto_prepare
+
+    prepared, tuned, _ = auto_prepare(raw, config or AnalysisConfig())
+    return add_derived(prepared.clean, tuned), effective_config(tuned, prepared.clean)
+
+
+def test_full_marks_without_assignment_column_is_100_percent():
+    derived, scheme = _derive_sheet(_mst_only_sheet())
+    assert scheme.internal_max == 30
+    assert derived["score_pct"].iloc[0] == 100.0
+    assert derived["score_pct"].iloc[4] == pytest.approx(53.33, abs=0.01)  # 16 of 30, not 16 of 40
+
+
+def test_total_max_excludes_missing_assignment():
+    derived, scheme = _derive_sheet(_mst_only_sheet(with_end_term=True))
+    assert (scheme.internal_max, scheme.total_max) == (30, 90)
+    assert derived["score_pct"].iloc[0] == 100.0
+
+
+def test_blank_assignment_column_is_ignored_but_partial_one_counts():
+    _, scheme = _derive_sheet(_mst_only_sheet(assignment=""))
+    assert scheme.internal_max == 30
+    _, scheme = _derive_sheet(_mst_only_sheet(assignment="7"))
+    assert scheme.internal_max == 40
+
+
+def test_explicit_maxima_are_respected():
+    from core.config import AnalysisConfig
+
+    _, scheme = _derive_sheet(_mst_only_sheet(with_end_term=True), AnalysisConfig(max_internal_total=50, max_total=120))
+    assert (scheme.internal_max, scheme.total_max) == (50, 120)

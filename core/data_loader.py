@@ -7,6 +7,7 @@ header (common in university result sheets) and odd CSV encodings.
 
 from __future__ import annotations
 
+import csv
 import io
 from pathlib import Path
 
@@ -45,7 +46,42 @@ def list_sheets(data: bytes, filename: str) -> list[str]:
         raise LoadError(f"Could not open the Excel file: {exc}") from exc
 
 
+def _split_rows(text: str, delimiter: str) -> list[list[str]]:
+    try:
+        return list(csv.reader(io.StringIO(text), delimiter=delimiter))
+    except csv.Error as exc:
+        raise LoadError(f"Could not read the CSV file: {exc}") from exc
+
+
+def _delimiter_score(text: str, delimiter: str) -> float:
+    """How table-like the first lines look with this delimiter: rows sharing the most common width."""
+    lines = [line for line in text[:20000].splitlines()[:60] if line.strip()]
+    if not lines:
+        return 0.0
+    widths = [len(row) for row in _split_rows("\n".join(lines), delimiter)]
+    multi = [w for w in widths if w > 1]
+    if not multi:
+        return 0.0
+    common = max(set(multi), key=multi.count)
+    return common * multi.count(common) / len(widths)
+
+
+def _guess_delimiter(text: str) -> str:
+    """Comma, semicolon (European Excel), tab or pipe — whichever gives the most consistent table."""
+    scores = {sep: _delimiter_score(text, sep) for sep in (",", ";", "\t", "|")}
+    best = max(scores, key=lambda sep: (scores[sep], sep == ","))
+    return best if scores[best] > 0 else ","
+
+
 def _read_csv_raw(data: bytes) -> pd.DataFrame:
+    """Parse CSV text into a rectangular frame of strings.
+
+    Uses the csv module rather than pandas because real sheets are ragged: a short title line
+    ("Rayat Bahra University - MST marks") above the header, or a stray extra comma in one row,
+    makes pandas' tokenizer reject the whole file (see DEBUG_LOG #34). Short rows are padded.
+    """
+    if not data.strip():
+        raise LoadError("The file is empty.")
     last_error: Exception | None = None
     for encoding in ("utf-8-sig", "cp1252", "latin-1"):
         try:
@@ -53,18 +89,12 @@ def _read_csv_raw(data: bytes) -> pd.DataFrame:
         except UnicodeDecodeError as exc:
             last_error = exc
             continue
-        frame = pd.read_csv(io.StringIO(text), header=None, dtype=str, keep_default_na=False, skip_blank_lines=False)
-        if frame.shape[1] == 1 and any(sep in text[:2000] for sep in (";", "\t", "|")):
-            frame = pd.read_csv(
-                io.StringIO(text),
-                header=None,
-                dtype=str,
-                keep_default_na=False,
-                sep=None,
-                engine="python",
-                skip_blank_lines=False,
-            )
-        return frame
+        text = text.replace("\x00", "")
+        rows = _split_rows(text, _guess_delimiter(text))
+        width = max((len(r) for r in rows), default=0)
+        if width == 0:
+            raise LoadError("The file is empty.")
+        return pd.DataFrame([r + [""] * (width - len(r)) for r in rows], dtype=str)
     raise LoadError(f"Could not decode the CSV file: {last_error}")
 
 

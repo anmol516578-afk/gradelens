@@ -20,7 +20,7 @@ load_dotenv(ROOT / ".env")  # optional local settings; real environment variable
 from core import analytics as an  # noqa: E402
 from core.column_mapping import MappingError  # noqa: E402
 from core.data_loader import LoadError  # noqa: E402
-from core.derive import assessment_stage  # noqa: E402
+from core.derive import assessment_stage, effective_config  # noqa: E402
 from ui import (  # noqa: E402
     ai_settings,
     sidebar,
@@ -70,7 +70,7 @@ def _header(ctx: AppContext) -> None:
         f"{ctx.derived_all['section'].nunique()} sections",
         ctx.filters.describe(),
     ]
-    st.markdown(" ".join(f'<span class="gl-chip">{c}</span>' for c in chips), unsafe_allow_html=True)
+    C.chips(chips)
     st.write("")
 
 
@@ -115,8 +115,10 @@ def main() -> None:
         return
 
     derived_all = state.cached_derive(prepared.clean, config.to_key())
+    # Maxima for the components this sheet actually has (e.g. no assignment column -> internals out of 30).
+    config = effective_config(config, prepared.clean)
     filters = sidebar.render_filters(derived_all)
-    sidebar.render_marks_scheme()
+    sidebar.render_marks_scheme(config)
     _sidebar_tail()
 
     filtered = an.apply_filters(derived_all, [filters.semester] if filters.semester else None, filters.sections,

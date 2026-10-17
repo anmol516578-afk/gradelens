@@ -53,7 +53,7 @@ def render(ctx: AppContext) -> None:
     chips.append(f"Semester {semester}")
     if risk_row is not None:
         chips.append(f"{risk_label(risk_row['risk_level'])} risk")
-    st.markdown(" ".join(f'<span class="gl-chip">{c}</span>' for c in chips), unsafe_allow_html=True)
+    C.chips(chips)
     st.write("")
 
     m1, m2, m3, m4 = st.columns(4)
