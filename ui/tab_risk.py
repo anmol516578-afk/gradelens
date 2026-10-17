@@ -82,7 +82,7 @@ def _model_token(model: rm.RiskModel | None) -> tuple:
     return (r.source, r.trained_at, r.chosen, r.n_rows, tuple(model.features))
 
 
-@st.cache_data(show_spinner=False, max_entries=16)
+@st.cache_data(show_spinner=False, max_entries=8, ttl=3600)
 def _cached_assess(df: pd.DataFrame, config_key: tuple, token: tuple, reason: str | None, _model) -> rm.RiskResult:
     return rm.assess(df, AnalysisConfig(**dict(config_key)), _model, fallback_reason=reason)
 

@@ -223,3 +223,17 @@ def test_explicit_maxima_are_respected():
 
     _, scheme = _derive_sheet(_mst_only_sheet(with_end_term=True), AnalysisConfig(max_internal_total=50, max_total=120))
     assert (scheme.internal_max, scheme.total_max) == (50, 120)
+
+
+def test_cache_keys_only_change_with_settings_each_step_reads():
+    """Cleaning reads only max marks; derived columns add the pass mark (DEBUG_LOG #59)."""
+    from core.config import AnalysisConfig
+
+    base = AnalysisConfig()
+    moved = AnalysisConfig(pass_pct=50.0, attendance_threshold=80.0, mst_change_tolerance=15.0)
+    assert base.marks_key() == moved.marks_key()
+    assert base.derive_key() != moved.derive_key()
+    assert base.derive_key() == AnalysisConfig(attendance_threshold=60.0).derive_key()
+    assert base.marks_key() != AnalysisConfig(max_mst1=20.0).marks_key()
+    rebuilt = AnalysisConfig(**dict(moved.derive_key()))
+    assert rebuilt.pass_pct == 50.0 and rebuilt.max_mst1 == base.max_mst1

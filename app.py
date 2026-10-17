@@ -106,7 +106,7 @@ def main() -> None:
 
     config = state.current_config()
     try:
-        prepared = state.cached_prepare(raw, st.session_state["mapping"], config.to_key())
+        prepared = state.cached_prepare(raw, st.session_state["mapping"], config.marks_key())
     except MappingError as exc:
         st.error(str(exc), icon="🧭")
         C.heading("Fix the column mapping", "Tell GradeLens which column holds what, then press Apply.")
@@ -114,7 +114,7 @@ def main() -> None:
         _sidebar_tail()
         return
 
-    derived_all = state.cached_derive(prepared.clean, config.to_key())
+    derived_all = state.cached_derive(prepared.clean, config.derive_key())
     # Maxima for the components this sheet actually has (e.g. no assignment column -> internals out of 30).
     config = effective_config(config, prepared.clean)
     filters = sidebar.render_filters(derived_all)

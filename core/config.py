@@ -118,8 +118,19 @@ class AnalysisConfig:
         """Stable, hashable representation used as a cache key."""
         return tuple(sorted(asdict(self).items()))
 
+    # Narrower cache keys: a step's cache entry should change only when a setting it reads changes,
+    # or every slider move stores another copy of the data (DEBUG_LOG #59).
+    def marks_key(self) -> tuple:
+        """Settings cleaning reads: the maximum marks."""
+        return tuple((name, getattr(self, name)) for name in MARKS_FIELDS)
+
+    def derive_key(self) -> tuple:
+        """Settings the derived columns read: maximum marks and the pass mark."""
+        return (*self.marks_key(), ("pass_pct", self.pass_pct))
+
 
 DEFAULT_CONFIG = AnalysisConfig()
+MARKS_FIELDS = ("max_assignment", "max_mst1", "max_mst2", "max_end_term", "max_internal_total", "max_total")
 
 # "Nice" maximum marks values used when inferring a marks scheme from data.
 NICE_MAX_MARKS = (5, 10, 12, 15, 20, 24, 25, 30, 35, 40, 45, 50, 60, 70, 75, 80, 90, 100, 150, 200)

@@ -45,6 +45,9 @@ CONFIG_KEYS = {
 }
 FILTER_KEYS = ("f_semester", "f_sections", "f_subjects", "drill_section", "drill_subject")
 ALL = "All"
+# Caches are shared by every visitor. Entries expire after an hour and are capped in number so that
+# exploring settings on a large sheet cannot grow memory without bound (DEBUG_LOG #59).
+CACHE_TTL = 3600
 
 
 def init_state() -> None:
@@ -117,23 +120,23 @@ def cached_sheets(data: bytes, filename: str) -> list[str]:
     return list_sheets(data, filename)
 
 
-@st.cache_data(show_spinner=False, max_entries=8)
+@st.cache_data(show_spinner=False, max_entries=4, ttl=CACHE_TTL)
 def cached_read(data: bytes, filename: str, sheet: str | None) -> pd.DataFrame:
     return read_table(data, filename, sheet)
 
 
-@st.cache_data(show_spinner=False, max_entries=16)
+@st.cache_data(show_spinner=False, max_entries=6, ttl=CACHE_TTL)
 def cached_prepare(raw: pd.DataFrame, mapping: tuple, config_key: tuple) -> PreparedData:
     config = AnalysisConfig(**dict(config_key))
     return prepare(raw, mapping_from_tuple(mapping), config)
 
 
-@st.cache_data(show_spinner=False, max_entries=32)
+@st.cache_data(show_spinner=False, max_entries=8, ttl=CACHE_TTL)
 def cached_derive(clean: pd.DataFrame, config_key: tuple) -> pd.DataFrame:
     return add_derived(clean, AnalysisConfig(**dict(config_key)))
 
 
-@st.cache_data(show_spinner=False, max_entries=8)
+@st.cache_data(show_spinner=False, max_entries=4, ttl=CACHE_TTL)
 def cached_question_marks(raw: pd.DataFrame) -> pd.DataFrame:
     return parse_question_marks(raw)
 
