@@ -155,6 +155,10 @@ A saved at-risk model lasts until the app restarts (the disk is not permanent th
    ```
 3. In the Space's **Settings → Variables and secrets**, add `LLM_PROVIDER` and the secret `LLM_API_KEY`.
 
+Spaces shows the app inside an iframe on huggingface.co, where browsers block Streamlit's XSRF cookie and file
+uploads would fail with *403*. The container detects Spaces (`SPACE_ID`) and turns XSRF protection off there only;
+on every other host it stays on.
+
 ### Render
 
 **New → Blueprint** → choose your repository; Render reads `render.yaml`, builds the Dockerfile and asks for

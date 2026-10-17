@@ -8,13 +8,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     MPLCONFIGDIR=/tmp/matplotlib \
     GRADELENS_MODEL_DIR=/app/models \
     STREAMLIT_SERVER_HEADLESS=true \
-    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false \
+    STREAMLIT_SERVER_FILE_WATCHER_TYPE=none
 
 WORKDIR /app
 
 # Unprivileged user: the app (and the code sandbox it spawns) never runs as root.
 # UID 1000 matches hosts that force it (Hugging Face Spaces runs containers as 1000).
-RUN useradd --create-home --uid 1000 appuser
+# The group is created explicitly: whether useradd makes one is a distro default (login.defs).
+RUN groupadd --gid 1000 appuser \
+    && useradd --create-home --uid 1000 --gid appuser appuser
 
 # Dependencies first, so code changes don't reinstall them. All are prebuilt wheels: no compiler needed.
 COPY requirements.txt .
@@ -35,4 +38,7 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
     CMD python -c "import os, sys, urllib.request as u; port = os.environ.get('PORT', '8501'); sys.exit(0 if u.urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=4).read() == b'ok' else 1)"
 
 # exec: Streamlit replaces the shell, so it receives stop signals from the platform directly.
-CMD ["sh", "-c", "exec streamlit run app.py --server.port=${PORT:-8501} --server.address=0.0.0.0"]
+# On Hugging Face Spaces (which sets SPACE_ID) the app runs inside an iframe on huggingface.co, where
+# browsers block Streamlit's XSRF cookie and every file upload fails with 403; XSRF protection is turned
+# off there only. Everywhere else it stays on.
+CMD ["sh", "-c", "exec streamlit run app.py --server.port=${PORT:-8501} --server.address=0.0.0.0 ${SPACE_ID:+--server.enableXsrfProtection=false}"]

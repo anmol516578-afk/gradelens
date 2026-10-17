@@ -33,7 +33,7 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
 )
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -52,6 +52,9 @@ FEATURE_LABELS = {"attendance_pct": "Attendance", "assignment_pct": "Assignment"
                   "mst2_pct": "MST-2"}  # fmt: skip
 ABSENT_FLAGS = {"assignment_pct": "assignment_absent", "mst1_pct": "mst1_absent", "mst2_pct": "mst2_absent"}
 MIN_ROWS, MIN_FAILS, MAX_FOLDS = 100, 10, 5
+# Four features saturate long before this; above it, train on a stratified sample. Rows left out get
+# genuinely out-of-sample predictions. (Training on 40,000 rows took ~11 s per pass-mark change.)
+MAX_TRAIN_ROWS = 10_000
 MODEL_VERSION = 1
 MODEL_FILENAME = "risk_model.joblib"
 
@@ -293,6 +296,11 @@ class ModelReport:
     folds: int
     trained_at: str
     source: str = "trained"  # "trained" on this data | "saved" model loaded from disk
+    n_available: int = 0  # graded records in the sheet; more than n_rows when training used a sample
+
+    @property
+    def sampled(self) -> bool:
+        return self.n_available > self.n_rows
 
     @property
     def chosen_metrics(self) -> dict:
@@ -392,7 +400,13 @@ def train(df: pd.DataFrame, random_state: int = 42) -> RiskModel:
     if not ok:
         raise ValueError(f"Can't train the risk model: {reason}.")
     rows = training_rows(df)
+    n_available = len(rows)
     features = available_features(df)
+    if n_available > MAX_TRAIN_ROWS:
+        labels = (rows["result"] == "Fail").astype(int).to_numpy()
+        keep, _ = train_test_split(np.arange(n_available), train_size=MAX_TRAIN_ROWS, stratify=labels,
+                                   random_state=random_state)  # fmt: skip
+        rows = rows.iloc[np.sort(keep)]
     X = build_features(rows, features)
     y = (rows["result"] == "Fail").astype(int).to_numpy()
     n_fails = int(y.sum())
@@ -449,6 +463,7 @@ def train(df: pd.DataFrame, random_state: int = 42) -> RiskModel:
         n_fails=n_fails,
         folds=folds,
         trained_at=datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"),
+        n_available=int(n_available),
     )
     imputed = X.fillna(X.median())
     return RiskModel(

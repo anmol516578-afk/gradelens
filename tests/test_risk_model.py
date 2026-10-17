@@ -189,3 +189,21 @@ def test_explain_names_weak_indicators(model):
     assert 1 <= len(reasons) <= 2 and all("vs" in r and "average" in r for r in reasons)
     strong = pd.Series({"attendance_pct": 95.0, "assignment_pct": 95.0, "mst1_pct": 95.0, "mst2_pct": 95.0})
     assert model.explain(strong) == []
+
+
+def test_large_sheets_train_on_a_stratified_sample(derived, config, monkeypatch):
+    """Above MAX_TRAIN_ROWS the model trains on a sample; the other rows get out-of-sample predictions."""
+    monkeypatch.setattr(rm, "MAX_TRAIN_ROWS", 500)
+    model = rm.train(derived)
+    report = model.report
+    assert report.n_rows == 500 and report.n_available == 900 and report.sampled
+    fail_share = (derived["result"] == "Fail").mean()
+    assert report.n_fails == pytest.approx(500 * fail_share, abs=1)  # class balance kept
+    assert len(model.oof_proba) == 500
+    result = rm.assess(derived, config, model)
+    assert result.students["ml_prob"].notna().sum() >= 170  # every student scored, sampled or not
+    assert report.confusion.to_numpy().sum() == 500
+
+
+def test_small_sheets_are_not_sampled(model):
+    assert not model.report.sampled and model.report.n_available == model.report.n_rows == 900

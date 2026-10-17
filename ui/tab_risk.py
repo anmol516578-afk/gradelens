@@ -208,8 +208,14 @@ def _model_section(ctx: AppContext, risk: rm.RiskResult) -> None:
 
     metrics = report.metrics.copy()
     metrics.insert(0, "chosen", metrics["model"].eq(report.chosen).map({True: "✅", False: ""}))
-    st.markdown(f"**Model comparison** · {report.n_rows:,} records, {report.n_fails} fails, "
-                f"stratified {report.folds}-fold CV")  # fmt: skip
+    # Older saved models predate n_available; treat them as unsampled.
+    available = getattr(report, "n_available", 0) or report.n_rows
+    trained_on = (
+        f"a stratified sample of {report.n_rows:,} of {available:,} records"
+        if available > report.n_rows
+        else f"{report.n_rows:,} records"
+    )
+    st.markdown(f"**Model comparison** · {trained_on}, {report.n_fails} fails, stratified {report.folds}-fold CV")
     pct = {"format": "%.2f"}
     st.dataframe(
         metrics[["chosen", "model", "f1", "roc_auc", "precision", "recall", "accuracy"]],
