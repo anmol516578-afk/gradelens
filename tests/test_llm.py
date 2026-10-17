@@ -211,3 +211,11 @@ def test_mock_records_payloads_and_replays_script():
 
 def test_check_connection():
     assert check_connection(MockLLM([text_reply("ready")])) == "ready"
+
+
+def test_client_setup_errors_become_friendly(monkeypatch, tmp_path):
+    """An unreadable CA bundle (SSL_CERT_FILE) must not crash the page."""
+    unreadable = tmp_path / "missing-ca.pem"
+    monkeypatch.setenv("SSL_CERT_FILE", str(unreadable))
+    with pytest.raises(LLMError, match="Couldn't set up the connection"):
+        OpenAICompatibleLLM(SETTINGS)

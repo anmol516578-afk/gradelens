@@ -232,12 +232,16 @@ class OpenAICompatibleLLM:
         if client is None:
             from openai import OpenAI
 
-            client = OpenAI(
-                base_url=settings.base_url,
-                api_key=settings.api_key or "not-needed",
-                timeout=settings.timeout,
-                max_retries=0,  # retries are handled below, with backoff we control
-            )
+            try:
+                client = OpenAI(
+                    base_url=settings.base_url,
+                    api_key=settings.api_key or "not-needed",
+                    timeout=settings.timeout,
+                    max_retries=0,  # retries are handled below, with backoff we control
+                )
+            except (OSError, ValueError) as exc:
+                # e.g. an unreadable SSL_CERT_FILE or a malformed URL: report it, don't crash the page.
+                raise LLMError(f"Couldn't set up the connection to {settings.provider_info.label}: {exc}") from exc
         self._client = client
 
     def _delay(self, attempt: int, exc: Exception) -> float:

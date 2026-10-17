@@ -130,3 +130,19 @@ Each entry records an ambiguity in the spec, the choice made, and why.
 
 32. **Reports are generated on demand** (a button), not on every rerun, and the download buttons disappear
     when inputs change, so a stale file is never downloaded by mistake.
+
+## Deployment
+
+33. **Exact pins for direct dependencies only** (`requirements.txt`), verified by a clean, wheels-only
+    install (`pip install --only-binary=:all:`, the same command as the Dockerfile) plus `pip check`. Dev tools
+    live in `requirements-dev.txt`.
+
+34. **Container runs as a non-root user (uid 10001)** with a HEALTHCHECK written in Python (curl is not in the
+    slim image). Sample data is generated at build time; `/app/models` is a Compose volume so a saved at-risk
+    model survives restarts.
+
+35. **`.env` is optional and never overrides real environment variables.** The same variables work in a
+    shell, `.env`, Docker Compose and Streamlit secrets.
+
+36. **The run scripts reinstall only when `requirements.txt` changes** (they keep a copy of the last installed
+    file in `.venv`), so the second start is instant.
