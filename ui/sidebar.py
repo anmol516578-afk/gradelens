@@ -79,8 +79,7 @@ def render_source() -> None:
 
 
 def _reset_filters() -> None:
-    for key in ("f_semester", "f_sections", "f_subjects", "drill_section", "drill_subject"):
-        st.session_state.pop(key, None)
+    state.reset_widgets(state.FILTER_KEYS)
 
 
 def render_filters(df_all: pd.DataFrame) -> Filters:

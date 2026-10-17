@@ -289,9 +289,13 @@ def render(ctx: AppContext) -> None:
 
     st.markdown("**Student list** · select a row to open the profile")
     f1, f2, f3 = st.columns([2, 1.4, 2], vertical_alignment="bottom")
-    levels = f1.multiselect("Risk level", list(rm.LEVELS), default=[rm.HIGH, rm.MEDIUM], key="risk_levels",
-                            format_func=risk_label)  # fmt: skip
+    for key in ("risk_levels", "risk_section", "risk_search"):
+        st.session_state.setdefault(key, list(state.WIDGET_DEFAULTS[key]) if key == "risk_levels"
+                                    else state.WIDGET_DEFAULTS[key])  # fmt: skip
+    levels = f1.multiselect("Risk level", list(rm.LEVELS), key="risk_levels", format_func=risk_label)
     sections = [state.ALL, *sorted(risk.students["section"].unique())]
+    if st.session_state["risk_section"] not in sections:
+        st.session_state["risk_section"] = state.ALL
     section = f2.selectbox("Section", sections, key="risk_section")
     query = f3.text_input("Search name or roll no", key="risk_search", placeholder="e.g. Kulkarni")
 

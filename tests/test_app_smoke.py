@@ -180,3 +180,19 @@ def test_marks_scheme_table_follows_the_sheet():
     assert table["Internal total"] == "30" and table["Assignment"] == "not in this sheet"
     assert any("internal out of **30**" in c.value for c in at.sidebar.caption)
     assert metric(at, "Average score") == "69.4%"  # totals 30,19,15,23,11,27 -> 20.83 of 30
+
+
+def test_resets_assign_widget_defaults_instead_of_deleting_keys():
+    """Deleting a widget key resets it on the server only; the browser kept showing and re-sending the
+    old filter (DEBUG_LOG #60). Resets must leave explicit default values in session state."""
+    from ui import state
+
+    at = loaded()
+    at.multiselect(key="f_sections").set_value(["B"]).run()
+    at.button(key="reset_filters").click().run()
+    assert "f_sections" in at.session_state and at.session_state["f_sections"] == []
+    at.multiselect(key="f_subjects").set_value(["Python"]).run()
+    at.sidebar.file_uploader[0].upload("new.csv", b"Roll No,Subject,MST 1\n1,Python,10\n2,DBMS,12\n", "text/csv").run()
+    for key, value in state.WIDGET_DEFAULTS.items():
+        assert at.session_state[key] == value, key
+    assert state.WIDGET_DEFAULTS["f_semester"] == state.ALL

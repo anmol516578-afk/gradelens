@@ -44,6 +44,21 @@ CONFIG_KEYS = {
     "attendance_threshold": "cfg_attendance_threshold",
 }
 FILTER_KEYS = ("f_semester", "f_sections", "f_subjects", "drill_section", "drill_subject")
+# What each resettable widget returns to (filters, searches, per-tab pickers). Widgets are reset by
+# *assigning* these values: deleting a widget's key resets it on the server only, while the browser
+# keeps showing the old value and sends it back on the next click (DEBUG_LOG #60).
+WIDGET_DEFAULTS = {
+    "f_semester": "All",
+    "f_sections": [],
+    "f_subjects": [],
+    "drill_section": "All",
+    "drill_subject": "All",
+    "student_search": "",
+    "risk_levels": ["High", "Medium"],
+    "risk_section": "All",
+    "risk_search": "",
+    "report_names": True,
+}
 ALL = "All"
 # Caches are shared by every visitor. Entries expire after an hour and are capped in number so that
 # exploring settings on a large sheet cannot grow memory without bound (DEBUG_LOG #59).
@@ -144,12 +159,21 @@ def cached_question_marks(raw: pd.DataFrame) -> pd.DataFrame:
 # --- Data source handling --------------------------------------------------------
 
 
+def reset_widgets(keys=None) -> None:
+    """Put widgets back to their defaults so both the server and the browser forget old values."""
+    for key in keys if keys is not None else WIDGET_DEFAULTS:
+        value = WIDGET_DEFAULTS[key]
+        st.session_state[key] = list(value) if isinstance(value, list) else value
+
+
 def reset_for_new_source() -> None:
-    for key in (*FILTER_KEYS, "selected_student", "profile_student", "co_mapping_df", "co_upload_sig"):
+    reset_widgets()
+    # Plain state (not widgets) can simply be dropped; the tabs rebuild it, assigning any widget values.
+    for key in ("selected_student", "profile_student", "co_mapping_df", "co_upload_sig", "report_co"):
         st.session_state.pop(key, None)
     st.session_state["chat"] = []
     st.session_state["agent_history"] = []
-    for key in [k for k in st.session_state if str(k).startswith(("risk_", "report_"))]:
+    for key in [k for k in st.session_state if str(k).startswith(("risk_", "report_")) and k not in WIDGET_DEFAULTS]:
         st.session_state.pop(key, None)
 
 

@@ -84,10 +84,35 @@ def _figure_from_json(figure_json: str):
     return fig
 
 
+INTERRUPTED = "interrupted"
+
+
+def _ask_again(question: str) -> None:
+    st.session_state[PENDING] = question
+
+
+def mark_interrupted(chat: list[dict]) -> None:
+    """A question still unanswered at the start of a run was stopped by a rerun (another question,
+    a filter or tab change) while the agent worked. Say so, instead of leaving it hanging."""
+    if chat and chat[-1]["role"] == "user":
+        chat.append({
+            "role": "assistant",
+            "status": INTERRUPTED,
+            "question": chat[-1]["content"],
+            "answer": "Stopped before finishing: the page changed while the analysis was running.",
+            "steps": [],
+        })  # fmt: skip
+
+
 def render_answer(message: dict, index: int) -> None:
     status = message.get("status", ANSWERED)
     if status == ANSWERED:
         st.markdown(message["answer"])
+    elif status == INTERRUPTED:
+        st.info(message["answer"], icon="⏹️")
+        st.button("Ask again", key=f"ai_again_{index}", on_click=_ask_again, args=(message["question"],),
+                  icon="🔁")  # fmt: skip
+        return
     else:
         st.warning(message["answer"], icon="⚠️")
 
@@ -249,6 +274,7 @@ def render(ctx: AppContext) -> None:
     )
 
     pseudo = cached_pseudonymizer(ctx.derived_all)
+    mark_interrupted(st.session_state[CHAT])
     for index, message in enumerate(st.session_state[CHAT]):
         with st.chat_message(message["role"], avatar="🧑‍🏫" if message["role"] == "user" else "🤖"):
             if message["role"] == "user":

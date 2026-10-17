@@ -130,16 +130,18 @@ def render(ctx: AppContext) -> None:
         c2.text_input("Faculty / prepared by", key=META_KEYS["faculty"], placeholder="Your name")
     with right:
         st.markdown("**2 · Contents**")
+        st.session_state.setdefault("report_names", True)
+        # Defaults by assignment, not value=: see state.WIDGET_DEFAULTS (DEBUG_LOG #60).
+        if not co_available or "report_co" not in st.session_state:
+            st.session_state["report_co"] = co_available
         include_names = st.toggle(
             "Include student names",
-            value=True,
             key="report_names",
             help="Turn off for a copy you share outside the department: names and roll numbers "
             "are left out and the at-risk list becomes counts per section.",
         )
         include_co = st.toggle(
             "Include CO attainment",
-            value=co_available,
             key="report_co",
             disabled=not co_available,
             help=None if co_available else "Open 🎯 CO Attainment and add question-wise marks first.",

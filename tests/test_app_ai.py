@@ -154,3 +154,18 @@ def test_streamlit_secrets_configure_the_ai(no_llm_env):
     assert not at.exception
     assert not at.chat_input(key="ai_input").disabled
     assert any("Groq" in c.value for c in at.caption)
+
+
+def test_interrupted_question_is_marked_and_can_be_asked_again(mock_llm):
+    """A rerun while the agent works (new question, filter, tab) used to leave the question unanswered."""
+    at = ai_tab()
+    at.session_state["chat"] = [{"role": "user", "content": "Who is the weakest student?"}]  # run was stopped
+    at.run()
+    assert not at.exception
+    chat = at.session_state["chat"]
+    assert [m["role"] for m in chat] == ["user", "assistant"] and chat[1]["status"] == "interrupted"
+    assert any("Stopped before finishing" in i.value for i in at.info)
+    at.button(key="ai_again_1").click().run()
+    assert not at.exception
+    chat = at.session_state["chat"]
+    assert chat[-2]["content"] == "Who is the weakest student?" and chat[-1]["status"] == "answered"
