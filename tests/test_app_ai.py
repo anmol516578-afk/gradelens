@@ -136,3 +136,21 @@ def test_sidebar_key_overrides_and_test_connection(no_llm_env, monkeypatch):
     assert not at.chat_input(key="ai_input").disabled
     at.button(key="ai_test").click().run()
     assert any("Connected to Groq" in s.value for s in at.success)
+
+
+def test_streamlit_secrets_configure_the_ai(no_llm_env):
+    """Streamlit Community Cloud passes settings through st.secrets, not environment variables."""
+    from streamlit.testing.v1 import AppTest
+
+    from tests.conftest import ROOT
+
+    at = AppTest.from_file(str(ROOT / "app.py"), default_timeout=90)
+    at.secrets["LLM_PROVIDER"] = "groq"
+    at.secrets["LLM_API_KEY"] = "gsk-secret"
+    at.run()
+    at.button(key="load_sample_hero").click().run()
+    at.session_state[C.TAB_KEY] = C.TAB_AI
+    at.run()
+    assert not at.exception
+    assert not at.chat_input(key="ai_input").disabled
+    assert any("Groq" in c.value for c in at.caption)

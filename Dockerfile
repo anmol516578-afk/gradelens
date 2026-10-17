@@ -25,9 +25,13 @@ RUN python scripts/generate_sample_data.py > /dev/null \
     && chown -R appuser:appuser /app/models /app/sample_data
 
 USER appuser
+
+# Hosts such as Render, Railway, Cloud Run and Hugging Face Spaces choose the port through $PORT.
+ENV PORT=8501
 EXPOSE 8501
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
-    CMD python -c "import sys, urllib.request as u; sys.exit(0 if u.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=4).read() == b'ok' else 1)"
+    CMD python -c "import os, sys, urllib.request as u; port = os.environ.get('PORT', '8501'); sys.exit(0 if u.urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=4).read() == b'ok' else 1)"
 
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# exec: Streamlit replaces the shell, so it receives stop signals from the platform directly.
+CMD ["sh", "-c", "exec streamlit run app.py --server.port=${PORT:-8501} --server.address=0.0.0.0"]

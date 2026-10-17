@@ -1,0 +1,14 @@
+# One-click deploy on Render: https://dashboard.render.com → New → Blueprint → choose this repository.
+# Render builds the Dockerfile and asks you for LLM_API_KEY (leave it empty to run without Ask AI).
+# The free plan (512 MB, 0.1 CPU) works but is slow and sleeps when idle; "starter" is much snappier.
+services:
+  - type: web
+    name: gradelens
+    runtime: docker
+    plan: free
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: LLM_API_KEY
+        sync: false

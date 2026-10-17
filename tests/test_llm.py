@@ -219,3 +219,9 @@ def test_client_setup_errors_become_friendly(monkeypatch, tmp_path):
     monkeypatch.setenv("SSL_CERT_FILE", str(unreadable))
     with pytest.raises(LLMError, match="Couldn't set up the connection"):
         OpenAICompatibleLLM(SETTINGS)
+
+
+def test_empty_environment_variables_fall_through_to_secrets():
+    secrets = {"LLM_PROVIDER": "groq", "LLM_API_KEY": "gsk-from-secrets"}
+    s = settings_from_env(secrets=secrets, env={"LLM_PROVIDER": "", "LLM_API_KEY": "  "})
+    assert s.provider == "groq" and s.api_key == "gsk-from-secrets"

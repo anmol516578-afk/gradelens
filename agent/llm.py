@@ -107,7 +107,8 @@ class LLMSettings:
 
 
 def _lookup(name: str, secrets: Mapping[str, Any] | None, env: Mapping[str, str]) -> str:
-    value = env.get(name)
+    # An empty variable counts as unset (docker-compose passes unset keys as ""), so secrets still apply.
+    value = (env.get(name) or "").strip() or None
     if value is None and secrets is not None:
         try:
             value = secrets.get(name)
