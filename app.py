@@ -19,8 +19,8 @@ from core import analytics as an  # noqa: E402
 from core.column_mapping import MappingError  # noqa: E402
 from core.data_loader import LoadError  # noqa: E402
 from core.derive import assessment_stage  # noqa: E402
+from ui import ai_settings, sidebar, state, tab_ai, tab_co, tab_dashboard, tab_profile, tab_quality, theme  # noqa: E402
 from ui import components as C  # noqa: E402
-from ui import sidebar, state, tab_co, tab_dashboard, tab_profile, tab_quality, theme  # noqa: E402
 from ui.context import AppContext  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s", stream=sys.stdout)
@@ -35,13 +35,19 @@ def _pending(label: str) -> None:
 
 RENDERERS = {
     C.TAB_DASHBOARD: tab_dashboard.render,
-    C.TAB_AI: lambda ctx: _pending("Ask AI"),
+    C.TAB_AI: tab_ai.render,
     C.TAB_RISK: lambda ctx: _pending("At-Risk"),
     C.TAB_CO: tab_co.render,
     C.TAB_PROFILE: tab_profile.render,
     C.TAB_REPORTS: lambda ctx: _pending("Reports"),
     C.TAB_QUALITY: tab_quality.render,
 }
+
+
+def _sidebar_tail() -> None:
+    on_ai_tab = st.session_state.get(C.TAB_KEY) == C.TAB_AI
+    ai_settings.render(expanded=on_ai_tab and not ai_settings.current().configured)
+    sidebar.render_footer()
 
 
 def _header(ctx: AppContext) -> None:
@@ -78,11 +84,11 @@ def main() -> None:
         raw = state.current_raw()
     except LoadError as exc:
         st.error(f"Couldn't read that file. {exc}", icon="📄")
-        sidebar.render_footer()
+        _sidebar_tail()
         return
     if raw is None:
         C.empty_state()
-        sidebar.render_footer()
+        _sidebar_tail()
         return
 
     if state.source_signature() != st.session_state.get("source_sig"):
@@ -95,13 +101,13 @@ def main() -> None:
         st.error(str(exc), icon="🧭")
         C.heading("Fix the column mapping", "Tell GradeLens which column holds what, then press Apply.")
         tab_quality.mapping_editor(raw, compact=True)
-        sidebar.render_footer()
+        _sidebar_tail()
         return
 
     derived_all = state.cached_derive(prepared.clean, config.to_key())
     filters = sidebar.render_filters(derived_all)
     sidebar.render_marks_scheme()
-    sidebar.render_footer()
+    _sidebar_tail()
 
     filtered = an.apply_filters(derived_all, [filters.semester] if filters.semester else None, filters.sections,
                                 filters.subjects)  # fmt: skip
