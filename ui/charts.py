@@ -27,6 +27,19 @@ def _pct(value: float) -> str:
     return "–" if pd.isna(value) else f"{value:.1f}%"
 
 
+INK_ON_LIGHT, INK_ON_DARK = "#1f1f1f", "#ffffff"
+
+
+def _cell_ink(values, vmin: float, vmax: float, dark_from: float = 0.55) -> list[str]:
+    """Text colour per heatmap cell: dark on light cells, white on dark ones.
+
+    Set explicitly because Streamlit's theme overrides Plotly's automatic contrast, which left
+    light text on light cells in dark mode (DEBUG_LOG #48).
+    """
+    span = (vmax - vmin) or 1.0
+    return [INK_ON_DARK if pd.notna(v) and (float(v) - vmin) / span > dark_from else INK_ON_LIGHT for v in values]
+
+
 def _ramp_scale(ramp: list[str]) -> list[list]:
     return [[i / (len(ramp) - 1), color] for i, color in enumerate(ramp)]
 
@@ -64,17 +77,15 @@ def fail_rate_bar(summary: pd.DataFrame, category: str, horizontal: bool = False
 def fail_heatmap(matrix: pd.DataFrame):
     """Section x subject fail-rate heatmap with values printed in each cell."""
     z = matrix.to_numpy(dtype=float)
-    text = [[_pct(v) for v in row] for row in z]
+    zmax = max(40.0, float(np.nanmax(z)) if np.isfinite(z).any() else 40.0)
     fig = go.Figure(
         go.Heatmap(
             z=z,
             x=list(matrix.columns),
             y=[f"Section {s}" for s in matrix.index],
-            text=text,
-            texttemplate="%{text}",
             colorscale=_ramp_scale(ORANGE_RAMP),
             zmin=0,
-            zmax=max(40.0, float(np.nanmax(z)) if np.isfinite(z).any() else 40.0),
+            zmax=zmax,
             colorbar={"title": "Fail %", "ticksuffix": "%", "thickness": 12},
             hoverinfo="skip",
             xgap=2,
@@ -90,8 +101,11 @@ def fail_heatmap(matrix: pd.DataFrame):
         go.Scatter(
             x=[c[1] for c in cells],
             y=[f"Section {c[0]}" for c in cells],
-            mode="markers",
+            mode="markers+text",  # the overlay also prints each value, with a colour that suits the cell
             marker={"size": 44, "opacity": 0, "symbol": "square"},
+            text=[_pct(c[2]) for c in cells],
+            textposition="middle center",
+            textfont={"color": _cell_ink([c[2] for c in cells], 0.0, zmax), "size": 13},
             customdata=[_pct(c[2]) for c in cells],
             hovertemplate="<b>%{y} · %{x}</b><br>Fail rate %{customdata}<br><i>Click to drill down</i><extra></extra>",
             showlegend=False,
@@ -238,7 +252,10 @@ def profile_radar(subjects: pd.DataFrame, student_name: str):
         )
     )  # fmt: skip
     fig.update_layout(
-        polar={"radialaxis": {"range": [0, 100], "ticksuffix": "%", "angle": 90, "tickfont": {"size": 10}}}
+        polar={
+            "bgcolor": "rgba(0,0,0,0)",  # transparent: a white disc stood out in dark mode
+            "radialaxis": {"range": [0, 100], "ticksuffix": "%", "angle": 90, "tickfont": {"size": 10}},
+        }
     )
     fig = style_figure(fig, height=380, legend=True)
     # Wide side margins so long subject names ("Computer Networks") are not clipped.
@@ -361,9 +378,19 @@ def confusion_heatmap(matrix: pd.DataFrame):
     z = matrix.to_numpy()
     fig = go.Figure(
         go.Heatmap(
-            z=z, x=list(matrix.columns), y=list(matrix.index), text=z, texttemplate="%{text}",
+            z=z, x=list(matrix.columns), y=list(matrix.index),
             colorscale=[[0, "#cde2fb"], [1, "#184f95"]], showscale=False, xgap=2, ygap=2,
             hovertemplate="Actual %{y} · Predicted %{x}: %{z}<extra></extra>",
+        )
+    )  # fmt: skip
+    cells = [
+        (y, x, v) for y, row in zip(matrix.index, z, strict=True) for x, v in zip(matrix.columns, row, strict=True)
+    ]
+    fig.add_trace(
+        go.Scatter(
+            x=[c[1] for c in cells], y=[c[0] for c in cells], mode="text", text=[f"{int(c[2]):,}" for c in cells],
+            textfont={"color": _cell_ink([c[2] for c in cells], float(z.min()), float(z.max()), 0.5), "size": 15},
+            hoverinfo="skip", showlegend=False,
         )
     )  # fmt: skip
     fig.update_xaxes(title="Predicted", type="category", side="bottom")

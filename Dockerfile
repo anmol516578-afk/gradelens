@@ -13,7 +13,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 # Unprivileged user: the app (and the code sandbox it spawns) never runs as root.
-RUN useradd --create-home --uid 10001 appuser
+# UID 1000 matches hosts that force it (Hugging Face Spaces runs containers as 1000).
+RUN useradd --create-home --uid 1000 appuser
 
 # Dependencies first, so code changes don't reinstall them. All are prebuilt wheels: no compiler needed.
 COPY requirements.txt .

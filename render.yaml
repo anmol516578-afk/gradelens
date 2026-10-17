@@ -1,11 +1,13 @@
 # One-click deploy on Render: https://dashboard.render.com → New → Blueprint → choose this repository.
 # Render builds the Dockerfile and asks you for LLM_API_KEY (leave it empty to run without Ask AI).
-# The free plan (512 MB, 0.1 CPU) works but is slow and sleeps when idle; "starter" is much snappier.
+# GradeLens needs about 1 GB of RAM (≈470 MB steady, ≈600 MB while the AI's code runs), so the
+# 512 MB free/starter plans would run out of memory; "standard" (2 GB) is the smallest safe plan.
+# For a free host, use Streamlit Community Cloud or Hugging Face Spaces instead (see README).
 services:
   - type: web
     name: gradelens
     runtime: docker
-    plan: free
+    plan: standard
     healthCheckPath: /_stcore/health
     envVars:
       - key: LLM_PROVIDER

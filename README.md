@@ -102,6 +102,18 @@ and attendance requirement (default 75%) are sliders.
 
 ## Deploy
 
+GradeLens needs about **1 GB of RAM** (≈470 MB steady, ≈600 MB while the AI's code runs) and no GPU.
+
+| Host | Cost | Resources | How |
+|---|---|---|---|
+| **Streamlit Community Cloud** | Free | up to 2.7 GB RAM | [steps below](#streamlit-community-cloud) |
+| **Hugging Face Spaces** (Docker) | Free (*CPU basic*) | 2 vCPU, 16 GB RAM | [steps below](#hugging-face-spaces) |
+| **Render** | Paid (*standard*, 2 GB) | — | `render.yaml` blueprint included |
+| **Railway, Google Cloud Run, any Docker host** | Varies | ≥ 1 GB | The image listens on `$PORT` (default 8501) |
+| **Your own computer / college server** | Free | — | `./run.sh` or `run.bat`, or Docker |
+
+Render's free and starter plans have 512 MB, which is not enough.
+
 ### Docker
 
 ```bash
@@ -116,18 +128,37 @@ docker build -t gradelens .
 docker run -p 8501:8501 -e LLM_PROVIDER=gemini -e LLM_API_KEY=your-key gradelens
 ```
 
-The image is `python:3.11-slim`, runs as a non-root user, has a `HEALTHCHECK` on `/_stcore/health`, and Compose keeps a
-saved at-risk model in a named volume. To use Ollama on the host from inside Docker, set
-`LLM_PROVIDER=ollama` and `LLM_BASE_URL=http://host.docker.internal:11434/v1`.
+The image is `python:3.11-slim`, runs as a non-root user (UID 1000), has a `HEALTHCHECK` on `/_stcore/health`,
+and listens on `$PORT` when the host sets it. Compose keeps a saved at-risk model in a named volume. To use Ollama on
+the host from inside Docker, set `LLM_PROVIDER=ollama` and `LLM_BASE_URL=http://host.docker.internal:11434/v1`.
 
 ### Streamlit Community Cloud
 
 1. Push this folder to a GitHub repository.
 2. At [share.streamlit.io](https://share.streamlit.io) → **Create app** → pick the repo, branch and `app.py`.
-   Under **Advanced settings** choose Python **3.11**.
+   Under **Advanced settings** choose Python **3.11, 3.12 or 3.13** (all tested).
 3. In **Secrets**, paste the contents of `.streamlit/secrets.toml.example` with your key filled in. Deploy.
 
-Uploads are limited to 50 MB (`.streamlit/config.toml`). Files are processed in memory and never stored.
+A saved at-risk model lasts until the app restarts (the disk is not permanent there).
+
+### Hugging Face Spaces
+
+1. Create a Space at [huggingface.co/new-space](https://huggingface.co/new-space) → SDK **Docker** → *CPU basic* (free).
+2. Push this folder to the Space's git repository, adding this block at the very top of `README.md`:
+
+   ```yaml
+   ---
+   title: GradeLens
+   sdk: docker
+   app_port: 8501
+   ---
+   ```
+3. In the Space's **Settings → Variables and secrets**, add `LLM_PROVIDER` and the secret `LLM_API_KEY`.
+
+### Render
+
+**New → Blueprint** → choose your repository; Render reads `render.yaml`, builds the Dockerfile and asks for
+`LLM_API_KEY`. The blueprint uses the *standard* plan (2 GB).
 
 ### Any Linux server
 
@@ -136,7 +167,9 @@ python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/streamlit run app.py --server.port 8501 --server.address 0.0.0.0
 ```
 
-Put it behind a reverse proxy (nginx / Caddy) with HTTPS if it faces the internet.
+Put it behind a reverse proxy (nginx / Caddy) with HTTPS if it faces the internet; the proxy must pass WebSockets.
+
+Uploads are limited to 50 MB (`.streamlit/config.toml`). Files are processed in memory and never stored.
 
 ---
 
@@ -246,6 +279,13 @@ GradeLens uses the rule-based score and says why. For mid-semester sheets, first
 past semester's final results.
 
 **Port 8501 is busy.** `PORT=8600 ./run.sh` (macOS/Linux) or `set PORT=8600` then `run.bat` (Windows).
+
+**Uploads fail with "403" on a hosted copy.** Some embedded views and proxies (for example a Hugging Face Space
+shown inside huggingface.co) block Streamlit's upload security cookie. Open the app's own address (…`.hf.space`), or
+make sure the proxy passes cookies and WebSockets. As a last resort set `STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false`.
+
+**The hosted app restarts or says it is over its resource limits.** It needs about 1 GB of RAM; 512 MB plans are too
+small (see [Deploy](#deploy)).
 
 **Docker: `host.docker.internal` doesn't resolve (Linux).** Use `docker compose`, which adds it, or pass
 `--add-host=host.docker.internal:host-gateway` to `docker run`.
