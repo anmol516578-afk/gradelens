@@ -57,6 +57,10 @@ BLOCKED_PYTHON = {
     "numpy_ctypes": "np.ctypeslib",
     "excel_writer": "pd.ExcelWriter('x.xlsx')",
     "fig_write": "fig = px.bar(df, x='section', y='score_pct')\nfig.write_html('x.html')",
+    "fig_to_image": "fig = px.bar(df, x='section', y='score_pct')\nresult = fig.to_image()",
+    "f_string_dunder": "result = f'{df.__class__}'",
+    "builtins_name": "result = __builtins__",
+    "subclass_walk": "result = object.__subclasses__()",
     "class_def": "class X:\n    pass",
     "global_stmt": "def f():\n    global df\n    return df",
 }
@@ -116,6 +120,12 @@ def test_non_select_sql_is_rejected(query, df):
     with pytest.raises(SandboxViolation):
         validate_sql(query)
     assert not execute("sql", query, df).ok
+
+
+def test_bare_file_path_as_sql_table_is_blocked(df):
+    """DuckDB would read a quoted path as a table; external access is disabled in the sandbox."""
+    result = execute("sql", "SELECT * FROM '/etc/hostname'", df)
+    assert not result.ok
 
 
 def test_file_access_blocked_inside_duckdb_even_if_validation_missed(df, monkeypatch):

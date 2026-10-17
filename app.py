@@ -40,7 +40,7 @@ from ui.context import AppContext  # noqa: E402
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s", stream=sys.stdout)
 log = logging.getLogger("gradelens")
 
-st.set_page_config(page_title="GradeLens", page_icon="🎓", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="GradeLens", page_icon="🎓", layout="wide", initial_sidebar_state="auto")
 
 
 RENDERERS = {

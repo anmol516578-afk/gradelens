@@ -53,7 +53,8 @@ BANNED_ATTRS = {
     "eval", "query", "exec", "system", "popen", "spawn", "format", "format_map", "mro",
     "ctypes", "ctypeslib", "lib", "io", "os", "sys", "subprocess", "builtins", "importlib", "shutil",
     "socket", "pathlib", "pickle", "marshal", "codecs", "f2py", "testing", "distutils", "core", "compat",
-    "plotting", "plot", "pipe_to", "ExcelWriter", "ExcelFile", "HDFStore", "webbrowser",
+    "plotting", "plot", "pipe_to", "ExcelWriter", "ExcelFile", "HDFStore", "webbrowser", "to_image",
+    "full_figure_for_development",
     "from_file", "read", "write",
 }  # fmt: skip
 WRITE_KWARGS = {"buf", "path", "path_or_buf", "excel_writer", "fname", "file", "filepath_or_buffer"}

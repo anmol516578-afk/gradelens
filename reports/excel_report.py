@@ -74,12 +74,14 @@ def _write_table(ws: Worksheet, frame: pd.DataFrame, start_row: int, formats: di
         cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
         cell.border = Border(bottom=THIN)
         letters[column] = get_column_letter(j)
+    # Data cells get a number format only where needed: every style assignment costs openpyxl a hash
+    # lookup, and per-cell borders made a 1,000-student workbook take ~10 s (see DEBUG_LOG #30).
+    formatted = {j: formats[c] for j, c in enumerate(frame.columns, start=1) if c in formats}
     for i, row in enumerate(frame.itertuples(index=False), start=start_row + 1):
-        for j, (column, value) in enumerate(zip(frame.columns, row, strict=True), start=1):
+        for j, value in enumerate(row, start=1):
             cell = ws.cell(row=i, column=j, value=_clean_value(value))
-            cell.border = Border(bottom=THIN)
-            if column in formats:
-                cell.number_format = formats[column]
+            if j in formatted:
+                cell.number_format = formatted[j]
     return start_row + 1, start_row + len(frame), letters
 
 
@@ -300,8 +302,13 @@ def _data_sheet(wb: Workbook, data: ReportData) -> None:
     if not data.meta.include_names:
         frame = frame.drop(columns=[c for c in ("Name",) if c in frame])
         frame["Roll No"] = "(omitted)"
-    numeric = {c: "0.0" for c in frame.columns if pd.api.types.is_float_dtype(frame[c])}
-    first, last, letters = _write_table(ws, frame, 1, numeric)
+    # Thousands of rows: round instead of styling each cell, and append rows in bulk.
+    floats = [c for c in frame.columns if pd.api.types.is_float_dtype(frame[c])]
+    frame = frame.assign(**{c: frame[c].round(2) for c in floats})
+    _, _, letters = _write_table(ws, frame.head(0), 1)
+    for row in frame.itertuples(index=False):
+        ws.append([_clean_value(v) for v in row])
+    first, last = 2, 1 + len(frame)
     ws.freeze_panes = "A2"
     ws.auto_filter.ref = f"A1:{get_column_letter(len(frame.columns))}{max(last, 1)}"
     if last >= first:
