@@ -61,3 +61,57 @@ def test_small_upload_falls_back_to_rules():
     at.sidebar.file_uploader[0].upload("small.csv", pd.DataFrame(rows).to_csv(index=False).encode()).run()
     open_tab(at, C.TAB_RISK)
     assert any("Rule-based scores" in i.value and "too little data" in i.value for i in at.info)
+
+
+# --- Optional features fail softly (DEBUG_LOG #43) ---------------------------------------
+
+
+def _clear_caches():
+    import streamlit as st
+
+    st.cache_resource.clear()
+    st.cache_data.clear()
+
+
+def test_model_training_failure_falls_back_to_rules(monkeypatch):
+    _clear_caches()
+
+    def broken_train(df, random_state=42):
+        raise RuntimeError("solver exploded")
+
+    monkeypatch.setattr(rm, "train", broken_train)
+    at = open_tab(loaded(), C.TAB_RISK)
+    assert not at.exception
+    assert any("could not be trained" in i.value and "solver exploded" in i.value for i in at.info)
+    assert metric(at, "At-risk students") == "81"  # rule-based count
+    _clear_caches()
+
+
+def test_risk_failure_never_breaks_the_rest_of_the_app(monkeypatch):
+    _clear_caches()
+
+    def broken_assess(*args, **kwargs):
+        raise RuntimeError("bad data")
+
+    monkeypatch.setattr(rm, "assess", broken_assess)
+    at = loaded()
+    assert not at.exception
+    assert metric(at, "At-risk students") == "–"
+    open_tab(at, C.TAB_RISK)
+    assert any("couldn't be calculated" in w.value for w in at.warning)
+    for label in (C.TAB_DASHBOARD, C.TAB_PROFILE, C.TAB_REPORTS):
+        open_tab(at, label)
+    _clear_caches()
+
+
+def test_report_failure_shows_an_error(monkeypatch):
+    from ui import tab_reports
+
+    def broken_pdf(*args, **kwargs):
+        raise ValueError("font missing")
+
+    monkeypatch.setattr(tab_reports, "build_pdf", broken_pdf)
+    at = open_tab(loaded(), C.TAB_REPORTS)
+    at.button(key="report_generate").click().run()
+    assert not at.exception
+    assert any("Couldn't build the reports" in e.value and "font missing" in e.value for e in at.error)

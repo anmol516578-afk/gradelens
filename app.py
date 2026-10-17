@@ -136,7 +136,7 @@ def main() -> None:
     ctx.risk = tab_risk.compute_risk(filtered, derived_all, config)
 
     _header(ctx)
-    current = an.kpis(filtered, at_risk_count=ctx.risk.at_risk_count)
+    current = an.kpis(filtered, at_risk_count=ctx.risk.at_risk_count if ctx.risk is not None else None)
     baseline = an.kpis(derived_all) if filters.active else None
     C.kpi_row(current, baseline)
     st.write("")

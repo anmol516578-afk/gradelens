@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import re
 import time
 
@@ -19,6 +20,8 @@ from reports.pdf_report import build_pdf
 from ui import ai_settings, state
 from ui import components as C
 from ui.context import AppContext
+
+log = logging.getLogger("gradelens.reports")
 
 SUMMARY_KEY = "report_summary"
 AUTO_KEY = "report_summary_auto"
@@ -202,8 +205,13 @@ def render(ctx: AppContext) -> None:
     if st.button("📄 Generate reports", type="primary", key="report_generate"):
         with st.spinner("Building the PDF and Excel reports…"):
             start = time.monotonic()
-            pdf = build_pdf(data, summary)
-            xlsx = build_excel(data, summary)
+            try:
+                pdf = build_pdf(data, summary)
+                xlsx = build_excel(data, summary)
+            except Exception as exc:  # noqa: BLE001 - show the problem, keep the app running
+                log.exception("Report generation failed")
+                st.error(f"Couldn't build the reports: {type(exc).__name__}: {exc}", icon="📄")
+                return
             output = {"signature": signature, "pdf": pdf, "xlsx": xlsx, "seconds": time.monotonic() - start}
             st.session_state[OUTPUT_KEY] = output
         st.toast("Reports ready to download", icon="✅")

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import io
+import logging
 from functools import partial
 
 import joblib
@@ -15,6 +16,8 @@ from ui import charts, state
 from ui import components as C
 from ui.context import AppContext
 from ui.theme import PLOTLY_CONFIG, risk_label
+
+log = logging.getLogger("gradelens.risk")
 
 REASON_GROUPS = (
     ("Failed", "Failed a subject"),
@@ -41,8 +44,23 @@ def _cached_saved_model(mtime: float) -> rm.RiskModel | None:
 
 
 @st.cache_resource(show_spinner=False, max_entries=4)
-def _cached_train(df_all: pd.DataFrame, config_key: tuple) -> rm.RiskModel:
-    return rm.train(df_all)
+def _cached_train(df_all: pd.DataFrame, config_key: tuple) -> tuple[rm.RiskModel | None, str | None]:
+    """Train once per sheet. A failure is cached too, so it is not retried on every click."""
+    try:
+        return rm.train(df_all), None
+    except Exception as exc:  # noqa: BLE001 - the model is optional; rules still work
+        log.exception("Risk model training failed")
+        return None, f"the model could not be trained on this sheet ({type(exc).__name__}: {exc})"
+
+
+def _training_key(config: AnalysisConfig) -> tuple:
+    """Only what changes the training labels: the pass mark and the maxima.
+
+    Keying on the whole config retrained the model (~3 s on 6,000 rows) every time the
+    attendance slider moved, though attendance plays no part in training (DEBUG_LOG #44).
+    """
+    return (config.pass_pct, config.max_assignment, config.max_mst1, config.max_mst2, config.max_end_term,
+            config.max_internal_total, config.max_total)  # fmt: skip
 
 
 def get_model(df_all: pd.DataFrame, config: AnalysisConfig) -> tuple[rm.RiskModel | None, str | None]:
@@ -50,7 +68,7 @@ def get_model(df_all: pd.DataFrame, config: AnalysisConfig) -> tuple[rm.RiskMode
     ok, reason = rm.can_train(df_all)
     if ok:
         with st.spinner("Training the at-risk model on this sheet…"):
-            return _cached_train(df_all, config.to_key()), None
+            return _cached_train(df_all, _training_key(config))
     saved = _cached_saved_model(_saved_model_mtime())
     if saved is not None and len(set(saved.features) & set(df_all.columns)) >= 2:
         return saved, None
@@ -69,9 +87,18 @@ def _cached_assess(df: pd.DataFrame, config_key: tuple, token: tuple, reason: st
     return rm.assess(df, AnalysisConfig(**dict(config_key)), _model, fallback_reason=reason)
 
 
-def compute_risk(df: pd.DataFrame, df_all: pd.DataFrame, config: AnalysisConfig) -> rm.RiskResult:
-    model, reason = get_model(df_all, config)
-    return _cached_assess(df, config.to_key(), _model_token(model), reason, model)
+def compute_risk(df: pd.DataFrame, df_all: pd.DataFrame, config: AnalysisConfig) -> rm.RiskResult | None:
+    """Risk for the students in view. Never raises: the rest of the app must work regardless."""
+    try:
+        model, reason = get_model(df_all, config)
+        return _cached_assess(df, config.to_key(), _model_token(model), reason, model)
+    except Exception:  # noqa: BLE001
+        log.exception("Risk scoring with the model failed; falling back to rules")
+    try:
+        return rm.assess(df, config, None, fallback_reason="the model failed on this sheet")
+    except Exception:  # noqa: BLE001
+        log.exception("Rule-based risk scoring failed")
+        return None
 
 
 def reason_counts(students: pd.DataFrame) -> pd.DataFrame:
@@ -227,12 +254,15 @@ def _model_section(ctx: AppContext, risk: rm.RiskResult) -> None:
 
 
 def render(ctx: AppContext) -> None:
-    risk: rm.RiskResult = ctx.risk
+    risk: rm.RiskResult | None = ctx.risk
     C.heading(
         "Students who may need support",
         "⚖️ Decision support, not a final judgement — talk to the student and check the context before acting.",
     )
-    if risk is None or risk.students.empty:
+    if risk is None:
+        st.warning("Risk scores couldn't be calculated for this sheet. Check the 🧹 Data Quality tab.", icon="⚠️")
+        return
+    if risk.students.empty:
         st.info("No students in view.", icon="🔍")
         return
     _banner(risk)

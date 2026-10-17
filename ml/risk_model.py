@@ -269,7 +269,7 @@ def _candidates(random_state: int) -> dict[str, Pipeline]:
                 (
                     "model",
                     RandomForestClassifier(
-                        n_estimators=200,
+                        n_estimators=120,
                         min_samples_leaf=3,
                         class_weight="balanced",
                         random_state=random_state,
