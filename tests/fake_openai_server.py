@@ -95,6 +95,13 @@ def decide(messages: list[dict]) -> dict:
             "tool_calls": [_tool_call("final_answer", {"answer": answer, "assumptions": assumptions})]}  # fmt: skip
 
 
+def summarize(prompt: str) -> str:
+    """Deterministic stand-in for an AI-written executive summary: restates the facts it was given."""
+    facts = [line[2:] for line in prompt.splitlines() if line.startswith("- ")]
+    body = " ".join(facts[1:4])
+    return f"{body} Recommended next steps: run remedial sessions for the weakest subject and meet at-risk students."
+
+
 class Handler(BaseHTTPRequestHandler):
     calls: list[dict] = []
 
@@ -113,7 +120,8 @@ class Handler(BaseHTTPRequestHandler):
             return
         messages = body.get("messages", [])
         if not body.get("tools"):
-            message = {"role": "assistant", "content": "ready"}
+            prompt = messages[-1].get("content", "") if messages else ""
+            message = {"role": "assistant", "content": summarize(prompt) if "executive summary" in prompt else "ready"}
         else:
             message = decide(messages)
         self._send(

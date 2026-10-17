@@ -26,3 +26,8 @@ Notable bugs found while building and testing, with root cause and fix.
 | 20 | P5 | Out-of-fold probabilities could attach to the wrong students if row order changed | They were keyed by the DataFrame's positional index | Keyed by (roll_no, subject); test checks a filtered, reversed view gets identical values |
 | 21 | P5 | Training took ~4 s | Each model was fitted twice per fold (once for scores, once for probabilities) | One fit per fold yields both: ~2 s |
 | 22 | P5 | Profile charts: attendance labels collided with the requirement line; radar clipped "Computer Networks" | Labels outside bars sat on the dashed line; radar margins too narrow | Labels inside bars, annotation top-left; wider radar margins |
+| 23 | P6 | Report tests could not import `pypdf` | It was installed system-wide, not in the project environment | Added to the dev requirements and installed in the venv |
+| 24 | P6 | Excel header fill was written as lowercase hex (`002a78d6`) | Palette colours are lowercase; openpyxl stores them as given | Colours are upper-cased before use (Excel's own convention) |
+| 25 | P6 | In the PDF's CO chart, the "Target" label overlapped the last bar's label | The label was drawn at the right end of the target line, where bar labels also sit | The target line is described in a legend under the chart |
+| 26 | P6 | Header and risk-level cells in PDF tables ignored their colours | ReportLab parses a Paragraph's style when it is created; changing `.style` later has no effect | Styles are passed when each Paragraph is built |
+| 27 | P6 | Summary said "CO3 fall below the target" | Plural verb for a single CO | Verb agrees with the number of COs |

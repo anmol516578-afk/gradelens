@@ -105,3 +105,28 @@ Each entry records an ambiguity in the spec, the choice made, and why.
 25. **Train automatically on final-results sheets; save only on request.** Saving writes
     `models/risk_model.joblib` (configurable with `GRADELENS_MODEL_DIR`) and is then used for mid-semester
     sheets. Models are never loaded from uploads, because unpickling an untrusted file can run code.
+
+## Reports
+
+26. **Reports cover the data in view** (sidebar filters), like every other tab. The scope is printed on the
+    cover and in the file name.
+
+27. **Charts in reports use matplotlib, fonts come from matplotlib.** Plotly's static export needs a browser
+    (kaleido), which breaks in slim containers. DejaVu Sans (bundled with matplotlib) gives the PDF symbols
+    such as ≥ and → with no system fonts installed.
+
+28. **The PDF lists the top 40 at-risk students; the Excel sheet lists everyone.** The PDF is for reading,
+    the workbook for working.
+
+29. **"Include student names" off = shareable copy.** Names and roll numbers are removed from both files and
+    the PDF's at-risk list becomes counts per section.
+
+30. **The executive summary is template-written by default and editable.** "Write with AI" sends only
+    aggregate facts (never names). An edited summary is kept when filters change; "Use automatic text"
+    restores the generated one.
+
+31. **CO attainment in reports** comes from the CO tab's latest result; for the sample data it is computed
+    automatically with the default OBE thresholds.
+
+32. **Reports are generated on demand** (a button), not on every rerun, and the download buttons disappear
+    when inputs change, so a stale file is never downloaded by mistake.

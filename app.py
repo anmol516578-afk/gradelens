@@ -28,6 +28,7 @@ from ui import (  # noqa: E402
     tab_dashboard,
     tab_profile,
     tab_quality,
+    tab_reports,
     tab_risk,
     theme,
 )
@@ -40,17 +41,13 @@ log = logging.getLogger("gradelens")
 st.set_page_config(page_title="GradeLens", page_icon="🎓", layout="wide", initial_sidebar_state="expanded")
 
 
-def _pending(label: str) -> None:
-    st.info(f"{label} is being built.", icon="🛠️")
-
-
 RENDERERS = {
     C.TAB_DASHBOARD: tab_dashboard.render,
     C.TAB_AI: tab_ai.render,
     C.TAB_RISK: tab_risk.render,
     C.TAB_CO: tab_co.render,
     C.TAB_PROFILE: tab_profile.render,
-    C.TAB_REPORTS: lambda ctx: _pending("Reports"),
+    C.TAB_REPORTS: tab_reports.render,
     C.TAB_QUALITY: tab_quality.render,
 }
 
