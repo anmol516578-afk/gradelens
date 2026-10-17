@@ -19,7 +19,18 @@ from core import analytics as an  # noqa: E402
 from core.column_mapping import MappingError  # noqa: E402
 from core.data_loader import LoadError  # noqa: E402
 from core.derive import assessment_stage  # noqa: E402
-from ui import ai_settings, sidebar, state, tab_ai, tab_co, tab_dashboard, tab_profile, tab_quality, theme  # noqa: E402
+from ui import (  # noqa: E402
+    ai_settings,
+    sidebar,
+    state,
+    tab_ai,
+    tab_co,
+    tab_dashboard,
+    tab_profile,
+    tab_quality,
+    tab_risk,
+    theme,
+)
 from ui import components as C  # noqa: E402
 from ui.context import AppContext  # noqa: E402
 
@@ -36,7 +47,7 @@ def _pending(label: str) -> None:
 RENDERERS = {
     C.TAB_DASHBOARD: tab_dashboard.render,
     C.TAB_AI: tab_ai.render,
-    C.TAB_RISK: lambda ctx: _pending("At-Risk"),
+    C.TAB_RISK: tab_risk.render,
     C.TAB_CO: tab_co.render,
     C.TAB_PROFILE: tab_profile.render,
     C.TAB_REPORTS: lambda ctx: _pending("Reports"),
@@ -121,8 +132,10 @@ def main() -> None:
         section_colors=theme.section_colors(list(derived_all["section"].unique())),
     )
 
+    ctx.risk = tab_risk.compute_risk(filtered, derived_all, config)
+
     _header(ctx)
-    current = an.kpis(filtered, at_risk_count=None)
+    current = an.kpis(filtered, at_risk_count=ctx.risk.at_risk_count)
     baseline = an.kpis(derived_all) if filters.active else None
     C.kpi_row(current, baseline)
     st.write("")

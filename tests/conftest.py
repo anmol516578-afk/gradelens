@@ -48,3 +48,18 @@ def make_frame(rows: list[dict]) -> pd.DataFrame:
         if text_col in df:
             df[text_col] = df[text_col].astype(str)
     return df
+
+
+@pytest.fixture(autouse=True, scope="session")
+def isolated_model_dir(tmp_path_factory):
+    """Never read or write the real models/ folder from tests."""
+    import os
+
+    path = tmp_path_factory.mktemp("models")
+    previous = os.environ.get("GRADELENS_MODEL_DIR")
+    os.environ["GRADELENS_MODEL_DIR"] = str(path)
+    yield path
+    if previous is None:
+        os.environ.pop("GRADELENS_MODEL_DIR", None)
+    else:
+        os.environ["GRADELENS_MODEL_DIR"] = previous

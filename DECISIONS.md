@@ -55,3 +55,53 @@ Each entry records an ambiguity in the spec, the choice made, and why.
 
 14. **MST change tolerance = 10 percentage points** (1.5 marks out of 15). Smaller tolerances treat
     single-mark noise as a trend.
+
+## AI analyst
+
+15. **Any OpenAI-compatible endpoint, through the OpenAI SDK.** One code path covers OpenAI, Gemini,
+    Groq, OpenRouter and local Ollama. Default models (checked against provider docs, October 2026):
+    `gpt-5.4-mini`, `gemini-3.8-flash`, `openai/gpt-oss-120b`, `qwen3:8b` (Ollama). `temperature` is never
+    sent because reasoning models reject it.
+
+16. **The agent analyses the data in view (sidebar filters applied).** "What you see is what the AI sees";
+    the scope is stated in the prompt and above the chat. IDs come from the *unfiltered* data so they stay
+    stable when filters change.
+
+17. **Pseudonymise, don't just drop names.** Students become S001, S002, … (sorted by roll number). Full
+    names and roll numbers of 5+ characters typed into a question are masked too; shorter roll numbers ("12")
+    are left alone because they collide with ordinary numbers and identify no one. Answers, tables and chart
+    labels are unmasked only for display.
+
+18. **"Max 3 consecutive error retries" = first attempt + 3 fixes.** The agent gives up after the 4th
+    consecutive failed tool call. Step limit is 6 model calls; on the last one the model is told to answer.
+
+19. **Plain-text replies count as an answer.** Some models answer without calling `final_answer`; rejecting
+    that would waste steps. Empty replies get a nudge instead.
+
+20. **Sandbox = AST allow-list + separate process.** Validation rejects imports, dunder access, eval-like
+    calls, file/network I/O and getattr tricks; the worker then runs with restricted builtins, an empty
+    environment (no API keys), CPU/memory/file-size limits and a wall-clock alarm. DuckDB runs with external
+    access disabled. Results return as JSON, never pickles.
+
+21. **Follow-ups keep the last 4 Q&A turns** (question, answer and the code used), not the full tool
+    transcripts, to keep prompts small.
+
+## At-risk students
+
+22. **Risk unit = student; ML unit = student-subject.** The model predicts failing a subject from attendance,
+    assignment, MST-1 and MST-2 (never end-term marks, which would leak the answer). A student's model
+    probability is their highest across subjects they have not already failed.
+
+23. **Rule points (calibrated on the sample).** Failed subject 30 (max 60), internals below pass 20 per
+    subject (max 40), attendance below requirement 20 (30 if 15+ below), sharp MST-2 drop (20+ points) 10 per
+    subject (max 20), passing by under 10 points in 2+ subjects 10, absent in an MST/assignment 10.
+    High ≥ 50, Medium ≥ 25. One signal alone stays Low; a fail is Medium; a fail plus another signal is High.
+
+24. **Model choice by mean F1, ties broken by ROC-AUC,** across stratified k-fold CV (k = min(5, fails)).
+    Both candidates use `class_weight="balanced"`. Probabilities shown for training rows are out-of-fold.
+    Model levels: ≥ 0.75 High, ≥ 0.5 Medium (balanced training inflates probabilities, so 0.5 is the decision
+    boundary). Final level = the higher of the rule and model levels.
+
+25. **Train automatically on final-results sheets; save only on request.** Saving writes
+    `models/risk_model.joblib` (configurable with `GRADELENS_MODEL_DIR`) and is then used for mid-semester
+    sheets. Models are never loaded from uploads, because unpickling an untrusted file can run code.

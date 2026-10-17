@@ -240,7 +240,8 @@ def profile_radar(subjects: pd.DataFrame, student_name: str):
         polar={"radialaxis": {"range": [0, 100], "ticksuffix": "%", "angle": 90, "tickfont": {"size": 10}}}
     )
     fig = style_figure(fig, height=380, legend=True)
-    fig.update_layout(margin={"l": 90, "r": 90, "t": 48, "b": 36})
+    # Wide side margins so long subject names ("Computer Networks") are not clipped.
+    fig.update_layout(margin={"l": 130, "r": 130, "t": 48, "b": 36})
     return fig
 
 
@@ -271,13 +272,18 @@ def profile_attendance(subjects: pd.DataFrame, threshold: float):
             x=data["subject"],
             y=data["attendance_pct"],
             marker_color=[STATUS["critical"] if b else SCORE_COLOR for b in below],
-            text=[f"{v:.0f}%" + (" ⚠ below" if b else "") for v, b in zip(data["attendance_pct"], below, strict=True)],
-            textposition="outside",
-            cliponaxis=False,
+            # Labels sit inside the bars so they never collide with the requirement line.
+            text=[f"{v:.0f}%" + (" ⚠" if b else "") for v, b in zip(data["attendance_pct"], below, strict=True)],
+            textposition="inside",
+            insidetextanchor="end",
+            textfont={"color": "white"},
             hovertemplate="<b>%{x}</b><br>Attendance %{y:.0f}%<extra></extra>",
         )
     )
-    fig.add_hline(y=threshold, line_dash="dash", line_color=MUTED, annotation_text=f"Required {threshold:g}%")
+    fig.add_hline(
+        y=threshold, line_dash="dash", line_color=MUTED, annotation_text=f"Required {threshold:g}%",
+        annotation_position="top left", annotation_yshift=2,
+    )  # fmt: skip
     fig.update_yaxes(title="Attendance (%)", ticksuffix="%", range=[0, 110], showgrid=True)
     fig.update_xaxes(title=None, type="category")
     return style_figure(fig, height=300, legend=False)
@@ -384,3 +390,18 @@ def auto_chart(table: pd.DataFrame):
     fig.update_xaxes(title=x, type="category")
     fig.update_yaxes(title=y, showgrid=True)
     return style_figure(fig, height=320, legend=False)
+
+
+def reason_bar(reasons: pd.DataFrame):
+    """How many flagged students show each warning sign (horizontal, most common on top)."""
+    data = reasons.sort_values("students")
+    fig = go.Figure(
+        go.Bar(
+            y=data["reason"], x=data["students"], orientation="h", marker_color=FAIL_COLOR,
+            text=data["students"], textposition="outside", cliponaxis=False,
+            hovertemplate="%{y}: %{x} students<extra></extra>",
+        )
+    )  # fmt: skip
+    fig.update_xaxes(title="Students", showgrid=True, range=[0, max(float(data["students"].max()) * 1.15, 1.0)])
+    fig.update_yaxes(title=None, type="category")
+    return style_figure(fig, height=60 + 40 * len(data), legend=False)
